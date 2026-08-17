@@ -98,7 +98,7 @@ export function ConversationIntelligencePanel({ callStatus }: { callStatus: Call
       <h3 className="mt-3 text-lg font-semibold text-starwhite">Live call intelligence</h3>
       <p className="mt-1.5 text-sm text-white/50">
         Language Operators run in real time on the call — transcript, sentiment, and summary build
-        as it happens, then a disposition writes straight back to KORE.
+        as it happens, then a disposition writes straight back to the CubeSmart Management Platform.
       </p>
 
       <div className="mt-4 flex flex-wrap gap-1.5">
@@ -156,7 +156,7 @@ export function ConversationIntelligencePanel({ callStatus }: { callStatus: Call
               <p className="text-xs text-starwhite font-medium">{disposition}</p>
               {synced && (
                 <p className="mt-1.5 text-[10px] text-mint flex items-center gap-1">
-                  <span>✓</span> Synced to KORE — lead status &amp; move-in appointment updated
+                  <span>✓</span> Synced to the CubeSmart Management Platform — lead status &amp; move-in appointment updated
                 </p>
               )}
             </div>

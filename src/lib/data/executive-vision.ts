@@ -17,7 +17,7 @@ export interface ExecutiveVisionCard {
 
 export const executiveVisionHeadline = {
   main: "CubeSmart's 2026 inflection point is operating leverage, not just growth.",
-  sub: 'Twilio is the intelligent communication layer inside KORE that gets it there.',
+  sub: 'Twilio is the intelligent communication layer inside the CubeSmart Management Platform that gets it there.',
 }
 
 export const executiveVisionCards: ExecutiveVisionCard[] = [

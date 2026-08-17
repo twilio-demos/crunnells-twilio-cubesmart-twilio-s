@@ -429,8 +429,8 @@ export function MaturitySection() {
           Three independent streams mature side by side — Messaging, Voice, and AI — each one useful
           on its own, with no single required order between them. A text-based AI agent can go live
           on day one, right alongside the simplest outbound call. The Flex SDK is an accelerator, not a
-          fourth stream: it embeds native omnichannel controls directly into KORE in one
-          integration.
+          fourth stream: it embeds native omnichannel controls directly into the CubeSmart
+          Management Platform in one integration.
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-[11px] text-white/40">
@@ -520,7 +520,7 @@ export function MaturitySection() {
                     <ValueList items={flexShortcut.studioValue} color="var(--barrys)" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide text-neptune-hover font-semibold mb-2">Value for CubeSmart (KORE)</p>
+                    <p className="text-xs uppercase tracking-wide text-neptune-hover font-semibold mb-2">Value for CubeSmart&apos;s Management Platform</p>
                     <ValueList items={flexShortcut.bmsValue} color="var(--neptune-hover)" />
                   </div>
                 </div>
@@ -633,7 +633,7 @@ export function MaturitySection() {
                 <ValueList items={activeDetail.studioValue} color="var(--barrys)" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide text-neptune-hover font-semibold mb-3">Value for CubeSmart (KORE Platform)</p>
+                <p className="text-xs uppercase tracking-wide text-neptune-hover font-semibold mb-3">Value for CubeSmart&apos;s Management Platform</p>
                 <ValueList items={activeDetail.bmsValue} color="var(--neptune-hover)" />
               </div>
             </div>

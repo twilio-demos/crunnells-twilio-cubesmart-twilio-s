@@ -2713,3 +2713,23 @@ larger rework.
 Build verified clean (`npm run build`) after the small aside; full final build+typecheck pass still
 pending at the point this entry was written — see the next verification step in this same session.
 
+## Session: Renamed all "KORE" mentions to "CubeSmart Management Platform"
+User asked to rename every mention of "Kore" to "Cubesmart Management Platform" across the app.
+Searched thoroughly (multiple passes, since the search tool only surfaces one match per file) and
+replaced every user-facing occurrence in: `README.md`, `package.json` description, `server/
+provision-cintel.cjs`, `src/app/layout.tsx`, `src/lib/data/{architecture,maturity,metrics,
+executive-vision}.ts`, and `src/components/showcase/{ConversationIntelligencePanel,MaturitySection,
+PhoneFrame,CapabilitiesSection,ClosingSection,HowItWorksSection,StorySection,HeroSection}.tsx`.
+- Standalone "KORE" → "the CubeSmart Management Platform" (or "CubeSmart Management Platform" when
+  used as a proper-noun label, e.g. tile titles, headings, the `who:` field in StorySection).
+- "KORE Platform" → "CubeSmart Management Platform" (collapsed, avoided "...Platform Platform").
+- Parenthetical shorthand like "for CubeSmart (KORE)" → "for the CubeSmart Management Platform".
+- A couple of awkward compound titles ("Call-from-KORE for Store Teams", "Digital-to-Physical KORE
+  Sync") were reworded to "Call From the CubeSmart Management Platform" / "Digital-to-Physical Sync
+  With the CubeSmart Management Platform" rather than literally concatenating the new name.
+- Internal-only identifiers left untouched on purpose: `architecture.ts`'s `id: 'kore'` (React key,
+  never rendered) and the historical Session-log text inside MEMORY.md itself (not user-facing).
+- No type/component/env-var changes — purely a copy/content rename. Verified with
+  `npm install && npm run build` (clean) and a final `KORE` text search across the repo (only
+  MEMORY.md history + the internal `id: 'kore'` remain, both intentional).
+

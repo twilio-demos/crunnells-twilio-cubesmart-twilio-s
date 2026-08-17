@@ -18,13 +18,13 @@ export function HeroSection() {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-semibold leading-[1.05] max-w-4xl animate-fade-up">
-          The communications platform layer inside
-          <span className="text-mint"> KORE — from booking a unit to move-in day.</span>
+          The communications platform layer inside the
+          <span className="text-mint"> CubeSmart Management Platform — from booking a unit to move-in day.</span>
         </h1>
 
         <p className="mt-6 text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.1s' }}>
-          KORE gives CubeSmart&apos;s 1,516 stores the modernized system of record to run the business.
-          Twilio gives KORE the embedded voice, messaging, verification, and AI layer that turns every
+          The CubeSmart Management Platform gives CubeSmart&apos;s 1,516 stores the modernized system of record to run the business.
+          Twilio gives the CubeSmart Management Platform the embedded voice, messaging, verification, and AI layer that turns every
           tenant touchpoint — leasing, move-in, billing, and retention — into a moment that matters.
         </p>
 

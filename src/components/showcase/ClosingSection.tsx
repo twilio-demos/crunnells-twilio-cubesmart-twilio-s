@@ -7,7 +7,7 @@ const nextSteps = [
   {
     title: 'POC Scoping Session',
     description:
-      "Led by Twilio Enterprise Strategy with CubeSmart's KORE architecture and product leads. Output is a written scope: target use case, success criteria, participants, and dates.",
+      "Led by Twilio Enterprise Strategy with CubeSmart's Management Platform architecture and product leads. Output is a written scope: target use case, success criteria, participants, and dates.",
   },
   {
     title: 'Onsite Hackathon',
@@ -29,11 +29,11 @@ export function ClosingSection() {
         </div>
 
         <h2 className="text-3xl md:text-5xl font-semibold leading-tight max-w-3xl mx-auto">
-          Let&apos;s build the AI-native communications layer inside KORE.
+          Let&apos;s build the AI-native communications layer inside the CubeSmart Management Platform.
         </h2>
         <p className="mt-6 text-white/60 text-base md:text-lg max-w-3xl mx-auto">
           Powered by Twilio, CubeSmart can unlock a genuinely magical tenant experience across the
-          entire portfolio. By building centrally in KORE and scaling across 1,516 stores, one
+          entire portfolio. By building centrally in the CubeSmart Management Platform and scaling across 1,516 stores, one
           unified engine delivers the same battle-tested voice, messaging, verification, and AI
           orchestration layer — hyper-tuned to self-storage leasing, move-in, and retention.
         </p>

@@ -48,7 +48,7 @@ export const industryMetrics: IndustryMetric[] = [
     value: '1,516',
     label: 'Stores Across the Portfolio',
     description:
-      '662 owned and 854 third-party managed properties (~104.8M sq. ft.) — every one of them scalable on the same Twilio-in-KORE communications layer.',
+      '662 owned and 854 third-party managed properties (~104.8M sq. ft.) — every one of them scalable on the same Twilio-in-CubeSmart-Management-Platform communications layer.',
     citation: 'CubeSmart Q1 2026 Earnings Release',
     href: 'https://investors.cubesmart.com/',
   },
@@ -74,7 +74,7 @@ export const industryMetrics: IndustryMetric[] = [
     value: '190%',
     label: 'ROI, Under 6-Month Payback',
     description:
-      'Replacing a legacy, siloed voice and messaging stack with one Twilio-powered layer inside KORE — with a 15% lift in agent productivity along the way, offsetting the 5.8% YoY rise in same-store operating expense.',
+      'Replacing a legacy, siloed voice and messaging stack with one Twilio-powered layer inside the CubeSmart Management Platform — with a 15% lift in agent productivity along the way, offsetting the 5.8% YoY rise in same-store operating expense.',
     highlights: ['15% lift in agent productivity'],
     citation: 'Forrester Total Economic Impact™ of Twilio / CubeSmart Q1 2026 10-Q',
     href: 'https://www.twilio.com/en-us/resources/analyst-reports/forrester-tei',

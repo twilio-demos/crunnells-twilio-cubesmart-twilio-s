@@ -2,7 +2,7 @@ import { opportunityStats } from '@/lib/data/metrics'
 
 const storyColumns = [
   {
-    who: 'KORE',
+    who: 'CubeSmart Management Platform',
     role: 'The platform',
     color: '#6923f4',
     points: [
@@ -43,7 +43,7 @@ export function StorySection() {
         </h2>
         <p className="mt-5 text-white/60 max-w-2xl text-base md:text-lg">
           Moving from reactive, siloed channels to an AI-native, autonomous layer isn&apos;t just a
-          feature upgrade — it reshapes the economics of the entire relationship, from KORE down to
+          feature upgrade — it reshapes the economics of the entire relationship, from the CubeSmart Management Platform down to
           the tenant at the gate.
         </p>
 
@@ -77,7 +77,7 @@ export function StorySection() {
             hard to get right. Buying trades that cost for a different risk: outsourcing away the
             customization and differentiation that should make the experience feel like CubeSmart&apos;s
             own. Twilio&apos;s advantage is that it doesn&apos;t force that trade-off — it provides
-            the infrastructure and plumbing out of the box, while leaving KORE free to build the
+            the infrastructure and plumbing out of the box, while leaving the CubeSmart Management Platform free to build the
             genuinely custom, differentiated capabilities on top.
           </p>
 

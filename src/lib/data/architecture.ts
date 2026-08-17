@@ -35,12 +35,12 @@ export const architectureStages: ArchStage[] = [
   },
   {
     id: 'kore',
-    title: 'KORE Platform',
+    title: 'CubeSmart Management Platform',
     accent: NEPTUNE,
     description:
       "CubeSmart's modernized system of record for leases, billing, access control and store operations across 1,516 owned and third-party managed properties.",
     chips: [
-      { label: 'KORE', active: true },
+      { label: 'Management Platform', active: true },
       { label: 'Lease Management' },
       { label: 'Billing & Autopay' },
       { label: 'Gate Access Control' },
@@ -52,7 +52,7 @@ export const architectureStages: ArchStage[] = [
     title: 'Unified Integration Layer',
     accent: NEPTUNE,
     description:
-      'One integration layer underneath KORE. CubeSmart builds and governs it once, and every store inherits it.',
+      'One integration layer underneath the CubeSmart Management Platform. CubeSmart builds and governs it once, and every store inherits it.',
   },
   {
     id: 'tac',

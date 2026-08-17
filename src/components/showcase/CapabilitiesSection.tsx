@@ -10,7 +10,7 @@ export function CapabilitiesSection() {
       <div className="max-w-6xl mx-auto w-full px-6 md:px-16">
         <span className="text-xs uppercase tracking-[0.2em] text-mint font-semibold">Embedded in the Platform</span>
         <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight max-w-3xl">
-          Every Twilio channel, embedded natively inside KORE
+          Every Twilio channel, embedded natively inside the CubeSmart Management Platform
         </h2>
         <p className="mt-5 text-white/60 max-w-2xl text-base md:text-lg">
           This is what it looks like when Twilio&apos;s full communications stack is embedded directly

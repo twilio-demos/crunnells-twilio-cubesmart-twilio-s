@@ -131,7 +131,7 @@ tenant to the store team with the recommendation attached.
 - No discount deeper than 20% off, and never for longer than 3 months, without a manager.
 - No refunds for elapsed months.
 - No free months of rent outright (the 20% discount and unit downsize are the only two levers).
-- No promises about specific unit availability beyond what is confirmed in KORE.
+- No promises about specific unit availability beyond what is confirmed in the CubeSmart Management Platform.
 - No guarantees about insurance claims — refer tenants to the insurance provider for claim
   questions.
 

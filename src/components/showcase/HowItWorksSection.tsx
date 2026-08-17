@@ -57,10 +57,10 @@ export function HowItWorksSection() {
           <span className="text-xs uppercase tracking-[0.2em] text-mint font-semibold">How Does It Work</span>
         </div>
         <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight max-w-3xl">
-          One integration layer. One KORE. Twilio underneath.
+          One integration layer. One CubeSmart Management Platform. Twilio underneath.
         </h2>
         <p className="mt-5 text-white/60 max-w-2xl text-base md:text-lg">
-          A reference architecture for how CubeSmart&apos;s KORE platform connects tenant touchpoints
+          A reference architecture for how CubeSmart&apos;s Management Platform connects tenant touchpoints
           to Twilio&apos;s orchestration and communications layer, portfolio-wide.
         </p>
 

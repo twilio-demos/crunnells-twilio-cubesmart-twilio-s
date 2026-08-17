@@ -17,7 +17,7 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "CubeSmart + Twilio | Guided Move-In Journey",
   description:
-    "An interactive showcase of how Twilio's communications platform embeds inside CubeSmart's KORE platform to power an AI-native, multichannel self-storage customer journey — from booking a unit to move-in day.",
+    "An interactive showcase of how Twilio's communications platform embeds inside CubeSmart's Management Platform to power an AI-native, multichannel self-storage customer journey — from booking a unit to move-in day.",
 };
 
 export default function RootLayout({

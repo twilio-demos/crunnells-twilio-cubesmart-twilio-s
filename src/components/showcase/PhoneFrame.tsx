@@ -149,7 +149,7 @@ export function PhoneFrame({
           <div className="pt-7 px-4 pb-2 flex items-center gap-2 border-b border-white/10">
             <CubeSmartLogoMark size={22} />
             <span className="text-[11px] font-semibold text-starwhite">CubeSmart</span>
-            <span className="ml-auto text-[8px] text-white/30">Powered by KORE</span>
+            <span className="ml-auto text-[8px] text-white/30">Powered by CubeSmart Management Platform</span>
           </div>
           <div className="flex-1 overflow-hidden px-3 py-3 flex flex-col gap-2">
             {messages

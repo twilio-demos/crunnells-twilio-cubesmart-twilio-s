@@ -1,7 +1,7 @@
 # CubeSmart + Twilio | Guided Move-In Journey
 
 An interactive, single-page presentation that shows how Twilio's communications platform embeds
-directly inside **CubeSmart's KORE platform** to power an AI-native, multichannel self-storage
+directly inside **CubeSmart's Management Platform** to power an AI-native, multichannel self-storage
 customer journey — from the first call about a unit, through booking and move-in, to gate access,
 autopay recovery and retention.
 
@@ -15,16 +15,16 @@ autopay recovery and retention.
   operating expense. Three stat cards: **$57.3M** incremental annual rental revenue from higher
   call-to-lease conversion, **$1.62M** annual labor expense reduction from automated RCS payment
   recovery, and **$4.13M** preserved annual NOI from real-time retention offers.
-- **The Opportunity** — a value story showing how maturity gains compound value for KORE, the store,
+- **The Opportunity** — a value story showing how maturity gains compound value for the Management Platform, the store,
   and the tenant, followed by a graceful build-vs-buy explanation (building in-house is expensive
   and hard; buying can outsource differentiation; Twilio provides the infrastructure out of the box
-  while leaving KORE free to build what's genuinely custom) and a sourced stats card citing Menlo
+  while leaving the Management Platform free to build what's genuinely custom) and a sourced stats card citing Menlo
   Ventures, MIT NANDA, RAND, and the Stanford HAI AI Index.
 - **Embedded Capabilities** — a device-mockup showcase illustrating the Guided Move-In voice AI,
   Branded Calling + Voice Insights, a branded RCS unit-browsing carousel, WhatsApp, and the unified
   store inbox — all shown as if embedded natively inside CubeSmart's own tools.
 - **How Does It Work** — a colour-coded layer diagram: Tenant Touchpoints (store phone line, SMS,
-  CubeSmart app, web booking, gate kiosk, email, RCS) → KORE Platform → Unified Integration Layer →
+  CubeSmart app, web booking, gate kiosk, email, RCS) → CubeSmart Management Platform → Unified Integration Layer →
   Twilio Agent Connect (TAC) → the Twilio Platform (Conversation Orchestrator, Memory, Intelligence,
   Relay, Voice & Messaging, Verify, Branded RCS, 10DLC/A2P), with a return path back up to the
   tenant's own channel.
@@ -37,7 +37,7 @@ autopay recovery and retention.
   Intelligent Multi-Channel Self-Service & Handoff), plus a **DIY / ⚡ Flex SDK** toggle that expands
   the surface into a fully-expanded "Embedded Flex SDK" card with a glowing perimeter around the
   three milestones it delivers natively. Clicking any stage opens its full breakdown — use cases,
-  value for the store and for CubeSmart (KORE), and the Twilio building blocks behind it.
+  value for the store and for the CubeSmart Management Platform, and the Twilio building blocks behind it.
 - **Live Demos** *(temporarily hidden)* — the "Try It Yourself" row is switched off while it is
   reworked. Flip `SHOW_LIVE_DEMOS` in `src/components/showcase/ShowcaseClient.tsx` back to `true` to
   restore the section and its nav entry. It contains a real WebRTC outbound call with live call

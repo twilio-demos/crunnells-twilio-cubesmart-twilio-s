@@ -181,8 +181,8 @@ export const streams: Stream[] = [
           },
         ],
         bmsValue: [
-          'Differentiated channel vs. competitors still on plain-text SMS — RCS lets KORE package a high-margin premium messaging add-on (e.g., "Advanced Rich Messaging Tier") to drive Net Revenue Retention (NRR) across owned and third-party managed stores.',
-          'Churn deflection — keeps communications native to KORE instead of losing tenants to 3rd-party inbox tools or a competitor\u2019s more responsive channel.',
+          'Differentiated channel vs. competitors still on plain-text SMS — RCS lets the CubeSmart Management Platform package a high-margin premium messaging add-on (e.g., "Advanced Rich Messaging Tier") to drive Net Revenue Retention (NRR) across owned and third-party managed stores.',
+          'Churn deflection — keeps communications native to the CubeSmart Management Platform instead of losing tenants to 3rd-party inbox tools or a competitor\u2019s more responsive channel.',
         ],
       },
       {
@@ -208,9 +208,9 @@ export const streams: Stream[] = [
           'Seamless cross-channel support across webchat, SMS, RCS, WhatsApp, and Facebook Messenger for every store in the portfolio',
         ],
         bmsValue: [
-          'A single conversational data model KORE can build every future channel on top of, across all 1,516 owned and managed stores',
+          'A single conversational data model the CubeSmart Management Platform can build every future channel on top of, across all 1,516 owned and managed stores',
           {
-            text: 'Ongoing maintenance typically costs 15% to 20% of initial build cost annually. Leveraging Twilio\u2019s OOTB solution reduces tech-debt and code complexity, allowing KORE to focus on the highest-value, differentiated work.',
+            text: 'Ongoing maintenance typically costs 15% to 20% of initial build cost annually. Leveraging Twilio\u2019s OOTB solution reduces tech-debt and code complexity, allowing the CubeSmart Management Platform team to focus on the highest-value, differentiated work.',
             sourced: true,
             citation: 'The Code, \u201cBuild vs. Buy Framework\u201d',
             href: 'https://thecodev.co.uk/build-vs-buy-framework/',
@@ -232,11 +232,11 @@ export const streams: Stream[] = [
         tagline: 'Client SDK + Branded Calling',
         icon: '📞',
         description:
-          'Store and call-center staff place outbound calls straight from KORE using the Client SDK, with a verified name and reason shown on the recipient\u2019s screen via Branded Calling — no separate phone system required.',
+          'Store and call-center staff place outbound calls straight from the CubeSmart Management Platform using the Client SDK, with a verified name and reason shown on the recipient\u2019s screen via Branded Calling — no separate phone system required.',
         techStack: ['Client SDK', 'Programmable Voice', 'Enhanced Branded Calling'],
         useCases: [
           {
-            title: 'Call-from-KORE for Store Teams',
+            title: 'Call From the CubeSmart Management Platform',
             description: 'A leasing agent or collections rep calls a lead or a past-due tenant straight from the tool they already work in — no separate desk phone.',
           },
           {
@@ -263,21 +263,21 @@ export const streams: Stream[] = [
             text: 'High-Margin Incremental Add-On Revenue for franchise & third-party managed store agreements, packaged as a native trust-and-verify add-on pass-through.',
             sourced: true,
           },
-          'Enterprise Competitive Moat: 854 third-party managed properties require verified caller ID to maintain brand trust across locations. Native branded calling gives KORE a distinct platform advantage, driving stickiness and higher switching costs for managed accounts.',
+          'Enterprise Competitive Moat: 854 third-party managed properties require verified caller ID to maintain brand trust across locations. Native branded calling gives the CubeSmart Management Platform a distinct advantage, driving stickiness and higher switching costs for managed accounts.',
         ],
       },
       {
         id: 'voice-cintel',
         name: 'Conversational Intelligence & Automations',
-        tagline: 'Every call summarized straight to KORE',
+        tagline: 'Every call summarized straight to the CubeSmart Management Platform',
         icon: '🧠',
         description:
-          'Layer Conversational Intelligence onto every call — automatic transcription, sentiment scoring, and structured call dispositions written straight to KORE without manual note-taking. Real-time intent analysis automatically scores leads, surfaces instant next-best action suggestions, flags churn signals, and empowers store teams to continuously refine the leasing experience.',
+          'Layer Conversational Intelligence onto every call — automatic transcription, sentiment scoring, and structured call dispositions written straight to the CubeSmart Management Platform without manual note-taking. Real-time intent analysis automatically scores leads, surfaces instant next-best action suggestions, flags churn signals, and empowers store teams to continuously refine the leasing experience.',
         techStack: ['Conversational Intelligence (CINTEL)', 'Automated Call Dispositions', 'Voice Insights'],
         useCases: [
           {
             title: 'CINTEL Summaries, Sentiment & Dispositions',
-            description: 'Every call is transcribed, summarized, and scored for sentiment, with dispositions posted to KORE via webhook.',
+            description: 'Every call is transcribed, summarized, and scored for sentiment, with dispositions posted to the CubeSmart Management Platform via webhook.',
           },
           {
             title: 'Voice Insights for Smarter Call Timing',
@@ -285,7 +285,7 @@ export const streams: Stream[] = [
           },
         ],
         studioValue: [
-          'Automatically update KORE with disposition, run post-call automations, capture observations, and generate trends and analysis at scale — across every store.',
+          'Automatically update the CubeSmart Management Platform with disposition, run post-call automations, capture observations, and generate trends and analysis at scale — across every store.',
           {
             text: 'Utilizing AI conversation intelligence achieves 35% higher win rates through real-time surfacing of next best actions.',
             sourced: true,
@@ -295,7 +295,7 @@ export const streams: Stream[] = [
         ],
         bmsValue: [
           {
-            text: 'KORE packages Twilio Voice Intelligence as a native module — a 15% increase in agent productivity and AHT reduction, offsetting the 5.8% YoY rise in same-store operating expense driven by personnel costs.',
+            text: 'The CubeSmart Management Platform packages Twilio Voice Intelligence as a native module — a 15% increase in agent productivity and AHT reduction, offsetting the 5.8% YoY rise in same-store operating expense driven by personnel costs.',
             sourced: true,
             citation: 'CubeSmart Q1 2026 10-Q / Forrester TEI of Twilio',
             href: 'https://www.twilio.com/en-us/resources/analyst-reports/forrester-tei',
@@ -314,7 +314,7 @@ export const streams: Stream[] = [
         useCases: [
           {
             title: 'One Screen, Every Call',
-            description: 'Store and regional teams never leave KORE — calls, voicemail, and routing all live in the same screen already used for leasing and billing.',
+            description: 'Store and regional teams never leave the CubeSmart Management Platform — calls, voicemail, and routing all live in the same screen already used for leasing and billing.',
           },
           {
             title: 'Unified Call Handling Toolkit',
@@ -323,11 +323,11 @@ export const streams: Stream[] = [
         ],
         studioValue: [
           'Faster first-contact resolution and simpler tenant experience — one number for SMS, RCS and voice at every store, not a separate leasing line and a separate billing line.',
-          'Staff Efficiency & Frictionless Store Operations: streamlines daily workflows with automated tenant insights populated directly inside KORE, while natively supporting multi-store call overflow and shared routing across owned and managed properties.',
+          'Staff Efficiency & Frictionless Store Operations: streamlines daily workflows with automated tenant insights populated directly inside the CubeSmart Management Platform, while natively supporting multi-store call overflow and shared routing across owned and managed properties.',
         ],
         bmsValue: [
           {
-            text: 'KORE becomes the "Business Operating System" for the portfolio — vertical platforms with embedded finance and communications command a 45% to 95% valuation multiple premium over standalone horizontal software.',
+            text: 'The CubeSmart Management Platform becomes the "Business Operating System" for the portfolio — vertical platforms with embedded finance and communications command a 45% to 95% valuation multiple premium over standalone horizontal software.',
             sourced: true,
             citation: 'Windsor Drake, \u201cVertical SaaS Valuation Report Q4 2025\u201d',
             href: 'https://windsordrake.com/vertical-saas-valuation-report-q4-2025/',
@@ -368,9 +368,9 @@ export const streams: Stream[] = [
           },
         ],
         bmsValue: [
-          'Aggregated data unlocks numerous opportunities, including Peer Performance Benchmarking across owned vs. third-party managed stores, a real-time pulse on tenant sentiment (unmet demand, early warning signals, quality assurance), and KORE-provided AI-driven Prescriptive Playbooks powered by platform-wide success patterns.',
+          'Aggregated data unlocks numerous opportunities, including Peer Performance Benchmarking across owned vs. third-party managed stores, a real-time pulse on tenant sentiment (unmet demand, early warning signals, quality assurance), and Prescriptive Playbooks provided by the CubeSmart Management Platform, powered by platform-wide success patterns.',
           {
-            text: 'KORE can package real-time sentiment analytics and automated churn warning alerts as a premium feature module for third-party managed properties.',
+            text: 'The CubeSmart Management Platform can package real-time sentiment analytics and automated churn warning alerts as a premium feature module for third-party managed properties.',
             sourced: true,
           },
           {
@@ -404,17 +404,17 @@ export const streams: Stream[] = [
             description: 'Remembers tenant preferences (e.g. "prefers ground-floor drive-up access") and recalls them on the next interaction, any channel.',
           },
           {
-            title: 'Digital-to-Physical KORE Sync',
+            title: 'Digital-to-Physical Sync With the CubeSmart Management Platform',
             description: 'Extracted memories (e.g. "recently mentioned a competitor\u2019s lower rate") auto-populate the store team\u2019s screen the moment a tenant calls or checks in.',
           },
         ],
         studioValue: [
-          'Out-of-the-Box Intelligence: KORE consumes each store\u2019s unstructured policy documents, including gate hours, insurance terms, late-fee schedules, and access rules, allowing AI agents to deliver verified responses without training or tuning models.',
+          'Out-of-the-Box Intelligence: the CubeSmart Management Platform consumes each store\u2019s unstructured policy documents, including gate hours, insurance terms, late-fee schedules, and access rules, allowing AI agents to deliver verified responses without training or tuning models.',
           'ROI-Rich Personalization: instead of a generic "come back!" text, the AI sends a targeted message: "Your 10x10 at West 7th is still available — want to lock in your old rate before it\u2019s gone?"',
         ],
         bmsValue: [
-          'KORE unlocks hyper-personalized, portfolio-wide Agentic Memory as a native "Tenant Concierge & Profile Memory Engine" that automatically hydrates tenant profiles across leasing touchpoints and is leveraged by agents downstream in KORE.',
-          'KORE positions itself as an enterprise-grade platform capable of executing multi-store SOPs with zero policy deviation across owned and third-party managed properties, creating a strong competitive moat against legacy storage management systems.',
+          'The CubeSmart Management Platform unlocks hyper-personalized, portfolio-wide Agentic Memory as a native "Tenant Concierge & Profile Memory Engine" that automatically hydrates tenant profiles across leasing touchpoints and is leveraged by agents downstream in the platform.',
+          'The CubeSmart Management Platform positions itself as an enterprise-grade platform capable of executing multi-store SOPs with zero policy deviation across owned and third-party managed properties, creating a strong competitive moat against legacy storage management systems.',
         ],
       },
       {
@@ -451,10 +451,10 @@ export const streams: Stream[] = [
         ],
         bmsValue: [
           {
-            text: 'High-margin Add-ons: embedding AI workflow automation commands a price premium, enabling KORE to increase ARPU across mid-market and enterprise/third-party managed tiers.',
+            text: 'High-margin Add-ons: embedding AI workflow automation commands a price premium, enabling the CubeSmart Management Platform to increase ARPU across mid-market and enterprise/third-party managed tiers.',
             sourced: true,
           },
-          'Platform Stickiness & Reduced Platform Churn: embedding deep, autonomous AI workflows directly into leasing, billing, and access control elevates KORE from an admin tool to an essential business system, lowering platform churn and deepening the competitive moat.',
+          'Platform Stickiness & Reduced Platform Churn: embedding deep, autonomous AI workflows directly into leasing, billing, and access control elevates the CubeSmart Management Platform from an admin tool to an essential business system, lowering platform churn and deepening the competitive moat.',
         ],
       },
       {
@@ -494,7 +494,7 @@ export const streams: Stream[] = [
             text: 'Premium Voice Add-Ons: monetizing the AI leasing concierge as a high-margin add-on module boosts store-level ARPU, capturing top-tier software margins on direct phone automation.',
             sourced: true,
           },
-          'Telephony is Sticky: embedding autonomous AI Voice Agents directly into store phone lines, leasing, and collections elevates KORE\u2019s value and stability even further across the portfolio.',
+          'Telephony is Sticky: embedding autonomous AI Voice Agents directly into store phone lines, leasing, and collections elevates the CubeSmart Management Platform\u2019s value and stability even further across the portfolio.',
         ],
       },
       {
@@ -515,7 +515,7 @@ export const streams: Stream[] = [
             description: 'A conversation started by voice can finish by text, and vice versa, with zero repeated context — and the updated gate code lands by RCS the moment the call ends.',
           },
         ],
-        studioValue: ['Native KORE UI Embed: integrates calls, messaging, and agent-to-human handoff with complete context directly inside KORE for the ultimate platform solution'],
+        studioValue: ['Native CubeSmart Management Platform UI Embed: integrates calls, messaging, and agent-to-human handoff with complete context directly inside the platform for the ultimate solution'],
         bmsValue: [
           {
             text: 'Valuation Multiple Premium: vertical platforms with embedded communications command a 45% to 95% valuation multiple premium over standalone software.',
@@ -537,7 +537,7 @@ export const flexShortcut: FlexShortcut = {
   tagline: 'Flex SDK — embedded natively, without walking every stop',
   icon: '🧩',
   description:
-    'This is not a fourth stream — it\u2019s an accelerator. Embedding the Flex SDK, TaskRouter, and Twilio Studio directly into KORE gives every store native omnichannel communication controls, task routing, and call/chat handling — plus Agent Copilot for real-time retention offers — in one integration, instead of building up each stream stage by stage.',
+    'This is not a fourth stream — it\u2019s an accelerator. Embedding the Flex SDK, TaskRouter, and Twilio Studio directly into the CubeSmart Management Platform gives every store native omnichannel communication controls, task routing, and call/chat handling — plus Agent Copilot for real-time retention offers — in one integration, instead of building up each stream stage by stage.',
   techStack: ['Flex SDK', 'TaskRouter', 'Twilio Studio', 'Serverless Functions'],
   useCases: [
     {
@@ -546,7 +546,7 @@ export const flexShortcut: FlexShortcut = {
     },
     {
       title: 'Agent Copilot for Retention & Collections',
-      description: 'Real-time sentiment detection on late-fee and competitor-pricing conversations surfaces a suggested waiver, discount or unit downsize directly on the agent\u2019s screen, sourced from KORE\u2019s own retention playbook.',
+      description: 'Real-time sentiment detection on late-fee and competitor-pricing conversations surfaces a suggested waiver, discount or unit downsize directly on the agent\u2019s screen, sourced from the CubeSmart Management Platform\u2019s own retention playbook.',
     },
   ],
   studioValue: [
@@ -554,7 +554,7 @@ export const flexShortcut: FlexShortcut = {
     'Complete tenant journey insights, robust analytics and reporting for regional leaders, and native corporate centralization support across owned and managed properties.',
   ],
   bmsValue: [
-    'Development Velocity & Component Reuse: out-of-the-box infrastructure provides pre-built WebRTC media handling, global carrier connectivity, state synchronization, and an extensible task routing engine. Engineers only need to write the application-level plugin code connecting Flex SDK to KORE.',
+    'Development Velocity & Component Reuse: out-of-the-box infrastructure provides pre-built WebRTC media handling, global carrier connectivity, state synchronization, and an extensible task routing engine. Engineers only need to write the application-level plugin code connecting Flex SDK to the CubeSmart Management Platform.',
     {
       text: 'Valuation Multiple Premium: vertical platforms with embedded communications command a 45% to 95% valuation multiple premium over standalone software.',
       sourced: true,
