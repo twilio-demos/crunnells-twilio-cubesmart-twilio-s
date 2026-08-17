@@ -1,7 +1,7 @@
 import React from 'react'
 import { palette as c } from '../theme'
 
-export function EmeraldMark({ size = 22 }: { size?: number }) {
+export function CubeSmartMark({ size = 22 }: { size?: number }) {
   return (
     <span
       style={{
@@ -11,24 +11,26 @@ export function EmeraldMark({ size = 22 }: { size?: number }) {
         width: size + 6,
         height: size + 6,
         borderRadius: 7,
-        background: 'linear-gradient(140deg, #10b981, #047857)',
+        background: 'linear-gradient(140deg, #ff7a1a, #c2570a)',
         flexShrink: 0,
       }}
     >
       <svg viewBox="0 0 24 24" width={size - 4} height={size - 4} aria-hidden="true">
-        <path
-          d="M12 2.6l2.5 5.6 6 .6-4.5 4 1.3 6-5.3-3.1-5.3 3.1 1.3-6-4.5-4 6-.6z"
-          fill="#041b13"
-        />
+        <rect x={3} y={12} width={8} height={8} rx={1} fill="none" stroke="#1c130d" strokeWidth={1.6} />
+        <rect x={13} y={12} width={8} height={8} rx={1} fill="none" stroke="#1c130d" strokeWidth={1.6} />
+        <rect x={8} y={3} width={8} height={8} rx={1} fill="#1c130d" />
       </svg>
     </span>
   )
 }
 
+// Kept as an alias so the old import name still resolves.
+export const EmeraldMark = CubeSmartMark
+
 type Tone = 'good' | 'warn' | 'bad' | 'neutral'
 
 const toneMap: Record<Tone, { fg: string; bg: string; bd: string }> = {
-  good: { fg: c.glow, bg: 'rgba(52,211,153,0.14)', bd: 'rgba(52,211,153,0.4)' },
+  good: { fg: c.glow, bg: 'rgba(255,165,82,0.14)', bd: 'rgba(255,165,82,0.4)' },
   warn: { fg: c.amber, bg: c.amberBg, bd: c.amberLine },
   bad: { fg: c.red, bg: c.redBg, bd: c.redLine },
   neutral: { fg: c.dim, bg: c.soft, bd: c.line },

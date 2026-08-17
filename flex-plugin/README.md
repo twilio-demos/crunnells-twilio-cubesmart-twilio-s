@@ -1,6 +1,6 @@
-# Emerald Fitness — Member Context (Twilio Flex plugin)
+# CubeSmart — Tenant Context (Twilio Flex plugin)
 
-Renders the context the Emerald Fitness voice AI agent hands over when it escalates a live call
+Renders the context the CubeSmart voice AI agent hands over when it escalates a live call
 into Flex, so the human who picks up already knows who they are talking to and what is blocking
 them.
 
@@ -11,16 +11,16 @@ agent says hello.
 
 | Surface | What appears |
 | --- | --- |
-| **CRM container** (the large panel beside the call) | Member name, number and home studio · membership tier and status · the hold window and its length · the declined card and failed charge amount · classes booked, class history, usual Fuel Bar order and last instructor rating · why the AI escalated plus its written summary · the last stretch of the call transcript · the Twilio Memory profile the record came from |
-| **Task Info tab** | A condensed strip: tier, membership status, a "card expired" flag, and the AI's summary |
+| **CRM container** (the large panel beside the call) | Tenant name, number and home store · unit type and account status · the extended access window and its length · the declined card and failed charge amount · units reserved, reservation history, usual Supply Shop order and last staff rating · why the AI escalated plus its written summary · the last stretch of the call transcript · the Twilio Memory profile the record came from |
+| **Task Info tab** | A condensed strip: unit type, account status, a "card expired" flag, and the AI's summary |
 
-If a task arrives that did not come from the Emerald Fitness voice agent, the panel says so instead
+If a task arrives that did not come from the CubeSmart voice agent, the panel says so instead
 of rendering an empty shell.
 
 ## It is already live
 
 A prebuilt, dependency-free version of this plugin is served by the voice service at
-`/flex-plugin/emerald-member-context-<version>.js` and is registered against the Flex account
+`/flex-plugin/cubesmart-tenant-context-<version>.js` and is registered against the Flex account
 through the Plugins API. Nothing needs installing to use it.
 
 That build is generated from `server/src/flex-plugin/bundle.ts`, which is the same component tree

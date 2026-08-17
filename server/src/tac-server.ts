@@ -93,7 +93,7 @@ export async function startTACServer(port: number) {
     const sessionChannel: "voice" | "sms" | "chat" =
       session?.channel === "sms" ? "sms" : session?.channel === "chat" ? "chat" : "voice";
 
-    // Emerald Fitness guided journey owns every voice call from the demo member.
+    // CubeSmart guided move-in journey owns every voice call from the demo tenant.
     if (sessionChannel === "voice") {
       const journey = journeyStateForCaller(session?.authorInfo?.address);
       if (journey) {
@@ -356,7 +356,7 @@ export async function startTACServer(port: number) {
     reply.type("text/xml").send(twiml.toString());
   });
 
-  // Emerald Fitness guided member journey
+  // CubeSmart guided move-in journey
   registerJourneyRoutes(server.fastify);
 
   // Twilio Flex plugin bundle. Flex fetches this URL directly, which is why it

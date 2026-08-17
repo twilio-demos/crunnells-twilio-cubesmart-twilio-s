@@ -1,9 +1,9 @@
 import React from 'react'
 import { withTaskContext, ITask } from '@twilio/flex-ui'
-import { hasEmeraldContext, prettyPhone, readAttributes } from '../context'
+import { hasCubeSmartContext, prettyPhone, readAttributes } from '../context'
 import { palette as c, font } from '../theme'
 import { IntelligenceBlock, NextBestActionCard } from './Intelligence'
-import { Callout, EmeraldMark, Field, Grid, Pill, Section } from './primitives'
+import { Callout, CubeSmartMark, Field, Grid, Pill, Section } from './primitives'
 
 function titleCase(value?: string): string {
   const s = String(value ?? '').replace(/[-_]/g, ' ')
@@ -28,13 +28,13 @@ function EmptyState({ message }: { message?: string }) {
     >
       <div>
         <div style={{ marginBottom: 10 }}>
-          <EmeraldMark size={30} />
+          <CubeSmartMark size={30} />
         </div>
         <div style={{ fontSize: 13, fontWeight: 600, color: c.text, marginBottom: 4 }}>
-          Emerald Fitness — Member Context
+          CubeSmart — Tenant Context
         </div>
         <div style={{ fontSize: 12, maxWidth: 280, lineHeight: 1.5 }}>
-          {message ?? 'Select a task to see the member the AI agent is handing you.'}
+          {message ?? 'Select a task to see the tenant the AI agent is handing you.'}
         </div>
       </div>
     </div>
@@ -43,24 +43,24 @@ function EmptyState({ message }: { message?: string }) {
 
 /**
  * Replaces the Flex CRM container. Everything rendered here arrives on the task
- * attributes from the Emerald Fitness voice agent at the moment it escalates —
- * no extra API call, so it is on screen before the agent says hello.
+ * attributes from the CubeSmart voice agent at the moment it escalates — no
+ * extra API call, so it is on screen before the agent says hello.
  */
 export function MemberContextPanelBase({ task }: { task?: ITask }) {
   if (!task) return <EmptyState />
 
   const a = readAttributes(task)
-  if (!hasEmeraldContext(a)) {
+  if (!hasCubeSmartContext(a)) {
     return (
-      <EmptyState message="This task did not arrive from the Emerald Fitness voice agent, so there is no member context attached." />
+      <EmptyState message="This task did not arrive from the CubeSmart voice agent, so there is no tenant context attached." />
     )
   }
 
-  const e = a.emerald ?? {}
+  const e = a.cubesmart ?? {}
   const name = a.customerName || a.name || a.customers?.name || '—'
-  const onHold = e.membership_status === 'on-hold'
+  const extendedAccess = e.account_status === 'on-hold'
   const cardExpired = e.payment_status === 'expired'
-  const history = e.class_history ?? []
+  const history = e.reservation_history ?? []
   const transcript = a.recent_transcript ?? []
 
   return (
@@ -83,16 +83,16 @@ export function MemberContextPanelBase({ task }: { task?: ITask }) {
           borderBottom: `1px solid ${c.line}`,
         }}
       >
-        <EmeraldMark size={24} />
+        <CubeSmartMark size={24} />
         <div style={{ minWidth: 0, flex: 1 }}>
           <div style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.2 }}>{name}</div>
           <div style={{ fontSize: 11, color: c.dim, marginTop: 2 }}>
-            {prettyPhone(a.from || a.customers?.phone)} · {e.studio ?? 'Emerald Fitness'}
+            {prettyPhone(a.from || a.customers?.phone)} · {e.store ?? 'CubeSmart'}
           </div>
         </div>
         <Pill
-          label={onHold ? 'On hold' : titleCase(e.membership_status ?? 'member')}
-          tone={onHold ? 'warn' : 'good'}
+          label={extendedAccess ? 'Extended access' : titleCase(e.account_status ?? 'tenant')}
+          tone={extendedAccess ? 'warn' : 'good'}
         />
       </div>
 
@@ -117,26 +117,26 @@ export function MemberContextPanelBase({ task }: { task?: ITask }) {
 
       {cardExpired && (
         <Section title="Needs resolving">
-          <Callout title="Payment method declined" tone="bad">
+          <Callout title="Autopay declined" tone="bad">
             {e.card_on_file ?? 'Card on file has expired'}
             {e.failed_charge ? ` — ${e.failed_charge} could not be processed.` : ''}
           </Callout>
         </Section>
       )}
 
-      <Section title="Membership">
+      <Section title="Unit & lease">
         <Grid>
-          <Field label="Tier" value={e.membership_tier ?? '—'} />
+          <Field label="Unit type" value={e.unit_type ?? '—'} />
           <Field
-            label="Status"
-            value={onHold ? 'On hold' : titleCase(e.membership_status)}
-            tone={onHold ? 'warn' : 'good'}
+            label="Account status"
+            value={extendedAccess ? 'Extended access' : titleCase(e.account_status)}
+            tone={extendedAccess ? 'warn' : 'good'}
           />
-          <Field label="Hold starts" value={e.hold_start ?? '—'} tone={onHold ? 'warn' : undefined} />
-          <Field label="Hold ends" value={e.hold_end ?? '—'} tone={onHold ? 'warn' : undefined} />
-          <Field label="Hold length" value={e.hold_days ? `${e.hold_days} days` : '—'} />
+          <Field label="Access window starts" value={e.access_window_start ?? '—'} tone={extendedAccess ? 'warn' : undefined} />
+          <Field label="Access window ends" value={e.access_window_end ?? '—'} tone={extendedAccess ? 'warn' : undefined} />
+          <Field label="Access window length" value={e.access_window_days ? `${e.access_window_days} days` : '—'} />
           <Field
-            label="Payment"
+            label="Autopay"
             value={cardExpired ? 'Expired' : titleCase(e.payment_status)}
             tone={cardExpired ? 'bad' : 'good'}
           />
@@ -151,17 +151,17 @@ export function MemberContextPanelBase({ task }: { task?: ITask }) {
 
       <Section title="Preferences & activity">
         <Grid>
-          <Field label="Classes booked" value={String(e.classes_booked ?? 0)} />
+          <Field label="Units reserved" value={String(e.units_booked ?? 0)} />
           <Field
             label="Last rating given"
-            value={e.last_instructor_rating ? `${e.last_instructor_rating} / 5` : '—'}
+            value={e.last_staff_rating ? `${e.last_staff_rating} / 5` : '—'}
           />
-          <Field label="Usual Fuel Bar order" value={e.favourite_shake ?? 'None yet'} />
-          <Field label="Home studio" value={e.studio ?? '—'} />
+          <Field label="Usual supply order" value={e.usual_supply_order ?? 'None yet'} />
+          <Field label="Home store" value={e.store ?? '—'} />
         </Grid>
       </Section>
 
-      <Section title="Class history">
+      <Section title="Reservation history">
         {history.length ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {history.map((line, i) => {
@@ -215,7 +215,7 @@ export function MemberContextPanelBase({ task }: { task?: ITask }) {
                         fontSize: 9,
                         letterSpacing: '0.1em',
                         textTransform: 'uppercase',
-                        color: isAgent ? 'rgba(52,211,153,0.7)' : c.faint,
+                        color: isAgent ? 'rgba(255,165,82,0.7)' : c.faint,
                         marginBottom: 2,
                       }}
                     >
@@ -244,7 +244,7 @@ export function MemberContextPanelBase({ task }: { task?: ITask }) {
       >
         <div>Twilio Memory profile: {e.memory_profile_id ?? '—'}</div>
         <div>Task: {task.taskSid}</div>
-        <div>Delivered on the task attributes by the Emerald Fitness voice agent.</div>
+        <div>Delivered on the task attributes by the CubeSmart voice agent.</div>
       </div>
     </div>
   )

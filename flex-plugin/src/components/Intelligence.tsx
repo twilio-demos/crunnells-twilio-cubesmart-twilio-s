@@ -1,12 +1,12 @@
 import React from 'react'
-import type { EmeraldIntelligence, EmeraldNextBestAction } from '../context'
+import type { CubeSmartIntelligence, CubeSmartNextBestAction } from '../context'
 import { palette as c } from '../theme'
 import { Pill, Section } from './primitives'
 
 type Tone = 'good' | 'warn' | 'bad' | 'neutral'
 
 const BANDS: Record<string, { label: string; fg: string; bar: string; tone: Tone }> = {
-  low: { label: 'Low risk', fg: c.glow, bar: c.emerald, tone: 'good' },
+  low: { label: 'Low risk', fg: c.glow, bar: c.orange, tone: 'good' },
   watch: { label: 'Watch', fg: '#7dd3fc', bar: '#38bdf8', tone: 'neutral' },
   elevated: { label: 'Elevated risk', fg: c.amber, bar: c.amber, tone: 'warn' },
   high: { label: 'High risk', fg: c.red, bar: c.red, tone: 'bad' },
@@ -19,7 +19,7 @@ const SENTIMENTS: Record<string, { label: string; tone: Tone }> = {
   negative: { label: 'Negative', tone: 'bad' },
 }
 
-export function hasIntelligence(intel?: EmeraldIntelligence | null): boolean {
+export function hasIntelligence(intel?: CubeSmartIntelligence | null): boolean {
   if (!intel) return false
   return Boolean(
     intel.call_reason ||
@@ -60,14 +60,14 @@ function Meter({ value, color }: { value: number; color: string }) {
  * Deliberately only ever shown to the human — the voice agent is not allowed to
  * make this offer itself, which is exactly why the handoff matters.
  */
-export function NextBestActionCard({ nba }: { nba?: EmeraldNextBestAction | null }) {
+export function NextBestActionCard({ nba }: { nba?: CubeSmartNextBestAction | null }) {
   if (!nba?.offer) return null
 
   return (
     <div
       style={{
-        background: 'linear-gradient(150deg, rgba(16,185,129,0.16), rgba(4,120,87,0.08))',
-        border: '1px solid rgba(52,211,153,0.45)',
+        background: 'linear-gradient(150deg, rgba(255,122,26,0.16), rgba(194,87,10,0.08))',
+        border: '1px solid rgba(255,165,82,0.45)',
         borderRadius: 12,
         padding: '12px 13px',
       }}
@@ -116,7 +116,7 @@ export function NextBestActionCard({ nba }: { nba?: EmeraldNextBestAction | null
             borderTop: '1px solid rgba(52,211,153,0.2)',
           }}
         >
-          From the studio playbook — {nba.policy_source}
+          From the store playbook — {nba.policy_source}
         </div>
       ) : null}
     </div>
@@ -124,7 +124,7 @@ export function NextBestActionCard({ nba }: { nba?: EmeraldNextBestAction | null
 }
 
 /** Call reason, sentiment and retention risk, as the operators score them live. */
-export function IntelligenceBlock({ intel }: { intel?: EmeraldIntelligence | null }) {
+export function IntelligenceBlock({ intel }: { intel?: CubeSmartIntelligence | null }) {
   if (!hasIntelligence(intel)) return null
   const i = intel!
 
@@ -151,8 +151,8 @@ export function IntelligenceBlock({ intel }: { intel?: EmeraldIntelligence | nul
                 fontSize: 12.5,
                 fontWeight: 700,
                 color: c.glow,
-                background: 'rgba(52,211,153,0.12)',
-                border: '1px solid rgba(52,211,153,0.3)',
+                background: 'rgba(255,165,82,0.12)',
+                border: '1px solid rgba(255,165,82,0.3)',
                 borderRadius: 8,
                 padding: '4px 9px',
               }}

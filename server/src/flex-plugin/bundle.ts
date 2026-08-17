@@ -1,5 +1,5 @@
 /**
- * Emerald Fitness — Flex plugin bundle.
+ * CubeSmart — Flex plugin bundle.
  *
  * Flex loads a plugin by fetching a JavaScript bundle and calling
  * `Twilio.Flex.Plugins.init(PluginClass)`. Everything a plugin needs is already
@@ -15,13 +15,13 @@
  * because it lives inside a TypeScript template literal.
  */
 
-export const FLEX_PLUGIN_UNIQUE_NAME = "emerald-member-context";
-export const FLEX_PLUGIN_FRIENDLY_NAME = "Emerald Fitness — Member Context";
-export const FLEX_PLUGIN_VERSION = "1.1.1";
+export const FLEX_PLUGIN_UNIQUE_NAME = "cubesmart-tenant-context";
+export const FLEX_PLUGIN_FRIENDLY_NAME = "CubeSmart — Tenant Context";
+export const FLEX_PLUGIN_VERSION = "1.0.0";
 export const FLEX_PLUGIN_PATH =
-  "/flex-plugin/emerald-member-context-" + FLEX_PLUGIN_VERSION + ".js";
+  "/flex-plugin/cubesmart-tenant-context-" + FLEX_PLUGIN_VERSION + ".js";
 
-export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin for Twilio Flex */
+export const FLEX_PLUGIN_BUNDLE = `/* CubeSmart — Tenant Context plugin for Twilio Flex */
 (function () {
   'use strict';
 
@@ -32,7 +32,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
   var React = w.React;
 
   if (!TwilioGlobal || !TwilioGlobal.Flex || !TwilioGlobal.Flex.Plugins || !React) {
-    if (w.console) w.console.warn('[emerald-member-context] Flex or React global missing.');
+    if (w.console) w.console.warn('[cubesmart-tenant-context] Flex or React global missing.');
     return;
   }
 
@@ -44,15 +44,15 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
   }
 
   var C = {
-    emerald: '#10b981',
-    glow: '#34d399',
-    panel: '#08201a',
-    bg: '#0b100e',
+    orange: '#ff7a1a',
+    glow: '#ffa552',
+    panel: '#2b1a10',
+    bg: '#150e09',
     line: 'rgba(255,255,255,0.09)',
     soft: 'rgba(255,255,255,0.035)',
-    text: '#f4f7f6',
-    dim: 'rgba(244,247,246,0.6)',
-    faint: 'rgba(244,247,246,0.38)',
+    text: '#f7f5f3',
+    dim: 'rgba(247,245,243,0.6)',
+    faint: 'rgba(247,245,243,0.38)',
     amber: '#fbbf24',
     amberBg: 'rgba(251,191,36,0.09)',
     amberLine: 'rgba(251,191,36,0.34)',
@@ -75,8 +75,8 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
     return a;
   }
 
-  function emeraldOf(a) {
-    return (a && a.emerald) || {};
+  function cubesmartOf(a) {
+    return (a && a.cubesmart) || {};
   }
 
   function intelOf(a) {
@@ -128,17 +128,16 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
           width: size + 6,
           height: size + 6,
           borderRadius: 7,
-          background: 'linear-gradient(140deg, #10b981, #047857)',
+          background: 'linear-gradient(140deg, #ff7a1a, #c2570a)',
           flexShrink: 0
         }
       },
       h(
         'svg',
         { viewBox: '0 0 24 24', width: size - 4, height: size - 4, 'aria-hidden': 'true' },
-        h('path', {
-          d: 'M12 2.6l2.5 5.6 6 .6-4.5 4 1.3 6-5.3-3.1-5.3 3.1 1.3-6-4.5-4 6-.6z',
-          fill: '#041b13'
-        })
+        h('rect', { x: 3, y: 12, width: 8, height: 8, rx: 1, fill: 'none', stroke: '#1c130d', strokeWidth: 1.6 }),
+        h('rect', { x: 13, y: 12, width: 8, height: 8, rx: 1, fill: 'none', stroke: '#1c130d', strokeWidth: 1.6 }),
+        h('rect', { x: 8, y: 3, width: 8, height: 8, rx: 1, fill: '#1c130d' })
       )
     );
   }
@@ -146,7 +145,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
   function Pill(props) {
     var tone = props.tone || 'neutral';
     var map = {
-      good: { fg: C.glow, bg: 'rgba(52,211,153,0.14)', bd: 'rgba(52,211,153,0.4)' },
+      good: { fg: C.glow, bg: 'rgba(255,165,82,0.14)', bd: 'rgba(255,165,82,0.4)' },
       warn: { fg: C.amber, bg: C.amberBg, bd: C.amberLine },
       bad: { fg: C.red, bg: C.redBg, bd: C.redLine },
       neutral: { fg: C.dim, bg: C.soft, bd: C.line }
@@ -285,7 +284,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
   /* ---------------- live intelligence ---------------- */
 
   var BANDS = {
-    low: { label: 'Low risk', fg: C.glow, bar: C.emerald, tone: 'good' },
+    low: { label: 'Low risk', fg: C.glow, bar: C.orange, tone: 'good' },
     watch: { label: 'Watch', fg: '#7dd3fc', bar: '#38bdf8', tone: 'neutral' },
     elevated: { label: 'Elevated risk', fg: C.amber, bar: C.amber, tone: 'warn' },
     high: { label: 'High risk', fg: C.red, bar: C.red, tone: 'bad' }
@@ -337,8 +336,8 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
       'div',
       {
         style: {
-          background: 'linear-gradient(150deg, rgba(16,185,129,0.16), rgba(4,120,87,0.08))',
-          border: '1px solid rgba(52,211,153,0.45)',
+          background: 'linear-gradient(150deg, rgba(255,122,26,0.16), rgba(194,87,10,0.08))',
+          border: '1px solid rgba(255,165,82,0.45)',
           borderRadius: 12,
           padding: '12px 13px'
         }
@@ -395,10 +394,10 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
                 color: C.faint,
                 marginTop: 8,
                 paddingTop: 7,
-                borderTop: '1px solid rgba(52,211,153,0.2)'
+                borderTop: '1px solid rgba(255,165,82,0.2)'
               }
             },
-            'From the studio playbook — ' + String(nba.policy_source)
+            'From the store playbook — ' + String(nba.policy_source)
           )
         : null
     );
@@ -442,8 +441,8 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
                     fontSize: 12.5,
                     fontWeight: 700,
                     color: C.glow,
-                    background: 'rgba(52,211,153,0.12)',
-                    border: '1px solid rgba(52,211,153,0.3)',
+                    background: 'rgba(255,165,82,0.12)',
+                    border: '1px solid rgba(255,165,82,0.3)',
                     borderRadius: 8,
                     padding: '4px 9px'
                   }
@@ -590,35 +589,35 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
         h(
           'div',
           { style: { fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 4 } },
-          'Emerald Fitness — Member Context'
+          'CubeSmart — Tenant Context'
         ),
         h(
           'div',
           { style: { fontSize: 12, maxWidth: 280, lineHeight: 1.5 } },
-          props.message || 'Select a task to see the member the AI agent is handing you.'
+          props.message || 'Select a task to see the tenant the AI agent is handing you.'
         )
       )
     );
   }
 
-  /* ---------------- the member panel ---------------- */
+  /* ---------------- the tenant panel ---------------- */
 
   function MemberPanel(props) {
     var task = props.task;
     var a = attrsOf(task);
-    var e = emeraldOf(a);
+    var e = cubesmartOf(a);
 
     var name = a.customerName || a.name || (a.customers && a.customers.name);
     if (!task) return h(Empty, {});
-    if (!name && !e.membership_tier) {
-      return h(Empty, { message: 'This task did not arrive from the Emerald Fitness voice agent, so there is no member context attached.' });
+    if (!name && !e.unit_type) {
+      return h(Empty, { message: 'This task did not arrive from the CubeSmart voice agent, so there is no tenant context attached.' });
     }
 
     var i = intelOf(a);
     var nba = i && i.next_best_action;
-    var onHold = String(e.membership_status || '') === 'on-hold';
+    var extendedAccess = String(e.account_status || '') === 'on-hold';
     var cardExpired = String(e.payment_status || '') === 'expired';
-    var history = asList(e.class_history);
+    var history = asList(e.reservation_history);
     var transcript = asList(a.recent_transcript);
 
     return h(
@@ -656,12 +655,12 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
             { style: { fontSize: 11, color: C.dim, marginTop: 2 } },
             prettyPhone(a.from || (a.customers && a.customers.phone)) +
               ' · ' +
-              text(e.studio, 'Emerald Fitness')
+              text(e.store, 'CubeSmart')
           )
         ),
         h(Pill, {
-          label: onHold ? 'On hold' : titleCase(e.membership_status || 'member'),
-          tone: onHold ? 'warn' : 'good'
+          label: extendedAccess ? 'Extended access' : titleCase(e.account_status || 'tenant'),
+          tone: extendedAccess ? 'warn' : 'good'
         })
       ),
 
@@ -698,42 +697,42 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
             { title: 'Needs resolving' },
             h(
               Callout,
-              { title: 'Payment method declined', tone: 'bad' },
+              { title: 'Autopay declined', tone: 'bad' },
               text(e.card_on_file, 'Card on file has expired') +
                 (e.failed_charge ? ' — ' + e.failed_charge + ' could not be processed.' : '')
             )
           )
         : null,
 
-      /* membership */
+      /* lease */
       h(
         Section,
-        { title: 'Membership' },
+        { title: 'Unit & lease' },
         h(
           Grid,
           null,
-          h(Field, { label: 'Tier', value: text(e.membership_tier) }),
+          h(Field, { label: 'Unit type', value: text(e.unit_type) }),
           h(Field, {
-            label: 'Status',
-            value: onHold ? 'On hold' : titleCase(e.membership_status),
-            tone: onHold ? 'warn' : 'good'
+            label: 'Account status',
+            value: extendedAccess ? 'Extended access' : titleCase(e.account_status),
+            tone: extendedAccess ? 'warn' : 'good'
           }),
           h(Field, {
-            label: 'Hold starts',
-            value: text(e.hold_start),
-            tone: onHold ? 'warn' : undefined
+            label: 'Access window starts',
+            value: text(e.access_window_start),
+            tone: extendedAccess ? 'warn' : undefined
           }),
           h(Field, {
-            label: 'Hold ends',
-            value: text(e.hold_end),
-            tone: onHold ? 'warn' : undefined
+            label: 'Access window ends',
+            value: text(e.access_window_end),
+            tone: extendedAccess ? 'warn' : undefined
           }),
           h(Field, {
-            label: 'Hold length',
-            value: e.hold_days ? e.hold_days + ' days' : '—'
+            label: 'Access window length',
+            value: e.access_window_days ? e.access_window_days + ' days' : '—'
           }),
           h(Field, {
-            label: 'Payment',
+            label: 'Autopay',
             value: cardExpired ? 'Expired' : titleCase(e.payment_status),
             tone: cardExpired ? 'bad' : 'good'
           }),
@@ -753,20 +752,20 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
         h(
           Grid,
           null,
-          h(Field, { label: 'Classes booked', value: text(e.classes_booked, '0') }),
+          h(Field, { label: 'Units reserved', value: text(e.units_booked, '0') }),
           h(Field, {
             label: 'Last rating given',
-            value: e.last_instructor_rating ? e.last_instructor_rating + ' / 5' : '—'
+            value: e.last_staff_rating ? e.last_staff_rating + ' / 5' : '—'
           }),
-          h(Field, { label: 'Usual Fuel Bar order', value: text(e.favourite_shake, 'None yet') }),
-          h(Field, { label: 'Home studio', value: text(e.studio) })
+          h(Field, { label: 'Usual supply order', value: text(e.usual_supply_order, 'None yet') }),
+          h(Field, { label: 'Home store', value: text(e.store) })
         )
       ),
 
-      /* class history */
+      /* reservation history */
       h(
         Section,
-        { title: 'Class history' },
+        { title: 'Reservation history' },
         history.length
           ? h(
               'div',
@@ -829,7 +828,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
                             fontSize: 9,
                             letterSpacing: '0.1em',
                             textTransform: 'uppercase',
-                            color: isAgent ? 'rgba(52,211,153,0.7)' : C.faint,
+                            color: isAgent ? 'rgba(255,165,82,0.7)' : C.faint,
                             marginBottom: 2
                           }
                         },
@@ -862,7 +861,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
         },
         h('div', null, 'Twilio Memory profile: ' + text(e.memory_profile_id)),
         h('div', null, 'Task: ' + text(task && task.taskSid)),
-        h('div', null, 'Delivered on the task attributes by the Emerald Fitness voice agent.')
+        h('div', null, 'Delivered on the task attributes by the CubeSmart voice agent.')
       )
     );
   }
@@ -872,10 +871,10 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
   function InfoSummary(props) {
     var task = props.task;
     var a = attrsOf(task);
-    var e = emeraldOf(a);
-    if (!task || (!a.customerName && !a.name && !e.membership_tier)) return null;
+    var e = cubesmartOf(a);
+    if (!task || (!a.customerName && !a.name && !e.unit_type)) return null;
 
-    var onHold = String(e.membership_status || '') === 'on-hold';
+    var extendedAccess = String(e.account_status || '') === 'on-hold';
     var cardExpired = String(e.payment_status || '') === 'expired';
     var i = intelOf(a);
     var band = bandFor(i);
@@ -903,17 +902,17 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
               fontWeight: 700,
-              color: C.emerald
+              color: C.orange
             }
           },
-          'Emerald Fitness'
+          'CubeSmart'
         )
       ),
       h(
         'div',
         { style: { display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 8 } },
-        h(Pill, { label: text(e.membership_tier, 'Member'), tone: 'neutral' }),
-        h(Pill, { label: onHold ? 'On hold' : 'Active', tone: onHold ? 'warn' : 'good' }),
+        h(Pill, { label: text(e.unit_type, 'Tenant'), tone: 'neutral' }),
+        h(Pill, { label: extendedAccess ? 'Extended access' : 'Active', tone: extendedAccess ? 'warn' : 'good' }),
         cardExpired ? h(Pill, { label: 'Card expired', tone: 'bad' }) : null,
         band
           ? h(Pill, {
@@ -939,8 +938,8 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
                 marginBottom: 8,
                 padding: '8px 9px',
                 borderRadius: 8,
-                background: 'rgba(16,185,129,0.12)',
-                border: '1px solid rgba(52,211,153,0.35)'
+                background: 'rgba(255,122,26,0.12)',
+                border: '1px solid rgba(255,165,82,0.35)'
               }
             },
             h(
@@ -951,7 +950,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   fontWeight: 700,
-                  color: C.emerald,
+                  color: C.orange,
                   marginBottom: 3
                 }
               },
@@ -979,34 +978,34 @@ export const FLEX_PLUGIN_BUNDLE = `/* Emerald Fitness — Member Context plugin 
 
   /* ---------------- plugin registration ---------------- */
 
-  function EmeraldMemberContextPlugin() {
-    this.name = 'EmeraldMemberContextPlugin';
+  function CubeSmartTenantContextPlugin() {
+    this.name = 'CubeSmartTenantContextPlugin';
     this.uniqueName = '${FLEX_PLUGIN_UNIQUE_NAME}';
     this.version = '${FLEX_PLUGIN_VERSION}';
     this.dependencies = {};
-    if (w.console) w.console.log('[emerald-member-context] loading ' + this.version);
+    if (w.console) w.console.log('[cubesmart-tenant-context] loading ' + this.version);
   }
 
-  EmeraldMemberContextPlugin.prototype.init = function (flex) {
+  CubeSmartTenantContextPlugin.prototype.init = function (flex) {
     try {
       var withTask = Flex.withTaskContext || function (c) { return c; };
       var Panel = withTask(MemberPanel);
       var Summary = withTask(InfoSummary);
 
       if (flex.CRMContainer && flex.CRMContainer.Content) {
-        flex.CRMContainer.Content.replace(h(Panel, { key: 'emerald-member-context' }));
+        flex.CRMContainer.Content.replace(h(Panel, { key: 'cubesmart-tenant-context' }));
       }
 
       if (flex.TaskInfoPanel && flex.TaskInfoPanel.Content) {
-        flex.TaskInfoPanel.Content.add(h(Summary, { key: 'emerald-member-summary' }), {
+        flex.TaskInfoPanel.Content.add(h(Summary, { key: 'cubesmart-tenant-summary' }), {
           sortOrder: -1
         });
       }
     } catch (err) {
-      if (w.console) w.console.error('[emerald-member-context] init failed', err);
+      if (w.console) w.console.error('[cubesmart-tenant-context] init failed', err);
     }
   };
 
-  Flex.Plugins.init(EmeraldMemberContextPlugin);
+  Flex.Plugins.init(CubeSmartTenantContextPlugin);
 })();
 `;

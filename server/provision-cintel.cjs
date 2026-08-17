@@ -1,8 +1,8 @@
 /**
- * One-off provisioning for the Emerald Fitness real-time Conversation Intelligence layer.
+ * One-off provisioning for the CubeSmart real-time Conversation Intelligence layer.
  *
  * Creates (idempotently, by display name):
- *   1. An Enterprise Knowledge base + the studio's retention / save playbook as raw text
+ *   1. An Enterprise Knowledge base + the store's retention / save playbook as raw text
  *   2. Three custom Language Operators — call reason, churn risk, next best action
  *   3. An intelligence configuration with two rules that post results to the journey service
  *   4. Appends that configuration to the live conversation configuration (append only)
@@ -85,75 +85,71 @@ const KNOW = 'https://knowledge.twilio.com/v2';
 const CONV = 'https://conversations.twilio.com/v2/ControlPlane';
 
 /* ------------------------------------------------------------------ *
- * 1. Enterprise Knowledge — the studio's own playbook
+ * 1. Enterprise Knowledge — the store's own retention playbook
  * ------------------------------------------------------------------ */
 
-const KB_NAME = 'emerald-fitness';
+const KB_NAME = 'cubesmart-storage';
 // Knowledge sources are created by name and reused, so the playbook is versioned:
 // bump the suffix whenever the policy text changes. Older versions are removed so
 // the operators are never grounded in two contradictory playbooks at once.
-const SOURCE_NAME = 'retention-playbook-v2';
+const SOURCE_NAME = 'retention-playbook-v1';
 const SOURCE_PREFIX = 'retention-';
 
-const PLAYBOOK = `# Emerald Fitness — Membership Retention & Save Playbook
-West 7th studio, Fort Worth. Effective this season. Applies to every member conversation on
-voice, SMS and RCS, and to both the AI voice agent and the front desk team.
+const PLAYBOOK = `# CubeSmart — Tenant Retention & Save Playbook
+West 7th store, Fort Worth. Effective this season. Applies to every tenant conversation on
+voice, SMS and RCS, and to both the AI voice agent and the store team.
 
-## 1. Membership holds
-- Members may place their membership on hold for 30, 60 or 90 days. No other lengths are offered.
-- Nothing bills during a hold and the member's original rate is locked for the duration.
-- The hold end date must be read back out loud and confirmed before it is placed.
-- A hold is always offered before a cancellation is processed. Holds retain roughly three times as
-  many members as cancellations at this studio.
+## 1. Extended after-hours gate access
+- Tenants locked out after hours may be granted extended gate access for 1 day (tonight only),
+  7 days (this week), or a standing 30 days. No other lengths are offered.
+- Standard rent still applies during an extended access window — this is an access accommodation,
+  not a billing change.
+- The access end date must be read back out loud and confirmed before it is granted.
 
-## 2. Coming off hold
-- Reinstatement charges the member's card on file on the day the hold is released.
-- If the card on file has expired or the charge is declined, staff must NEVER take card details
-  over the phone. The member is warm-transferred to the front desk, who take payment on a secure
+## 2. Checking in on an account / autopay
+- If the card on file has expired or a rent charge is declined, staff must NEVER take card details
+  over the phone. The tenant is warm-transferred to the store team, who take payment on a secure
   terminal or send a secure payment link.
-- Never tell a member to call back later or during business hours. Somebody handles it now.
+- Never tell a tenant to call back later or during business hours. Somebody handles it now.
 
-## 3. Approved save offers — front desk and above
+## 3. Approved save offers — store team and above
 These may be offered by a human team member. The AI voice agent must NOT offer them; it hands the
-member to the desk with the recommendation attached.
-- ONE-TIME CLASS CREDIT: a single complimentary class credit, any format, valid 30 days. Approved for
-  any member coming off hold, any member who has attended fewer than four classes in the last 60
-  days, any member who says they are not getting value, and any member who was hurt in a class.
-- PERSONAL COACHING CONSULTATION: a complimentary 15 minute one-to-one coaching consultation with a
-  lead instructor, booked alongside the class credit. Approved for members who say they are not
-  seeing results, are unsure what to book, picked up an injury and need their programming adjusted,
-  or are new within their first 90 days.
-- The one-time class credit and the 15 minute personal coaching consultation are offered TOGETHER as
-  one gesture. Members who take both return at materially higher rates than members offered a
-  discount. This pairing is the studio's standard save.
-- FEE WAIVER: a declined-payment fee may be waived once per membership year at the desk's
+tenant to the store team with the recommendation attached.
+- 20% RENT DISCOUNT: 20% off monthly rent for the next 3 months. Approved for any tenant checking in
+  on autopay who mentions a competitor or a cheaper rate, any tenant who says they are not sure the
+  unit is worth the money, and any tenant showing signs of moving out.
+- UNIT DOWNSIZE: a free move to a smaller unit (e.g. 10x10 to 5x10) at the smaller unit's rate,
+  waiving the standard transfer fee. Approved for tenants who say they have less to store than they
+  thought, or who are choosing between downsizing and leaving entirely.
+- The 20% discount and the unit downsize are ALTERNATIVES, not a bundle — offer the discount first
+  unless the tenant has clearly said she wants a smaller unit. Tenants offered a meaningful discount
+  or a right-sized unit renew at materially higher rates than tenants given no offer at all.
+- FEE WAIVER: a declined-payment or late fee may be waived once per lease year at the store's
   discretion.
 
 ## 4. Never offered
-- No discounts on the monthly rate. Price is never the lever at this studio.
+- No discount deeper than 20% off, and never for longer than 3 months, without a manager.
 - No refunds for elapsed months.
-- No free months of membership.
-- No promises about class availability, instructor schedules or results.
-- No medical advice, diagnosis, treatment plans or physiotherapy referrals. An injury is handled by
-  adjusting programming with a coach, never by advising on the injury itself.
+- No free months of rent outright (the 20% discount and unit downsize are the only two levers).
+- No promises about specific unit availability beyond what is confirmed in KORE.
+- No guarantees about insurance claims — refer tenants to the insurance provider for claim
+  questions.
 
 ## 5. What raises retention risk
-- Low or falling attendance, particularly fewer than one class a week.
-- A second hold inside the same membership year.
-- Any statement that they are not using it, not seeing results, or are not sure it is worth it.
-- AN INJURY SUSTAINED IN CLASS. A member who was hurt training with us is a serious retention risk
-  even when they do not say the word cancel — they usually just stop coming. Treat any mention of
-  being hurt, injured, in pain, or sore for days as a strong risk signal on its own.
-- A failed payment, especially combined with any of the above.
-- Naming another studio or a cheaper alternative.
-- Risk of 60 or more out of 100 is the point at which the studio treats the member as an active
-  churn risk, records it against their profile, and expects the desk to make the standard save.
+- Naming a competitor or a cheaper storage option down the street.
+- Any statement that they are not using the unit, not sure it is worth it, or thinking about
+  moving out.
+- A second extended-access request inside the same lease year.
+- A failed or declined autopay charge, especially combined with any of the above.
+- Rent increases mentioned negatively by the tenant.
+- Risk of 60 or more out of 100 is the point at which the store treats the tenant as an active
+  churn risk, records it against their profile, and expects the store team to make the standard
+  save.
 
 ## 6. Tone
 - Lead with the good news, then the blocker. Never open with a problem.
-- Acknowledge frustration in the member's own words before offering anything.
-- If a member mentions an injury, ask if they are alright before anything else.
-- One or two sentences at a time. Never read a policy number out loud to a member.
+- Acknowledge frustration in the tenant's own words before offering anything.
+- One or two sentences at a time. Never read a policy number out loud to a tenant.
 `;
 
 async function ensureKnowledge() {
@@ -163,7 +159,7 @@ async function ensureKnowledge() {
   if (!base) {
     const created = await call('POST', `${KNOW}/ControlPlane/KnowledgeBases`, {
       displayName: KB_NAME,
-      description: 'Emerald Fitness studio policies, retention playbook and approved save offers.',
+      description: 'CubeSmart store policies, retention playbook and approved save offers.',
     });
     base = created && created.id ? created : created?.knowledgeBase;
     if (!base?.id) {
@@ -203,7 +199,7 @@ async function ensureKnowledge() {
         const created = await call('POST', `${KNOW}/KnowledgeBases/${base.id}/Knowledge`, {
           name: SOURCE_NAME,
           description:
-            'Hold lengths, reinstatement rules, approved save offers (win-back class + 15 minute coaching reset), what is never offered, and the studio risk signals.',
+            'Access windows, autopay rules, approved save offers (20% rent discount or unit downsize), what is never offered, and the store risk signals.',
           source: src,
         });
         source = created && created.id ? created : created?.knowledge;
@@ -230,23 +226,23 @@ async function ensureKnowledge() {
  * ------------------------------------------------------------------ */
 
 const REASON_LABELS = [
-  'Membership hold',
-  'Come off hold',
-  'Payment or billing problem',
-  'Book a class',
-  'Move or cancel a booking',
-  'Thinking about cancelling',
-  'Schedule or class question',
-  'Fuel Bar order',
+  'Locked out / gate access',
+  'Check in on account',
+  'Payment or autopay problem',
+  'Book a move-in',
+  'Move or cancel a reservation',
+  'Thinking about moving out',
+  'Unit or pricing question',
+  'Supply Shop order',
   'Something else',
   'Not clear yet',
 ];
 
 const OPERATORS = [
   {
-    displayName: 'Emerald Call Reason',
+    displayName: 'CubeSmart Call Reason',
     description:
-      'Resolves why the member is calling Emerald Fitness, as early in the conversation as possible.',
+      'Resolves why the tenant is calling CubeSmart, as early in the conversation as possible.',
     outputFormat: 'JSON',
     context: { memory: { enabled: true }, knowledge: { enabled: false } },
     outputSchema: {
@@ -259,26 +255,26 @@ const OPERATORS = [
         },
         evidence: {
           type: 'string',
-          description: 'The member\u2019s own words that told you. Empty if they have not said yet.',
+          description: 'The tenant\u2019s own words that told you. Empty if they have not said yet.',
         },
       },
     },
-    prompt: `You are listening to a live conversation between a member of Emerald Fitness, a boutique fitness studio in Fort Worth, and the studio's line.
+    prompt: `You are listening to a live conversation between a tenant of CubeSmart, a self-storage company, and the store's line.
 
-Decide why the MEMBER is making contact. Judge only what the member themselves has said. The agent asking a question, offering something, or reading anything back is never evidence of the member's reason.
+Decide why the TENANT is making contact. Judge only what the tenant themselves has said. The agent asking a question, offering something, or reading anything back is never evidence of the tenant's reason.
 
 Rules:
-- Return "Not clear yet" with a confidence of 0 until the member has actually stated a need. A greeting, a hello, background noise, or a single word is not a reason.
-- "Membership hold" means they want to pause, freeze or suspend an active membership.
-- "Come off hold" means they want to restart or release a membership that is already on hold.
-- "Thinking about cancelling" is only for an explicit intent to end the membership, not for general frustration.
+- Return "Not clear yet" with a confidence of 0 until the tenant has actually stated a need. A greeting, a hello, background noise, or a single word is not a reason.
+- "Locked out / gate access" means they cannot get into the facility and need their gate code reset.
+- "Check in on account" means they are calling to confirm their account or access status is normal.
+- "Thinking about moving out" is only for an explicit intent to vacate or end the lease, not for general frustration.
 - Never infer a reason from the agent's suggestions.
-- Keep evidence to a short quote of the member's words. Leave it empty when the reason is "Not clear yet".`,
+- Keep evidence to a short quote of the tenant's words. Leave it empty when the reason is "Not clear yet".`,
   },
   {
-    displayName: 'Emerald Retention Risk',
+    displayName: 'CubeSmart Retention Risk',
     description:
-      'Scores how likely this member is to leave Emerald Fitness, live, with the reasons behind the score.',
+      'Scores how likely this tenant is to leave CubeSmart, live, with the reasons behind the score.',
     outputFormat: 'JSON',
     context: { memory: { enabled: true }, knowledge: { enabled: true } },
     outputSchema: {
@@ -296,43 +292,42 @@ Rules:
         },
         quote: {
           type: 'string',
-          description: 'The single most telling thing the member said. Empty if nothing yet.',
+          description: 'The single most telling thing the tenant said. Empty if nothing yet.',
         },
         trend: { type: 'string', enum: ['rising', 'steady', 'falling'] },
       },
     },
-    prompt: `You are scoring live retention risk for a member of Emerald Fitness, a boutique fitness studio, while they are still on the phone.
+    prompt: `You are scoring live retention risk for a tenant of CubeSmart, a self-storage company, while they are still on the phone.
 
-The conversation may be with an AI agent or with a human team member at the front desk. Score it exactly the same way either way.
+The conversation may be with an AI agent or with a human store team member. Score it exactly the same way either way.
 
-Score from 0 to 100, where 0 is a happy engaged member and 100 is a member about to leave. Bands: 0-24 low, 25-49 watch, 50-74 elevated, 75-100 high.
+Score from 0 to 100, where 0 is a happy engaged tenant and 100 is a tenant about to leave. Bands: 0-24 low, 25-49 watch, 50-74 elevated, 75-100 high.
 
-Raise the score for things the MEMBER says or that are true of their record:
-- Saying they are not really using it, not going, or too busy to come in.
-- Saying they are not seeing results or are not sure it is worth the money.
-- Asking about cancelling, or naming another studio or a cheaper option.
-- BEING HURT OR INJURED IN A CLASS. This is one of the strongest signals there is. A member who was hurt training with us usually stops coming without ever saying the word cancel. Any mention of being hurt, injured, in pain, having tweaked or pulled something, or being sore for days must push the score into the elevated band on its own, and into high when combined with disengagement or a failed payment.
-- A failed or declined payment, especially combined with any of the above.
-- A second hold within the same membership year, or a long hold.
+Raise the score for things the TENANT says or that are true of their record:
+- Saying they found a cheaper unit, a better rate, or naming a competitor down the street.
+- Saying they are not sure the unit is worth the money, or are not really using it.
+- Asking about moving out, vacating, or ending the lease.
+- Complaining about a rent increase.
+- A failed or declined autopay charge, especially combined with any of the above.
+- A second extended-access request within the same lease year.
 - Audible frustration, resignation or repeated dissatisfaction.
 
 Do not raise the score for:
-- A routine hold request with a clear practical reason such as travel or work.
-- A single logistical question, a booking change, or ordinary small talk.
-- Anything the agent said, human or AI. Only the member's own words and record count.
+- A routine after-hours access request with a clear practical reason such as a late move.
+- A single logistical question, a reservation change, or ordinary small talk.
+- Anything the agent said, human or AI. Only the tenant's own words and record count.
 
-Floors you must not go below once the member has said it, even if she is polite about it:
-- She mentions cancelling, quitting, ending or not renewing her membership, or asks how to cancel: at least 75. Explicit cancellation talk is a high-risk member, no matter how calm she sounds.
-- She says she is not seeing results, not getting value, or is not sure it is worth the money: at least 60.
-- She was hurt or injured in a class: at least 60, and at least 80 alongside any disengagement or a failed payment.
+Floors you must not go below once the tenant has said it, even if she is polite about it:
+- She mentions cancelling, moving out, vacating or not renewing her lease, or asks how to end it: at least 75. Explicit move-out talk is a high-risk tenant, no matter how calm she sounds.
+- She names a competitor, a cheaper unit, or says she is not sure it is worth the money: at least 60.
 - These floors are permanent for the rest of the call. Never lower the score back down because a later part of the conversation went smoothly, and never let a helpful agent or a resolved payment reduce it.
 
-Start low and only move as evidence appears. Set trend by comparing with how the conversation opened. Keep each driver under eight words, phrased as a fact about the member. Return an empty drivers list and an empty quote ONLY while the score is still in the low band — from 25 upwards you must always name at least one driver and quote the member's own words that moved the score.`,
+Start low and only move as evidence appears. Set trend by comparing with how the conversation opened. Keep each driver under eight words, phrased as a fact about the tenant. Return an empty drivers list and an empty quote ONLY while the score is still in the low band — from 25 upwards you must always name at least one driver and quote the tenant's own words that moved the score.`,
   },
   {
-    displayName: 'Emerald Next Best Action',
+    displayName: 'CubeSmart Next Best Action',
     description:
-      'Recommends the save offer a human should make, grounded in the studio retention playbook.',
+      'Recommends the save offer a human should make, grounded in the store retention playbook.',
     outputFormat: 'JSON',
     context: { memory: { enabled: true }, knowledge: { enabled: true } },
     outputSchema: {
@@ -344,7 +339,7 @@ Start low and only move as evidence appears. Set trend by comparing with how the
         },
         headline: {
           type: 'string',
-          description: 'Six words or fewer naming the save, e.g. "Class credit and coaching reset".',
+          description: 'Six words or fewer naming the save, e.g. "20% discount for 3 months".',
         },
         offer: {
           type: 'string',
@@ -352,40 +347,40 @@ Start low and only move as evidence appears. Set trend by comparing with how the
         },
         rationale: {
           type: 'string',
-          description: 'One sentence on why this member, right now.',
+          description: 'One sentence on why this tenant, right now.',
         },
         policy_source: {
           type: 'string',
-          description: 'The part of the studio playbook this comes from.',
+          description: 'The part of the store playbook this comes from.',
         },
         urgency: { type: 'string', enum: ['now', 'before the call ends', 'follow up later'] },
       },
     },
-    prompt: `You are the live co-pilot for the Emerald Fitness front desk. A member is on the phone right now, either with the AI agent or already with a human team member. Recommend the single next best SAVE OFFER a human team member should make.
+    prompt: `You are the live co-pilot for the CubeSmart store team. A tenant is on the phone right now, either with the AI agent or already with a human team member. Recommend the single next best SAVE OFFER a human team member should make.
 
-You recommend GOODWILL, never PROCEDURE. The desk already knows how to do its job.
+You recommend GOODWILL, never PROCEDURE. The store team already knows how to do its job.
 
-THE ONLY THING YOU MAY EVER RECOMMEND is an approved save offer from the "Approved save offers" section of the studio playbook available to you as knowledge. In practice that means the ONE-TIME CLASS CREDIT offered together with the complimentary FIFTEEN MINUTE PERSONAL COACHING CONSULTATION, as one single gesture. A fee waiver may be added when a payment fee is involved. If no approved save offer applies, set recommend to false and return empty strings. There is no third option.
+THE ONLY THING YOU MAY EVER RECOMMEND is an approved save offer from the "Approved save offers" section of the store playbook available to you as knowledge. In practice that means EITHER the 20% RENT DISCOUNT for 3 months OR a free UNIT DOWNSIZE — never both at once, offer the discount first unless she has clearly said she wants a smaller unit. A fee waiver may be added when a payment fee is involved. If no approved save offer applies, set recommend to false and return empty strings. There is no third option.
 
 NEVER recommend any of the following, under any wording. These are process, not a save, and recommending them is a failure:
-- Transferring, warm transferring, bringing her to the desk, or connecting her to anyone.
+- Transferring, warm transferring, bringing her to the store team, or connecting her to anyone.
 - Taking a card, updating a card, a secure terminal, a payment link, re-running a charge, or collecting payment in any form.
-- Reactivating, restarting, releasing or lifting the membership hold, or placing a new hold.
+- Resetting, extending or releasing gate access, or granting a new access window.
 - Calling her back, following up later, or noting anything on her account.
-- Anything the playbook lists as never offered: rate discounts, refunds, free months, medical advice.
+- Anything the playbook lists as never offered: discounts deeper than 20%, refunds, free months outright, insurance claim guarantees.
 
-An expired card or a failed payment is PROCEDURE on its own — it is not a reason to recommend anything. It only matters as an extra risk factor alongside something the member actually said.
+An expired card or a failed autopay charge is PROCEDURE on its own — it is not a reason to recommend anything. It only matters as an extra risk factor alongside something the tenant actually said.
 
-Recommend the standard save (class credit plus the fifteen minute coaching consultation) as soon as ANY of these is true:
-- She says she is not really using it, not going, or too busy to come in.
-- She says she is not seeing results, or is not sure it is worth the money.
-- She mentions cancelling, quitting, ending her membership, or another studio.
-- SHE WAS HURT OR INJURED IN A CLASS. This alone is enough. Do not wait for the word cancel — by the time she says it she has already gone. Say plainly that the coaching consultation is where her programming gets adjusted around the injury.
+Recommend the standard save (20% discount for 3 months, or a unit downsize) as soon as ANY of these is true:
+- She names a competitor, a cheaper unit, or a better rate down the street.
+- She says she is not sure the unit is worth the money, or is not really using it.
+- She mentions moving out, vacating, or ending her lease.
+- She says she has less to store than she thought and is considering downsizing.
 
 Rules:
-- Set recommend to false, with empty strings, whenever the conversation is routine. A member putting her membership on hold for travel or work is ROUTINE. A member coming off hold and simply needing her card updated, with no complaint and no injury, is ALSO ROUTINE — recommend nothing. Do not manufacture a save.
-- policy_source must name the approved save offers section of the playbook in plain words. Never cite the hold rules or the failed payment rules as the source of a save.
-- The offer must be goodwill a human at the desk can say and honour immediately.
+- Set recommend to false, with empty strings, whenever the conversation is routine. A tenant asking for after-hours gate access for a late move is ROUTINE. A tenant checking in on her account and simply needing her card updated, with no complaint about price or competitors, is ALSO ROUTINE — recommend nothing. Do not manufacture a save.
+- policy_source must name the approved save offers section of the playbook in plain words. Never cite the access-window rules or the autopay rules as the source of a save.
+- The offer must be goodwill a human at the store can say and honour immediately.
 - Keep the offer to two sentences at most. No greetings, no sign-offs, no markdown.`,
   },
 ];
@@ -422,7 +417,7 @@ async function ensureOperators() {
  * 3. Intelligence configuration
  * ------------------------------------------------------------------ */
 
-const CONFIG_NAME = 'emerald-fitness-realtime';
+const CONFIG_NAME = 'cubesmart-realtime';
 const TWILIO_SENTIMENT = 'intelligence_operator_01kcrvw16kfa88qvgrfmr7y151';
 
 function buildRules(operatorIds, knowledge) {
@@ -437,7 +432,7 @@ function buildRules(operatorIds, knowledge) {
     {
       // Fast signals — resolve the reason and read the room on every turn.
       operators: [
-        { id: operatorIds['Emerald Call Reason'] },
+        { id: operatorIds['CubeSmart Call Reason'] },
         { id: TWILIO_SENTIMENT },
       ],
       triggers: [{ on: 'COMMUNICATION', parameters: { count: 1 } }],
@@ -447,8 +442,8 @@ function buildRules(operatorIds, knowledge) {
     {
       // Heavier signals — risk and the recommended play, grounded in the playbook.
       operators: [
-        { id: operatorIds['Emerald Retention Risk'] },
-        { id: operatorIds['Emerald Next Best Action'] },
+        { id: operatorIds['CubeSmart Retention Risk'] },
+        { id: operatorIds['CubeSmart Next Best Action'] },
       ],
       triggers: [{ on: 'COMMUNICATION', parameters: { count: 2 } }],
       actions: [action],
@@ -462,7 +457,7 @@ async function ensureConfiguration(operatorIds, knowledge) {
   const found = (list.items || []).find((c) => c.displayName === CONFIG_NAME);
   const payload = {
     displayName: CONFIG_NAME,
-    description: 'Live call reason, sentiment, retention risk and next best action for the Emerald Fitness guided journey.',
+    description: 'Live call reason, sentiment, retention risk and next best action for the CubeSmart guided move-in journey.',
     rules: buildRules(operatorIds, knowledge),
   };
 
@@ -539,12 +534,12 @@ async function attachToConversationConfiguration(configId) {
   await attachToConversationConfiguration(configId);
 
   console.log('\n--- env values ---');
-  console.log(`EMERALD_INTEL_CONFIG_ID=${configId}`);
-  console.log(`EMERALD_KNOWLEDGE_BASE_ID=${knowledge.baseId}`);
-  console.log(`EMERALD_OP_CALL_REASON=${operatorIds['Emerald Call Reason']}`);
-  console.log(`EMERALD_OP_RETENTION_RISK=${operatorIds['Emerald Retention Risk']}`);
-  console.log(`EMERALD_OP_NEXT_BEST_ACTION=${operatorIds['Emerald Next Best Action']}`);
-  console.log(`EMERALD_OP_SENTIMENT=${TWILIO_SENTIMENT}`);
+  console.log(`CUBESMART_INTEL_CONFIG_ID=${configId}`);
+  console.log(`CUBESMART_KNOWLEDGE_BASE_ID=${knowledge.baseId}`);
+  console.log(`CUBESMART_OP_CALL_REASON=${operatorIds['CubeSmart Call Reason']}`);
+  console.log(`CUBESMART_OP_RETENTION_RISK=${operatorIds['CubeSmart Retention Risk']}`);
+  console.log(`CUBESMART_OP_NEXT_BEST_ACTION=${operatorIds['CubeSmart Next Best Action']}`);
+  console.log(`CUBESMART_OP_SENTIMENT=${TWILIO_SENTIMENT}`);
 })().catch((err) => {
   console.error('\nFAILED:', err.message);
   process.exit(1);

@@ -2599,3 +2599,117 @@ Push & Redeploy.
 - Card 2 is now a single +18% stat, label 'Conversions, Voice AI Beat Humans on Every Outcome', body 'Also +12% Offers and +17% 30-Day Retention for 70,000 people randomly assigned to a structured intake call with either a human or an AI voice agent.', highlights ['+12% Offers','+17% 30-Day Retention'].
 - Card 4 (+45%) citation -> GrowthGurukul - Community Engagement Strategy, href https://growthgurukul.in/community-engagement-strategy-creating-fomo-loyalty/ (was Tharrett & Bedford / Amazon link).
 - MetricFlipCard.tsx: dropped multi-stat rendering, added a Body sub-component that regex-splits the description and wraps highlight substrings in font-semibold text-mint; card min-h 13rem -> 15.5rem.
+
+## Session: REWORKED for CubeSmart (self-storage) — full rebrand from the Emerald Fitness/Barry's/Mariana Tek demo
+User attached a CubeSmart (NYSE: CUBE) sales strategy brief and asked for the whole demo reworked
+into a multichannel self-storage customer journey (booking a unit → move-in), reusing the same
+proven architecture rather than building from scratch. Plan approved via requestApproval before
+starting. This was a MASSIVE content/copy rework — almost no structural/type changes, to keep risk
+low across ~50 files touched.
+
+**Framing change**: this is no longer an ISV-showcases-inside-a-BMS story (Xplor/Mariana Tek/
+Barry's). CubeSmart owns both the platform (KORE) and the stores, so the old two-tier "Value for
+the Studio" vs "Value for the BMS" framing became "Value for the Store (Property Level)" vs "Value
+for CubeSmart (KORE Platform)". Real figures from the brief used throughout: 1,516 stores (662
+owned/854 managed), 35%→38.5% call-to-lease conversion (+10% relative, ~$57.3M/yr), >52% missed-call
+lead loss, 190% ROI/<6mo payback, 15% agent productivity lift, ~$1.62M labor savings from RCS
+autopay recovery, ~$4.13M preserved NOI from retention saves.
+
+**Terminology mapping used everywhere** (kept internal field/type/id names identical to minimize
+risk — only display strings, comments, and a few env vars changed):
+- Xplor/Mariana Tek/Barry's → CubeSmart / KORE (no separate ISV layer)
+- "member" → "tenant", "studio" → "store", "membership" → "unit lease" (state.membership.tier now
+  holds a unit type string like "10x10 Climate-Controlled Unit"), "class" → "unit reservation /
+  move-in appointment", "instructor" → "move-in specialist", "Fuel Bar" → "the Move-In Supply Shop",
+  "front desk" → "store team"
+- Act 3 concept changed from "place a 30/60/90-day membership hold" to "grant a 1/7/30-day extended
+  after-hours gate-access window" (maps to the brief's "Smart Access & Gate Coordination" row).
+  `HOLD_OPTIONS` in script.ts now `[1,7,30]` (function/tool names kept as-is: `pauseMembership`,
+  `sendHoldConfirmation`, voice tool renamed `place_membership_hold` → `reset_gate_access`).
+- Act 4 concept unchanged in shape (expired card → Flex handoff → real-time retention save) but the
+  save offer changed from "class credit + coaching consultation" to "20% rent discount for 3 months,
+  OR a unit downsize" (SAVE_OFFER.classCredit/coaching fields reused verbatim, just holding new
+  strings — matches the brief's Use Case 3 "Predictive Save-the-Deal" almost exactly: 20% off or
+  downsize, competitor-mention detection, Agent Copilot).
+- EVENTS object KEYS unchanged (ACCOUNT_CREATED, CLASS_BOOKED, etc.) — only the display VALUES
+  changed (e.g. CLASS_BOOKED: "Unit Reserved", MEMBERSHIP_PAUSED: "Gate Access Extended",
+  MEMBERSHIP_REACTIVATED: "Autopay Recovered & Lease Retained") — this meant zero call sites needed
+  touching.
+- DRINKS array (Fuel Bar shakes) → Move-In Supply Shop bundles (Box Bundle/Disc Lock+Cover/
+  Furniture Wrap Kit), payloads renamed `drink_*` → `supply_*` (contained rename, only touches
+  script.ts + engine.ts + inbound.ts KEYWORD_MAP, all edited together).
+- WELCOME_CARDS keys/payloads (`wc_bring`/`wc_parking`/`wc_etiquette`/`wc_fuel`/`wc_schedule`) kept
+  IDENTICAL since `handleWelcomeChip`'s `card.key === "schedule"` check and inbound.ts's
+  KEYWORD_MAP reference them literally — only title/body/media/reply copy changed.
+
+**Brand theme**: `--barrys`/`--barrys-hover` and the whole `--emerald`/`-deep`/`-glow`/`-ink`/
+`-panel` token family in globals.css were RECOLORED (not renamed) to CubeSmart orange (#ff7a1a
+family) — deliberately kept the CSS variable/Tailwind class NAMES (`bg-emerald`, `text-emerald-glow`,
+etc.) unchanged since they're used across 10+ journey component files; renaming would have been a
+huge, purely-cosmetic blast radius for zero user-visible benefit. Comment added in globals.css
+explaining this. `BarrysLogoMark.tsx` → new `CubeSmartLogoMark` export (cube-stack SVG), old name
+kept as a const alias so the one importer (PhoneFrame.tsx) didn't strictly need updating (updated
+it anyway for clarity). `EmeraldMark.tsx` → new `CubeSmartMark`/`CubeSmartWordmark` exports (same
+alias pattern), updated in all 8 importer files.
+
+**Files fully rewritten (content, not structure)**: `lib/data/{metrics,executive-vision,
+architecture,maturity,capabilities}.ts`, `StorySection/HeroSection/ClosingSection/
+CapabilitiesSection/HowItWorksSection/MaturitySection` (data + a handful of hardcoded "Value for
+Barry's" style strings + headline text), `MemberJourneySection.tsx`, all of `server/src/journey/
+{script,engine,voice,inbound,flex,intel,content}.ts` (full rewrites), `send.ts`/`memory-profile.ts`/
+`rcs-health.ts` (targeted edits, env var renames), `server/src/flex-plugin/bundle.ts` (full
+rewrite — this is what's actually served to Flex) + the `/flex-plugin` reference mirror (theme,
+primitives, context, MemberContextPanel, MemberSummary, Intelligence, plugin class, index,
+package.json, README — all analogous renames), `server/provision-cintel.cjs` (full rewrite: new
+KB_NAME `cubesmart-storage`, new playbook text with gate-access/autopay/20%-discount-or-downsize
+rules, renamed operators `CubeSmart Call Reason`/`CubeSmart Retention Risk`/`CubeSmart Next Best
+Action`, new CONFIG_NAME `cubesmart-realtime`). All journey client components (`SignupStage,
+BookingStage, CallStage, DeskStage, SaveStage, ProfilePane, PhoneThread, JourneyWorkspace,
+IntelligencePanel, StoryRail`) got targeted text edits (not full rewrites) — labels, chrome URLs,
+placeholder copy.
+
+**New RCS carousel/card images**: real Pexels photos (searched, not uploaded) — storage unit doors
+w/ padlock (38573375), industrial warehouse steel units (5759037, 5759145), moving boxes w/ tape
+(7217904, 7217846), used across `capabilities.ts` RCS card and `script.ts` WELCOME_CARDS media.
+
+**Env vars renamed** `EMERALD_*` → `CUBESMART_*` (MESSAGING_SERVICE_SID, RCS_SENDER_ID, STORE_PHONE
+[was STUDIO_PHONE], VOICE_GREETING, INTEL_CONFIG_ID, KNOWLEDGE_BASE_ID, OP_CALL_REASON,
+OP_RETENTION_RISK, OP_NEXT_BEST_ACTION, OP_SENTIMENT) — registered as empty placeholders via
+`updateEnvironmentVariables`. Also registered (previously never set on this chat despite being
+referenced by pre-existing code): `FLEX_WORKSPACE_SID`, `FLEX_WORKFLOW_SID`, `FLEX_TASK_QUEUE_SID`,
+`NEXT_PUBLIC_FLEX_URL` (defaulted to the standard Flex agent-desktop URL),
+`NEXT_PUBLIC_VOICE_SERVER_URL`/`VOICE_SERVER_URL`/`TWILIO_VOICE_PUBLIC_DOMAIN` (set to this chat's
+real Railway URL from `getChatMetadata`, since `NEXT_PUBLIC_VOICE_SERVER_URL` was blank before).
+This chat's connected Twilio account (shared `AC8d5f68c0bde434a245c6b356550a0e17`) has NONE of the
+Emerald resources that existed on the user's own account in earlier sessions — different
+`TWILIO_MEMORY_STORE_ID`/`TWILIO_CONVERSATION_CONFIGURATION_ID`/`TWILIO_VERIFY_SID`/
+`TWILIO_PHONE_NUMBER` entirely — so renaming the env vars was low-risk (nothing on this account was
+using the old names anyway; full re-provisioning via `provision-cintel.cjs` + a real RCS
+sender/Messaging Service/Flex workspace is still required before the live journey demo will
+actually send anything, same as it would have been under the old naming).
+
+**Mystery, flagged not solved**: `server/src/journey/memory-profile.ts` was found ALREADY updated
+to CubeSmart content (trait names/descriptions, "10x10 Climate-Controlled Unit" default, etc.) the
+first time it was read mid-session, despite never having been written to yet at that point in this
+session. Two `editFile` calls against it both failed with "oldStr not found" because the old
+Emerald text was already gone. Content was verified correct and left as-is; cause unknown (possibly
+a stale/cached first read). Worth double-checking this file specifically if anything about it looks
+wrong in a future session.
+
+**Left as lower-priority / not touched**: `server/src/journey/orchestrator.ts` and `bus.ts` (no
+Emerald-specific strings, only generic "member" wording in comments); `server/verify-plugin-render.cjs`
+/`verify-plugin.ts` (dev-only smoke-test scripts referencing a `/tmp/emerald-flex-plugin.js` temp
+path — cosmetic only, never shipped); the hidden Live Demos section's `ConversationIntelligencePanel
+.tsx`/`AiConcierge.tsx`/`LiveDemosSection.tsx` got quick text swaps (Barry's → CubeSmart, class →
+move-in) since `SHOW_LIVE_DEMOS = false` keeps that section off by default.
+
+**Mid-task interruption handled inline**: user asked to reword the StorySection's "build vs. buy"
+h3 headline + add a supporting paragraph using their dictated talking points (build is
+expensive/hard, buying outsources differentiation, Twilio provides infra OOTB while KORE builds the
+custom layer) — done as a small aside via direct edit (no separate approval needed, continuation of
+already-approved work), verified with a full `npm install && npm run build` before continuing the
+larger rework.
+
+Build verified clean (`npm run build`) after the small aside; full final build+typecheck pass still
+pending at the point this entry was written — see the next verification step in this same session.
+

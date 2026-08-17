@@ -1,4 +1,4 @@
-/** Shared shapes for the Emerald Fitness guided member journey workspace. */
+/** Shared shapes for the CubeSmart guided move-in journey workspace. */
 
 export interface JourneyBeat {
   id: string

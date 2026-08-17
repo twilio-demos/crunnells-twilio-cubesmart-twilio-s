@@ -1,4 +1,4 @@
 import * as Flex from '@twilio/flex-ui'
-import { EmeraldMemberContextPlugin } from './EmeraldMemberContextPlugin'
+import { CubeSmartTenantContextPlugin } from './EmeraldMemberContextPlugin'
 
-Flex.loadPlugin(EmeraldMemberContextPlugin)
+Flex.loadPlugin(CubeSmartTenantContextPlugin)

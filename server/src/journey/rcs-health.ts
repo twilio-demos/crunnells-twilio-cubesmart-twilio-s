@@ -19,7 +19,7 @@ const MESSAGING_BASE = "https://messaging.twilio.com";
 export interface RcsHealth {
   /** The sender id the app is configured to use, e.g. rcs:my_brand_agent. */
   senderId: string;
-  /** Brand name a member sees in their messaging app. */
+  /** Brand name a tenant sees in their messaging app. */
   displayName?: string;
   /** Twilio sender lifecycle status — DRAFT is fine for allowlisted testers. */
   senderStatus?: string;
@@ -56,8 +56,8 @@ const TTL_MS = 60_000;
 export async function checkRcsHealth(force = false): Promise<RcsHealth> {
   if (!force && cached && Date.now() - cached.at < TTL_MS) return cached.value;
 
-  const senderId = process.env.EMERALD_RCS_SENDER_ID ?? "";
-  const serviceSid = process.env.EMERALD_MESSAGING_SERVICE_SID ?? "";
+  const senderId = process.env.CUBESMART_RCS_SENDER_ID ?? "";
+  const serviceSid = process.env.CUBESMART_MESSAGING_SERVICE_SID ?? "";
   const base: RcsHealth = {
     senderId,
     inSenderPool: false,
@@ -69,7 +69,7 @@ export async function checkRcsHealth(force = false): Promise<RcsHealth> {
     const value: RcsHealth = {
       ...base,
       problem: "No RCS sender is configured.",
-      hint: "Set EMERALD_RCS_SENDER_ID to an RCS sender your test handset has accepted.",
+      hint: "Set CUBESMART_RCS_SENDER_ID to an RCS sender your test handset has accepted.",
     };
     cached = { value, at: Date.now() };
     return value;
@@ -79,7 +79,7 @@ export async function checkRcsHealth(force = false): Promise<RcsHealth> {
     const value: RcsHealth = {
       ...base,
       problem: "No Messaging Service is configured.",
-      hint: "Set EMERALD_MESSAGING_SERVICE_SID so RCS-first sending with SMS fallback can work.",
+      hint: "Set CUBESMART_MESSAGING_SERVICE_SID so RCS-first sending with SMS fallback can work.",
     };
     cached = { value, at: Date.now() };
     return value;
@@ -109,7 +109,7 @@ export async function checkRcsHealth(force = false): Promise<RcsHealth> {
     health.problem = "That RCS sender does not exist on this Twilio account.";
     health.hint = "Pick a sender from Messaging → RCS → Senders in the Twilio Console.";
   } else if (!inSenderPool) {
-    health.problem = "The RCS sender is not attached to the Emerald Fitness Messaging Service.";
+    health.problem = "The RCS sender is not attached to the CubeSmart Messaging Service.";
     health.hint =
       "Every send would go out over SMS. Add the sender to the Messaging Service sender pool.";
   } else {

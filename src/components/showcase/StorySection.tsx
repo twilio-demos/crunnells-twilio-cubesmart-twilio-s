@@ -69,9 +69,17 @@ export function StorySection() {
 
         <div className="mt-10 rounded-[28px] border border-mint/25 bg-black/30 p-8 md:p-12">
           <h3 className="font-heading text-2xl md:text-3xl font-bold leading-tight max-w-3xl text-starwhite">
-            When it comes to build vs. buy, the market has already decided: for AI communications,
-            building in-house is the losing play.
+            Build vs. buy is the real question — and for AI communications, the market has already
+            answered it.
           </h3>
+          <p className="mt-4 max-w-3xl text-sm md:text-base leading-relaxed text-white/60">
+            Building in-house is expensive — in time, and in real dollars — and it&apos;s genuinely
+            hard to get right. Buying trades that cost for a different risk: outsourcing away the
+            customization and differentiation that should make the experience feel like CubeSmart&apos;s
+            own. Twilio&apos;s advantage is that it doesn&apos;t force that trade-off — it provides
+            the infrastructure and plumbing out of the box, while leaving KORE free to build the
+            genuinely custom, differentiated capabilities on top.
+          </p>
 
           <div className="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-8">
             {opportunityStats.map((stat) => (

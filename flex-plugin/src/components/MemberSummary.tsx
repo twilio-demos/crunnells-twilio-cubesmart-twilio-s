@@ -1,8 +1,8 @@
 import React from 'react'
 import { withTaskContext, ITask } from '@twilio/flex-ui'
-import { hasEmeraldContext, readAttributes } from '../context'
+import { hasCubeSmartContext, readAttributes } from '../context'
 import { palette as c, font } from '../theme'
-import { EmeraldMark, Pill } from './primitives'
+import { CubeSmartMark, Pill } from './primitives'
 
 /**
  * Compact version, added to the top of the task Info tab so the essentials are
@@ -12,11 +12,11 @@ export function MemberSummaryBase({ task }: { task?: ITask }) {
   if (!task) return null
 
   const a = readAttributes(task)
-  if (!hasEmeraldContext(a)) return null
+  if (!hasCubeSmartContext(a)) return null
 
-  const e = a.emerald ?? {}
+  const e = a.cubesmart ?? {}
   const i = a.intelligence ?? {}
-  const onHold = e.membership_status === 'on-hold'
+  const extendedAccess = e.account_status === 'on-hold'
   const cardExpired = e.payment_status === 'expired'
   const band = String(i.retention_risk_band ?? '').toLowerCase()
   const bandLabel: Record<string, string> = {
@@ -35,23 +35,23 @@ export function MemberSummaryBase({ task }: { task?: ITask }) {
   return (
     <div style={{ fontFamily: font, padding: '10px 12px 4px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-        <EmeraldMark size={16} />
+        <CubeSmartMark size={16} />
         <div
           style={{
             fontSize: 10,
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
             fontWeight: 700,
-            color: c.emerald,
+            color: c.orange,
           }}
         >
-          Emerald Fitness
+          CubeSmart
         </div>
       </div>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 8 }}>
-        <Pill label={e.membership_tier ?? 'Member'} />
-        <Pill label={onHold ? 'On hold' : 'Active'} tone={onHold ? 'warn' : 'good'} />
+        <Pill label={e.unit_type ?? 'Tenant'} />
+        <Pill label={extendedAccess ? 'Extended access' : 'Active'} tone={extendedAccess ? 'warn' : 'good'} />
         {cardExpired && <Pill label="Card expired" tone="bad" />}
         {bandLabel[band] && (
           <Pill
@@ -75,8 +75,8 @@ export function MemberSummaryBase({ task }: { task?: ITask }) {
             marginBottom: 8,
             padding: '8px 9px',
             borderRadius: 8,
-            background: 'rgba(16,185,129,0.12)',
-            border: '1px solid rgba(52,211,153,0.35)',
+            background: 'rgba(255,122,26,0.12)',
+            border: '1px solid rgba(255,165,82,0.35)',
           }}
         >
           <div
@@ -85,7 +85,7 @@ export function MemberSummaryBase({ task }: { task?: ITask }) {
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
               fontWeight: 700,
-              color: c.emerald,
+              color: c.orange,
               marginBottom: 3,
             }}
           >

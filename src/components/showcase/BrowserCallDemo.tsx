@@ -72,7 +72,7 @@ export function BrowserCallDemo({
 
       <h3 className="mt-3 text-lg font-semibold text-starwhite">Call a lead</h3>
       <p className="mt-1.5 text-sm text-white/50">
-        A desk phone embedded directly inside Mariana Tek&apos;s staff tools using the Twilio
+        A desk phone embedded directly inside CubeSmart&apos;s staff tools using the Twilio
         Voice SDK — dial a real prospect and it actually rings.
       </p>
 

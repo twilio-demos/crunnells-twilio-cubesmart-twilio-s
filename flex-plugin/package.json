@@ -1,13 +1,13 @@
 {
-  "name": "plugin-emerald-member-context",
-  "version": "1.1.0",
+  "name": "plugin-cubesmart-tenant-context",
+  "version": "1.0.0",
   "private": true,
-  "description": "Twilio Flex plugin that renders the Emerald Fitness member context and live call intelligence handed over by the voice AI agent.",
+  "description": "Twilio Flex plugin that renders the CubeSmart tenant context and live call intelligence handed over by the voice AI agent.",
   "scripts": {
     "start": "twilio-run flex:plugins:start",
     "build": "twilio-run flex:plugins:build",
-    "deploy": "twilio flex:plugins:deploy --major --changelog \"Emerald Fitness member context panel\" --description \"Renders the voice AI handoff context on the agent desktop\"",
-    "release": "twilio flex:plugins:release --name \"Emerald Fitness member context\" --description \"Enable the Emerald Fitness member context panel\" --plugin plugin-emerald-member-context@1.1.0"
+    "deploy": "twilio flex:plugins:deploy --major --changelog \"CubeSmart tenant context panel\" --description \"Renders the voice AI handoff context on the agent desktop\"",
+    "release": "twilio flex:plugins:release --name \"CubeSmart tenant context\" --description \"Enable the CubeSmart tenant context panel\" --plugin plugin-cubesmart-tenant-context@1.0.0"
   },
   "dependencies": {
     "@twilio/flex-plugin": "^7.0.0",
