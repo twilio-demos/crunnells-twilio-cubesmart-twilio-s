@@ -1,0 +1,31 @@
+{
+  "name": "xplor-twilio-platform-showcase",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Xplor + Twilio | Platform Showcase — an interactive presentation (starring Barry's as the illustrative Mariana Tek customer) with embedded live demos of Twilio's communications platform (Voice, Verify, ConversationRelay, Branded Calling + Voice Insights, RCS, WhatsApp, Conversations unified messaging-and-voice inbox, Memory, Conversational Intelligence), a reference architecture for a centralized AI harness across BMS platforms, the Xplor Technologies AI-Native Communications Adoption Arch (three independently-maturing streams — Messaging, Voice, and AI — plus a DIY/Flex SDK toggle that expands the surface and draws one continuous glowing outline around the milestones the Flex SDK delivers natively), and the Emerald Fitness guided member journey — a fully functional thirteen-beat, four-act narrative demo running live to a real handset over branded RCS (with per-message channel verification so an SMS fallback is never mistaken for RCS), SMS and inbound voice AI, personalised by-name call greetings, 30/60/90-day membership holds, a Unified Profile built in Twilio Memory, and real-time Conversation Intelligence that keeps scoring the call after it is handed to a human — Real-Time Transcription takes over from ConversationRelay in the same conversation, so the operators coach the live Flex agent mid-sentence, write a Retention Risk Threshold Reached event straight back to the member's profile when her score crosses 60, and release a playbook-grounded save (a one-time class credit plus a fifteen minute personal coaching consultation) onto the live TaskRouter task, rendered on the agent desktop by a purpose-built Twilio Flex plugin.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@twilio/voice-sdk": "^2.13.0",
+    "next": "15.3.9",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "twilio": "^5.13.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/parser": "^8.60.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
