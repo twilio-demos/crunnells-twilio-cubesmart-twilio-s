@@ -80,17 +80,16 @@ function RcsView({ rcs }: { rcs: RcsData }) {
         <div className="relative mt-1">
           <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-xl bg-black/10" />
           <div className="relative rounded-xl bg-white overflow-hidden shadow-md text-left">
-            <div className="relative w-full h-28 overflow-hidden bg-[#e9e9eb] flex items-center justify-center pt-2">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-sm shrink-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={card.photo}
-                  alt={card.title}
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
+            <div className="relative w-full h-32 overflow-hidden bg-[#e9e9eb]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={card.photo}
+                alt={card.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
               <span
-                className="absolute left-1/2 bottom-2 -translate-x-1/2 text-[9px] font-extrabold uppercase tracking-wider text-ink/50"
+                className="absolute left-1/2 bottom-2 -translate-x-1/2 text-[9px] font-extrabold uppercase tracking-wider text-white drop-shadow"
               >
                 CUBESMART
               </span>

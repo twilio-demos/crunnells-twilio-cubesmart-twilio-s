@@ -2761,3 +2761,26 @@ and asked to replace every instance of the CubeSmart logo with it.
   root (clean). Requires "Push & Redeploy" for the `/server` (Railway) change to reach the live
   voice agent / Flex plugin — the Next.js app picks up its own logo changes on normal deploy.
 
+## Session: RCS preview card image full-bleed (was circular avatar)
+`PhoneFrame.tsx`'s `RcsView` (the static/scripted RCS carousel mockup rendered in the "Embedded
+Capabilities" section — confirmed via the screenshot's "10x15 Drive-Up Access — $179/mo" copy,
+which lives in `src/lib/data/capabilities.ts`, NOT the live `/journey` demo) previously masked
+`card.photo` into a small `w-16 h-16 rounded-full` avatar centered in a gray `h-28` strip, with the
+"CUBESMART" wordmark below it. Changed the photo to fill the whole `h-32` strip
+(`absolute inset-0 object-cover`), added a `bg-gradient-to-t from-black/60 via-black/5 to-transparent`
+scrim so the "CUBESMART" wordmark (now white with a drop-shadow, still bottom-centered) stays legible
+over any photo. Title/subtitle white box below is unchanged. No data changes — same `card.photo` URLs.
+
+**User also asked which Messaging Service backs the RCS preview.** Answered that this specific
+preview is the static/scripted "Embedded Capabilities" mockup (confirmed no live Twilio send behind
+it — it's illustrative, same as documented in earlier sessions), so no real Messaging Service is
+involved for THAT card. The real RCS sends happen in the separate `/journey` Guided Move-In Journey
+demo, driven by `CUBESMART_MESSAGING_SERVICE_SID` — currently **empty** on this chat's env vars
+(not yet provisioned). Checked the connected account's live Messaging Services via the Twilio API
+(`GET https://messaging.twilio.com/v1/Services`) and found none tied to this project's own Railway
+host (`crunnells-twilio-cubesmart-twilio-s-production.up.railway.app`) — the shared account has
+several unrelated services from other Vibes users/chats. `server/provision-cintel.cjs` does not
+create the Messaging Service either (only Knowledge/Operators/Intelligence config) — the Messaging
+Service + RCS sender are still a manual Twilio Console provisioning step for this chat, same as
+documented in the README's "Setup required" section.
+
