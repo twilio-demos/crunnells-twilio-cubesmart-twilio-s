@@ -2784,3 +2784,62 @@ create the Messaging Service either (only Knowledge/Operators/Intelligence confi
 Service + RCS sender are still a manual Twilio Console provisioning step for this chat, same as
 documented in the README's "Setup required" section.
 
+## Session: Guided demo persona renamed Maya → John, city Fort Worth → Denver; logo rounded corners
+User asked for two things: rename the guided move-in journey's tenant persona from Maya to John and
+change her city from Fort Worth to Denver, plus round the CubeSmart logo image's corners by 25%.
+
+**Scope decision**: interpreted "the guided demo" as the `/journey` experience specifically — did
+NOT touch `src/lib/data/capabilities.ts`'s unrelated static "Hey Maya, here are today's open units"
+RCS mockup in the separate "Embedded Capabilities" showcase section, since that's a different,
+non-`/journey` illustrative scenario that happens to reuse the name "Maya" coincidentally.
+
+**Also renamed pronouns** (she/her/hers → he/him/his) throughout every user-facing string tied to
+the persona, even though the user only asked for the name/city — leaving "she" attached to a
+character now named John would read as an obvious bug. Left untouched: the generic "she" pronoun
+used as a placeholder in the Language Operator prompts in `provision-cintel.cjs` (Call Reason /
+Retention Risk / Next Best Action operator instructions) — those aren't about a specific named
+tenant, they're generic instructions for scoring ANY caller, so changing that pronoun has no
+functional or narrative value and was left as-is to limit blast radius.
+
+**Files changed:**
+- `server/src/journey/script.ts` — `BRAND` (`studioFull`, `address`, `city: "Denver"`,
+  `timeZone: "America/Denver"`), `PERSONA` (`firstName: "John"`, rewritten `blurb`), and every
+  `BEATS[].title/narration/mechanic/waiting` string with "Maya" or a gendered pronoun (14 entries
+  across all 4 acts) — rewritten to "John" + he/him/his, preserving the address/timezone match
+  ("West 7th" kept as the store name; picked a real Denver street, W 7th Ave, so the nickname still
+  makes literal sense).
+- `server/src/journey/content.ts` — the welcome carousel's Content Template `variables: {"1": ...}`
+  changed `"Maya"` → `"John"` — this is the literal name substituted into the real RCS message sent
+  to the test handset.
+- `server/src/journey/memory-profile.ts` — `Contact.city`/`Contact.state` now `"Denver"`/`"CO"`
+  (was `"Fort Worth"`/`"TX"`), `Membership.homeStudio` → `"West 7th — Denver"`.
+- `server/provision-cintel.cjs` — playbook header line `"West 7th store, Denver."` (was Fort Worth);
+  left the operator prompts' generic "she" pronoun untouched per the scope decision above.
+- `server/verify-plugin-render.cjs` (dev-only smoke test, already somewhat stale/pre-CubeSmart-
+  rebrand) — swapped the remaining "Maya"/"Fort Worth" literals to "John"/"Denver" for consistency;
+  did not attempt to fix its pre-existing schema drift from the current `emerald`-keyed vs.
+  `cubesmart`-keyed task attributes, since that's an unrelated, already-broken smoke test.
+- `src/components/journey/EmeraldMark.tsx` — `CubeSmartWordmark`'s default subtitle
+  `'West 7th · Denver'`.
+- `src/components/journey/{CallStage,SignupStage,BookingStage,DeskStage,SaveStage,ProfilePane,
+  JourneyWorkspace}.tsx` — every "Maya"/she/her/hers reference in transcript labels, placeholder
+  text, narration snippets, and Flex context copy → "John"/he/him/his.
+- `src/components/showcase/MemberJourneySection.tsx` — "Meet Maya — 31, just moved to Fort Worth…"
+  → "Meet John — 31, just moved to Denver…", pronoun in the closing sentence too.
+- `README.md` — the Guided Move-In Journey section (Story Rail bullet, the full Acts 0–4 narrative
+  table, "operators keep listening" bullets, the Conversation Intelligence table, "Reset demo"
+  bullet, the example voice greeting in Setup Required, and the Flex plugin section) all rewritten
+  for John/Denver/he-him-his.
+
+**Logo rounded corners (25%)**: added `rounded-[25%]` (Tailwind) to the `<img>` in
+`BarrysLogoMark.tsx`/`CubeSmartLogoMark` and `EmeraldMark.tsx`/`CubeSmartMark`, and
+`borderRadius: '25%'` (inline style, no Tailwind in these projects) to the Flex plugin's mark in
+both `flex-plugin/src/components/primitives.tsx` (dev mirror) and the actual served
+`server/src/flex-plugin/bundle.ts` `Mark()` helper — same 4 files touched when the logo image was
+first swapped in from the SVG mark.
+
+Verified `cd server && npm install && npx tsc --noEmit` (clean) and `npm run build` at the repo root
+(clean). The `/server` changes (script.ts, content.ts, memory-profile.ts, provision-cintel.cjs,
+bundle.ts) require "Push & Redeploy" to reach the live journey/voice service and the Flex plugin;
+the Next.js app picks up its changes on normal deploy.
+

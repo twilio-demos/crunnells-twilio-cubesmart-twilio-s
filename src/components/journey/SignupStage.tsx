@@ -137,7 +137,7 @@ export function SignupStage({ config, onComplete }: SignupStageProps) {
                     label="First name"
                     value={firstName}
                     onChange={setFirstName}
-                    placeholder="Maya"
+                    placeholder="John"
                   />
                   <Field
                     label="Last name"
@@ -251,7 +251,7 @@ export function SignupStage({ config, onComplete }: SignupStageProps) {
 
             {!lookup ? (
               <p className="text-[11px] leading-relaxed text-white/35">
-                Enter her number and we&apos;ll validate it before a single marketing message
+                Enter his number and we&apos;ll validate it before a single marketing message
                 goes out — is it real, is it a mobile line, which carrier, and can it receive
                 rich messages.
               </p>

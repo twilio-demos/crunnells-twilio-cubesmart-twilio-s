@@ -9,20 +9,20 @@
 export const BRAND = {
   name: "CubeSmart",
   studio: "West 7th",
-  studioFull: "CubeSmart — West 7th, Fort Worth",
-  address: "2600 W 7th St, Fort Worth, TX 76107",
-  city: "Fort Worth",
-  timeZone: "America/Chicago",
+  studioFull: "CubeSmart — West 7th, Denver",
+  address: "2600 W 7th Ave, Denver, CO 80204",
+  city: "Denver",
+  timeZone: "America/Denver",
   hours: "Office: Mon–Sat 9:30a–6:00p, Sun 12:00p–5:00p · Gate access 6:00a–9:00p daily",
   fuelBar: "the Move-In Supply Shop",
 };
 
 export const PERSONA = {
-  firstName: "Maya",
+  firstName: "John",
   lastName: "Ellison",
   age: 31,
   blurb:
-    "31, just moved to Fort Worth from Denver. Reserves a storage unit at the West 7th store while her new apartment gets ready.",
+    "31, just moved to Denver. Reserves a storage unit at the West 7th store while his new apartment gets ready.",
 };
 
 /**
@@ -407,9 +407,9 @@ export const BEATS: Beat[] = [
     act: "0",
     actLabel: "Act 0 — Setup",
     step: "Say this, don't demo it",
-    title: "Meet Maya",
+    title: "Meet John",
     narration:
-      "Maya, 31, just moved to Fort Worth. She's between apartments and needs somewhere to put her things — she finds the West 7th CubeSmart on her phone and reserves a unit before she's even parked.",
+      "John, 31, just moved to Denver. He's between apartments and needs somewhere to put his things — he finds the West 7th CubeSmart on his phone and reserves a unit before he's even parked.",
     mechanic:
       "Real Twilio infrastructure end to end: Lookup and Verify at reservation, branded RCS on her handset, Twilio Memory as the profile of record, a voice AI agent on the store line, and a live Flex handoff to a human at the finish.",
     stage: "narration",
@@ -422,7 +422,7 @@ export const BEATS: Beat[] = [
     step: "1",
     title: "Reservation & consent capture",
     narration:
-      "She gives us her name and her number, and explicitly opts in to text messages. Nothing goes out until we know two things: that this is a real mobile line she can actually receive rich messages on, and that it's genuinely hers.",
+      "He gives us his name and his number, and explicitly opts in to text messages. Nothing goes out until we know two things: that this is a real mobile line he can actually receive rich messages on, and that it's genuinely his.",
     mechanic:
       "Twilio Lookup validates the line type and carrier and checks RCS capability. Twilio Verify sends a real 6-digit code she has to enter. Only then do we create her profile in Twilio Memory.",
     stage: "signup",
@@ -436,7 +436,7 @@ export const BEATS: Beat[] = [
     step: "2",
     title: "Welcome RCS",
     narration:
-      "Her first message from us isn't a grey SMS from a random number. It's a branded, verified sender with our logo, our colour and a carousel she can actually use.",
+      "His first message from us isn't a grey SMS from a random number. It's a branded, verified sender with our logo, our colour and a carousel he can actually use.",
     mechanic:
       "A twilio/carousel Content Template sent over RCS from the verified CubeSmart sender. Five cards: What to Bring, Parking & Loading Dock, Storage Rules & Insurance, Get Packing Supplies, Schedule Your Move-In.",
     stage: "thread",
@@ -450,7 +450,7 @@ export const BEATS: Beat[] = [
     step: "3",
     title: "Books move-in appointment #1",
     narration:
-      "She taps Schedule Your Move-In and books straight from the thread. No app download, no password reset.",
+      "He taps Schedule Your Move-In and books straight from the thread. No app download, no password reset.",
     mechanic:
       "The booking surface writes the reservation to her record and immediately sends a real confirmation message.",
     stage: "booking",
@@ -464,13 +464,13 @@ export const BEATS: Beat[] = [
     step: "4",
     title: "Reminder cadence",
     narration:
-      "The day before move-in, she gets a reminder she can act on in one tap — Confirm, Running late, or Reschedule. No calling the store. Tap Confirm for this beat; resizing her unit from the thread is demonstrated later, in Act 2.",
+      "The day before move-in, he gets a reminder he can act on in one tap — Confirm, Running late, or Reschedule. No calling the store. Tap Confirm for this beat; resizing his unit from the thread is demonstrated later, in Act 2.",
     mechanic:
       "A twilio/card with three quick replies, addressed to whichever move-in appointment is actually next on her record. Her tap comes back as a button payload and we answer it in-thread.",
     stage: "thread",
     action: "Send RCS Reminder for Next Move-In",
     waiting:
-      "Tap Confirm on your phone — not Reschedule. Resizing her unit is demonstrated in Act 2.",
+      "Tap Confirm on your phone — not Reschedule. Resizing his unit is demonstrated in Act 2.",
   },
   {
     id: "fuel",
@@ -479,7 +479,7 @@ export const BEATS: Beat[] = [
     step: "5",
     title: "Mid-move packing supplies pre-order",
     narration:
-      "While she's loading the truck, she gets three supply bundles to choose from. She taps one and it's on the counter with her name on it before she's finished unloading.",
+      "While he's loading the truck, he gets three supply bundles to choose from. He taps one and it's on the counter with his name on it before he's finished unloading.",
     mechanic:
       "A three-card RCS carousel with real photography. Her tap places the order and we confirm it's waiting at the Supply Shop.",
     stage: "thread",
@@ -496,7 +496,7 @@ export const BEATS: Beat[] = [
     narration:
       "After move-in: how it went, and one tap to rate the experience.",
     mechanic:
-      "A move-in recap, a 1–5 star staff rating as an RCS chip list, and a one-tap option to reserve another unit. The rating lands on her profile.",
+      "A move-in recap, a 1–5 star staff rating as an RCS chip list, and a one-tap option to reserve another unit. The rating lands on his profile.",
     stage: "thread",
     action: "Send Post-Move-In Follow-Up",
     waiting: "Rate the move-in on your phone",
@@ -508,7 +508,7 @@ export const BEATS: Beat[] = [
     step: "7",
     title: "Books unit #2 — then life happens",
     narration:
-      "A week in she books a second move-in appointment. Then it turns out she has more stuff than expected. She doesn't open an app or call us — she just replies to the confirmation text like a human.",
+      "A week in he books a second move-in appointment. Then it turns out he has more stuff than expected. He doesn't open an app or call us — he just replies to the confirmation text like a human.",
     mechanic:
       "Same booking surface, same real confirmation. Then a free-text inbound reply lands on the same thread and the AI agent picks it up.",
     stage: "booking",
@@ -523,9 +523,9 @@ export const BEATS: Beat[] = [
     step: "8",
     title: "AI agent handles it in-thread",
     narration:
-      "The agent understands what she means, asks which day works, gives her the open unit options as taps, moves the reservation and confirms it. Nobody at the store touched this.",
+      "The agent understands what he means, asks which day works, gives him the open unit options as taps, moves the reservation and confirms it. Nobody at the store touched this.",
     mechanic:
-      "The agent is scoped to this one job with her live reservation state and the real open schedule. It can only offer real slots and can only cancel and rebook — it cannot wander off script.",
+      "The agent is scoped to this one job with his live reservation state and the real open schedule. It can only offer real slots and can only cancel and rebook — it cannot wander off script.",
     stage: "thread",
     waiting: "Answer the agent on your phone — say Friday, then pick a slot",
     events: [EVENTS.CLASS_CANCELLED, EVENTS.CLASS_BOOKED],
@@ -537,7 +537,7 @@ export const BEATS: Beat[] = [
     step: "9",
     title: "8pm. The store is closed.",
     narration:
-      "Two months later she's moving more boxes in after work and gets locked out at the gate. She calls the store at 8pm. We're closed. This is exactly the moment a frustrated tenant starts looking at a competitor down the street.",
+      "Two months later he's moving more boxes in after work and gets locked out at the gate. He calls the store at 8pm. We're closed. This is exactly the moment a frustrated tenant starts looking at a competitor down the street.",
     mechanic:
       "Her call lands on the store's real number and is answered by the voice AI agent. Nothing rings at the front desk.",
     stage: "call-prompt",
@@ -550,7 +550,7 @@ export const BEATS: Beat[] = [
     step: "10",
     title: "Voice AI resets gate access",
     narration:
-      "She says she's locked out and needs access tonight. The agent verifies her, resets the gate code, and the RCS confirmation — with a QR code and gate directions — is on her phone before she's hung up.",
+      "He says he's locked out and needs access tonight. The agent verifies him, resets the gate code, and the RCS confirmation — with a QR code and gate directions — is on his phone before he's hung up.",
     mechanic:
       "The voice agent has her profile and exactly two tools in this beat: reset access, and send the confirmation. It offers standing options and reads the window back before it commits anything.",
     stage: "call-live",
@@ -564,9 +564,9 @@ export const BEATS: Beat[] = [
     step: "11",
     title: "She calls back about a declined charge",
     narration:
-      "Sixty days later she calls back. The agent greets her by name, already knows her gate access was extended, and when she mentions her autopay it tells her that's great she called — then has to tell her the card on file has expired.",
+      "Sixty days later he calls back. The agent greets him by name, already knows his gate access was extended, and when he mentions his autopay it tells him that's great he called — then has to tell him the card on file has expired.",
     mechanic:
-      "Same number, same agent, her profile already loaded. The agent acknowledges her first, then checks the payment method, finds the expired card, and knows it cannot take card details itself.",
+      "Same number, same agent, his profile already loaded. The agent acknowledges him first, then checks the payment method, finds the expired card, and knows it cannot take card details itself.",
     stage: "call-prompt",
     waiting: "Call back and ask about your account",
   },
@@ -577,9 +577,9 @@ export const BEATS: Beat[] = [
     step: "12",
     title: "Warm handoff into Flex",
     narration:
-      "The agent asks if it can bring in someone from the store team, then hands her to a human with everything already on screen — her unit history, the access window, the failed charge and the last sixty seconds of what she just said. She doesn't repeat herself. That's the save.",
+      "The agent asks if it can bring in someone from the store team, then hands him to a human with everything already on screen — his unit history, the access window, the failed charge and the last sixty seconds of what he just said. He doesn't repeat himself. That's the save.",
     mechanic:
-      "The live call is handed to Twilio Flex as a real TaskRouter voice task with her full context in the task attributes. A Flex agent accepts and is bridged straight to her.",
+      "The live call is handed to Twilio Flex as a real TaskRouter voice task with his full context in the task attributes. A Flex agent accepts and is bridged straight to him.",
     stage: "desk",
     waiting: "The agent is transferring — accept the task in Flex",
     events: [EVENTS.FLEX_ESCALATION],
@@ -591,13 +591,13 @@ export const BEATS: Beat[] = [
     step: "13",
     title: "Coached in real time, then saved",
     narration:
-      "While she's giving the store team her new card she starts venting — she found a cheaper unit down the street and isn't sure it's worth staying. The operators are still listening, her risk score climbs past sixty, and the recommended save appears on the agent's screen mid-sentence: 20% off for three months, or a downsize to a smaller unit. She takes the discount, gives the card, and stays.",
+      "While he's giving the store team his new card he starts venting — he found a cheaper unit down the street and isn't sure it's worth staying. The operators are still listening, his risk score climbs past sixty, and the recommended save appears on the agent's screen mid-sentence: 20% off for three months, or a downsize to a smaller unit. He takes the discount, gives the card, and stays.",
     mechanic:
-      "The handoff did not end the conversation. Real-Time Transcription takes over from ConversationRelay on the same call, so the same operators keep scoring the human conversation. Crossing the risk threshold writes an event straight to her Unified Profile and releases the offer to Flex — the operators are writing back, not just reading.",
+      "The handoff did not end the conversation. Real-Time Transcription takes over from ConversationRelay on the same call, so the same operators keep scoring the human conversation. Crossing the risk threshold writes an event straight to his Unified Profile and releases the offer to Flex — the operators are writing back, not just reading.",
     stage: "save",
     action: "New card taken — complete the save",
     waiting:
-      "In Flex: read her the recommended offer, then take the new card. Say you found a cheaper unit down the street and aren't sure it's worth staying, to drive the score up.",
+      "In Flex: read him the recommended offer, then take the new card. Say you found a cheaper unit down the street and aren't sure it's worth staying, to drive the score up.",
     events: [EVENTS.RETENTION_RISK_THRESHOLD, EVENTS.MEMBERSHIP_REACTIVATED],
   },
 ];

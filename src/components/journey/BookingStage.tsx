@@ -7,7 +7,7 @@ import type { ClassSlot, JourneyConfig, JourneyState } from '@/lib/journey/types
 interface BookingStageProps {
   config: JourneyConfig
   state: JourneyState | null
-  /** Round 2 is pinned to Thursday so her "can't make Thursday" reply lands. */
+  /** Round 2 is pinned to Thursday so his "can't make Thursday" reply lands. */
   restrictToDate?: string
   busy: boolean
   onBook: (slotId: string) => void
@@ -51,7 +51,7 @@ export function BookingStage({
         {restrictToDate && (
           <div className="border-b border-emerald/20 bg-emerald/[0.06] px-5 py-2.5">
             <p className="text-[11px] text-emerald-glow">
-              Maya is booking Thursday this time — that&apos;s the class she&apos;ll need to move
+              John is booking Thursday this time — that&apos;s the class he&apos;ll need to move
               in the next beat.
             </p>
           </div>
@@ -141,7 +141,7 @@ export function BookingStage({
 
         <div className="border-t border-white/[0.06] px-5 py-3">
           <p className="text-[10px] text-white/30">
-            Every booking sends a real confirmation to her handset over RCS.
+            Every booking sends a real confirmation to his handset over RCS.
           </p>
         </div>
       </div>

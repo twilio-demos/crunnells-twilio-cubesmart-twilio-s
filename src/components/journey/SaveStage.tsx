@@ -7,9 +7,9 @@ import type { JourneyConfig, JourneyState } from '@/lib/journey/types'
  *
  * The handoff to Flex did not end the conversation. ConversationRelay tore down,
  * Real-Time Transcription took over on the same call, and the same Language
- * Operators kept scoring what she said to the human. When the retention score
+ * Operators kept scoring what he said to the human. When the retention score
  * crossed the studio's threshold, two things happened without anyone clicking
- * anything: an event was written to her Unified Profile, and the recommended save
+ * anything: an event was written to his Unified Profile, and the recommended save
  * was released to the agent's screen in Flex.
  *
  * This panel shows that happening, then records what the human did with it.
@@ -42,12 +42,12 @@ export function SaveStage({
           The operators are still listening
         </p>
         <h2 className="mt-2 font-heading text-xl font-semibold text-starwhite">
-          She is with a human — and still being scored
+          He is with a human — and still being scored
         </h2>
         <p className="mt-3 text-[13px] leading-relaxed text-white/70">
           The call was handed to Flex, not ended. Real-Time Transcription picked up where
           ConversationRelay left off on the same call, so the same operators keep reading the
-          conversation between {state?.firstName ?? 'her'} and your agent. Nothing here is replayed
+          conversation between {state?.firstName ?? 'him'} and your agent. Nothing here is replayed
           or simulated.
         </p>
       </div>
@@ -102,14 +102,14 @@ export function SaveStage({
           <div className="mt-4 rounded-xl border border-emerald/30 bg-emerald/[0.07] px-4 py-3">
             <p className="text-[12px] leading-relaxed text-emerald-glow">
               <span className="font-semibold">Retention Risk Threshold Reached</span> was written to
-              her Unified Profile in Twilio Memory at{' '}
+              his Unified Profile in Twilio Memory at{' '}
               {new Date(state!.riskThresholdAt!).toLocaleTimeString()} — by a Language Operator,
               mid-call. Look at the Events list on the right.
             </p>
           </div>
         ) : (
           <p className="mt-4 text-[11.5px] leading-relaxed text-white/45">
-            The score climbs when she says she found a cheaper unit down the street, isn&apos;t sure
+            The score climbs when he says he found a cheaper unit down the street, isn&apos;t sure
             it&apos;s worth the money, or is thinking about moving out. Say those things on the call
             and watch this move.
           </p>
@@ -123,7 +123,7 @@ export function SaveStage({
         </p>
         <p className="mt-2.5 text-[13px] leading-relaxed text-white/70">
           {crossed
-            ? 'The offer has been released and merged onto the live Flex task. It is on your agent‑s screen now — read it to her from there.'
+            ? 'The offer has been released and merged onto the live Flex task. It is on your agent‑s screen now — read it to him from there.'
             : 'The operator has a recommendation parked. It is released to the agent the moment the score crosses the threshold.'}
         </p>
         {offer && (
@@ -139,10 +139,10 @@ export function SaveStage({
         </p>
       </div>
 
-      {/* What she said to the human */}
+      {/* What he said to the human */}
       <div className="rounded-2xl border border-white/[0.08] bg-black/30 p-5">
         <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45">
-          What she is telling your agent
+          What he is telling your agent
         </p>
         {memberLines.length === 0 ? (
           <p className="text-[11.5px] text-white/30">
@@ -179,7 +179,7 @@ export function SaveStage({
             <OfferCard label="Applied" value={saved.coaching} />
           </div>
           <p className="mt-3.5 text-[12px] leading-relaxed text-white/70">
-            The confirmation is on her handset, and everything the store team did is on her profile
+            The confirmation is on his handset, and everything the store team did is on his profile
             alongside the event the operator wrote. One lease that would have quietly lapsed at 8pm
             on a Tuesday, kept.
           </p>

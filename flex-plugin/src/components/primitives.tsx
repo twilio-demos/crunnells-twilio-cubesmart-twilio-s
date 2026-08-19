@@ -12,6 +12,7 @@ export function CubeSmartMark({ size = 22 }: { size?: number }) {
         width: 'auto',
         flexShrink: 0,
         objectFit: 'contain',
+        borderRadius: '25%',
       }}
     />
   )

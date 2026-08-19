@@ -4,7 +4,7 @@ export function CubeSmartMark({ size = 28 }: { size?: number }) {
     <img
       src="https://rosewood-clam-5211.twil.io/assets/cubesmart_logo.png"
       alt="CubeSmart"
-      className="object-contain shrink-0"
+      className="object-contain shrink-0 rounded-[25%]"
       style={{ height: size, width: "auto" }}
     />
   )
@@ -19,7 +19,7 @@ export function CubeSmartWordmark({ subtitle }: { subtitle?: string }) {
           CubeSmart
         </div>
         <div className="text-[10px] uppercase tracking-[0.18em] text-emerald-glow/70">
-          {subtitle ?? 'West 7th · Fort Worth'}
+          {subtitle ?? 'West 7th · Denver'}
         </div>
       </div>
     </div>

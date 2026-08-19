@@ -89,7 +89,7 @@ async function ensure(
 
 export function welcomeTemplate() {
   return ensure(TEMPLATE_NAMES.welcome, () => ({
-    variables: { "1": "Maya" },
+    variables: { "1": "John" },
     types: {
       "twilio/carousel": {
         body: "Welcome to CubeSmart West 7th, {{1}}!",

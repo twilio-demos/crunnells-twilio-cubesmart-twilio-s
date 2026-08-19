@@ -96,7 +96,7 @@ const SOURCE_NAME = 'retention-playbook-v1';
 const SOURCE_PREFIX = 'retention-';
 
 const PLAYBOOK = `# CubeSmart — Tenant Retention & Save Playbook
-West 7th store, Fort Worth. Effective this season. Applies to every tenant conversation on
+West 7th store, Denver. Effective this season. Applies to every tenant conversation on
 voice, SMS and RCS, and to both the AI voice agent and the store team.
 
 ## 1. Extended after-hours gate access

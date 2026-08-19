@@ -56,10 +56,10 @@ scripted four-act story that only advances when the real thing happens on a real
 The workspace has three panes:
 
 - **Story Rail** — the thirteen beats of Acts 0–4 in fixed order. Exactly one beat is active; the
-  rest are locked. A beat is either *your turn* (one primary button) or *waiting on Maya*.
+  rest are locked. A beat is either *your turn* (one primary button) or *waiting on John*.
 - **Stage** — becomes whatever the beat needs: the store's reservation page, the move-in-appointment
   mini-site, the after-hours call prompt, the live call transcript, or the live Twilio Flex handoff
-  panel. Her handset thread sits alongside it the whole way through.
+  panel. His handset thread sits alongside it the whole way through.
 - **Unified Profile** — Traits (Contact and lease state only), Events, Observations and reservation
   history, read live from Twilio Memory.
 
@@ -67,11 +67,11 @@ The workspace has three panes:
 
 | Act | What happens |
 | --- | --- |
-| **0** | Set the scene: Maya, 31, just moved to Fort Worth, reserves a unit at the West 7th store. |
-| **1** | Reservation with explicit opt-in → live Twilio Lookup (real line type, carrier, RCS eligibility) → a real Verify code she has to enter → Memory profile created. Then a branded RCS welcome carousel (What to Bring, Parking & Loading Dock, Storage Rules & Insurance, Get Packing Supplies, Schedule Your Move-In), a move-in booking with a real confirmation, a reminder with Confirm / Running late / Reschedule chips, a mid-move Supply Shop carousel of three packing bundles, and a post-move-in recap with a 1–5 star staff rating. |
-| **2** | She books Thursday, then replies in free text that she needs a bigger unit. A tightly scoped AI agent asks which day, returns the real open slots as tappable chips, cancels, rebooks and confirms — in the same thread. |
-| **3** | She calls the store at 8pm locked out at the gate. The voice AI greets her **by name** (her first name is resolved from the live run, or from her Twilio Memory profile by phone number, *before* the greeting is spoken), then **waits** — it opens neutrally and will not name a reason for the call. Once she actually asks for gate access help it acknowledges the request, offers **1, 7 or 30 day** extended-access windows, reads the chosen end date back before committing, resets access, confirms the window out loud, asks whether there's anything else — and the RCS confirmation with her new gate code lands as she hangs up. |
-| **4** | She calls back to check on her account; the agent greets her by name, tells her the extended access is still active, reacts warmly to her check-in — *glad you called* — then has to tell her the card on file has expired. It asks permission to bring in the store team, then hands the **live call into Twilio Flex** as a real TaskRouter voice task carrying her profile, reservation history, access window, failed charge, AI summary, the live intelligence signals and the last sixty seconds of transcript. A Flex agent accepts, is bridged straight to her, and sees all of that rendered on their desktop by the **CubeSmart Tenant Context** Flex plugin. Then, while she is giving the store team her new card, she starts venting — she found a cheaper unit down the street and isn't sure it's worth staying. **The operators are still listening**, her retention score climbs past 60, an event is written to her profile mid-call, and the recommended save appears on the agent's screen: 20% off her rent for three months, or a downsize to a smaller unit. She takes the discount, gives the card, and stays. |
+| **0** | Set the scene: John, 31, just moved to Denver, reserves a unit at the West 7th store. |
+| **1** | Reservation with explicit opt-in → live Twilio Lookup (real line type, carrier, RCS eligibility) → a real Verify code he has to enter → Memory profile created. Then a branded RCS welcome carousel (What to Bring, Parking & Loading Dock, Storage Rules & Insurance, Get Packing Supplies, Schedule Your Move-In), a move-in booking with a real confirmation, a reminder with Confirm / Running late / Reschedule chips, a mid-move Supply Shop carousel of three packing bundles, and a post-move-in recap with a 1–5 star staff rating. |
+| **2** | He books Thursday, then replies in free text that he needs a bigger unit. A tightly scoped AI agent asks which day, returns the real open slots as tappable chips, cancels, rebooks and confirms — in the same thread. |
+| **3** | He calls the store at 8pm locked out at the gate. The voice AI greets him **by name** (his first name is resolved from the live run, or from his Twilio Memory profile by phone number, *before* the greeting is spoken), then **waits** — it opens neutrally and will not name a reason for the call. Once he actually asks for gate access help it acknowledges the request, offers **1, 7 or 30 day** extended-access windows, reads the chosen end date back before committing, resets access, confirms the window out loud, asks whether there's anything else — and the RCS confirmation with his new gate code lands as he hangs up. |
+| **4** | He calls back to check on his account; the agent greets him by name, tells him the extended access is still active, reacts warmly to his check-in — *glad you called* — then has to tell him the card on file has expired. It asks permission to bring in the store team, then hands the **live call into Twilio Flex** as a real TaskRouter voice task carrying his profile, reservation history, access window, failed charge, AI summary, the live intelligence signals and the last sixty seconds of transcript. A Flex agent accepts, is bridged straight to him, and sees all of that rendered on their desktop by the **CubeSmart Tenant Context** Flex plugin. Then, while he is giving the store team his new card, he starts venting — he found a cheaper unit down the street and isn't sure it's worth staying. **The operators are still listening**, his retention score climbs past 60, an event is written to his profile mid-call, and the recommended save appears on the agent's screen: 20% off his rent for three months, or a downsize to a smaller unit. He takes the discount, gives the card, and stays. |
 
 Events fired to the Unified Profile along the way: **New Lease Started**, **Consent Captured**,
 **Unit Reserved**, **Moving Supplies Ordered**, **Reservation Changed**, **Gate Access Extended**,
@@ -90,17 +90,17 @@ So the same Language Operators keep scoring the human conversation, and two thin
 anyone pressing anything:
 
 - **The operators write back.** The first time the retention score crosses **60**, a
-  **Retention Risk Threshold Reached** event is written to her Unified Profile in Twilio Memory,
+  **Retention Risk Threshold Reached** event is written to his Unified Profile in Twilio Memory,
   naming the score and the drivers behind it. It is authored by a Language Operator mid-call, not by
   a button in this app.
 - **The agent gets coached in real time.** The recommended save is released onto the live Flex task
-  the moment the threshold is crossed, so the offer appears on the agent's screen while she is still
+  the moment the threshold is crossed, so the offer appears on the agent's screen while he is still
   mid-sentence. The release is driven by the score itself and by the operators' own quoted evidence —
-  never by this app having to hear her name a competitor, which is exactly why it used to stay
+  never by this app having to hear him name a competitor, which is exactly why it used to stay
   silent during the human stretch of the call.
 
 The demo screen mirrors the human leg of the transcript back from Conversation Orchestrator, so the
-room can watch her words arrive and the score climb even though the AI agent has long since dropped
+room can watch his words arrive and the score climb even though the AI agent has long since dropped
 off the call.
 
 ### Keeping the voice agent on the rails
@@ -112,8 +112,8 @@ Three things stop the callback stalling, which is the failure mode a live audien
 - **The payment check happens in the same breath as the check-in.** Reacting warmly and then
   checking the card happen in one turn, along with breaking the news and asking permission to bring
   in the store team.
-- **It can hang up.** Once she confirms there is nothing else, the agent says one short goodbye and
-  closes the line itself rather than leaving her holding a silent phone.
+- **It can hang up.** Once he confirms there is nothing else, the agent says one short goodbye and
+  closes the line itself rather than leaving him holding a silent phone.
 
 There is also a **Hand off to Flex now** control on the live call panel during Act 4. It performs the
 same real transfer the agent would — same live call, same TaskRouter task, same context — so a stalled
@@ -127,9 +127,9 @@ the Flex task so the agent's panel updates mid-call. Four signals run:
 
 | Signal | What it does | Where it shows |
 | --- | --- | --- |
-| **Call reason** | Resolves why she's calling — "Locked out / gate access" appears seconds in, with her own words as evidence and a confidence score. Deliberately reports *not clear yet* until she has actually said something. | Demo screen + Flex |
-| **Sentiment** | Twilio's prebuilt sentiment operator, kept as a trail through the call rather than a single badge — so Act 4 visibly moves from positive to negative as her card is declined. | Demo screen + Flex |
-| **Retention risk** | A 0–100 score with a band, a trend and the named drivers behind it. It climbs in Act 4 as she names a competitor or says she isn't sure the unit is worth it. | Demo screen + Flex |
+| **Call reason** | Resolves why he's calling — "Locked out / gate access" appears seconds in, with his own words as evidence and a confidence score. Deliberately reports *not clear yet* until he has actually said something. | Demo screen + Flex |
+| **Sentiment** | Twilio's prebuilt sentiment operator, kept as a trail through the call rather than a single badge — so Act 4 visibly moves from positive to negative as his card is declined. | Demo screen + Flex |
+| **Retention risk** | A 0–100 score with a band, a trend and the named drivers behind it. It climbs in Act 4 as he names a competitor or says he isn't sure the unit is worth it. | Demo screen + Flex |
 | **Next best action** | The save offer a human should make — 20% off rent for 3 months, or a unit downsize — grounded in the store's own retention playbook stored in Twilio Enterprise Knowledge. It is **withheld until a save is genuinely owed**: released when the retention score crosses 60, or when the tenant's own words (on either leg of the call) name a competitor or raise moving out. Stays silent on routine calls. | **Flex only** |
 
 The recommendation is delivered to the human at the store, in the moment, with the policy it came
@@ -144,7 +144,7 @@ The greeting can't be interrupted, the agent is forbidden from being the first t
 gate codes or billing, and gate access cannot be reset unless a genuine request appears in what the
 tenant actually said on that call.
 
-A **Reset demo** control deletes her Memory profile by phone number and clears all state for a
+A **Reset demo** control deletes his Memory profile by phone number and clears all state for a
 clean run.
 
 The app is themed in a clean black/white palette with CubeSmart orange as the brand accent and
@@ -167,7 +167,7 @@ below.
   missing or not attached to the Messaging Service, and tags any individual message that fell back
   to SMS with the reason.
 - **Voice** — point the store's phone number's voice webhook at `<journey service>/twiml`. The agent
-  resolves who is calling first, then opens with their first name (for example *"Hi Maya, thanks for
+  resolves who is calling first, then opens with their first name (for example *"Hi John, thanks for
   calling CubeSmart on West 7th — good to hear from you. What can I do for you?"*). Deploy once to
   bring it online.
 - **Flex** — Act 4 performs a real handoff. The live call is redirected out of the AI agent and
@@ -233,11 +233,11 @@ that:
   history, usual Supply Shop order, last staff rating, why the AI escalated plus its written
   summary, the last stretch of the call transcript, and the Twilio Memory profile it all came from.
 - **The task's Info tab** gets a condensed strip: unit type, account status, a card-expired flag,
-  the retention risk band, what she's calling about, the recommended offer and the AI's summary.
+  the retention risk band, what he's calling about, the recommended offer and the AI's summary.
 - Tasks that didn't come from the voice agent say so, rather than rendering an empty shell.
 
 The intelligence block keeps updating while the agent is on the call — new operator results are
-merged onto the live task, so the risk score climbs on their screen as she talks.
+merged onto the live task, so the risk score climbs on their screen as he talks.
 
 It is served by the voice service itself at `/flex-plugin/cubesmart-tenant-context-<version>.js`
 and registered through Twilio's Plugins API — which means the plugin ships and updates alongside

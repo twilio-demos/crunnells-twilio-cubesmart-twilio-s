@@ -54,10 +54,10 @@ export function MemberJourneySection() {
         </h2>
 
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
-          Meet <span className="text-starwhite">Maya</span> — 31, just moved to Fort Worth, reserves a
+          Meet <span className="text-starwhite">John</span> — 31, just moved to Denver, reserves a
           unit at the CubeSmart West 7th store. This isn&apos;t a dashboard of disconnected demos.
           It&apos;s a single guided narrative that runs to a real phone number over RCS, SMS and
-          voice, with her Unified Profile filling in live as it happens.
+          voice, with his Unified Profile filling in live as it happens.
         </p>
 
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">

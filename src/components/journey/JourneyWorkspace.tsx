@@ -330,7 +330,7 @@ export function JourneyWorkspace({ serverUrl }: { serverUrl?: string }) {
             <div className="mx-auto h-[540px] w-full max-w-[340px] shrink-0 lg:h-auto lg:max-h-full">
               <PhoneThread
                 messages={state?.messages ?? []}
-                emptyHint="Her handset. Every message on this thread is really sent — branded RCS from the CubeSmart sender, with SMS fallback."
+                emptyHint="His handset. Every message on this thread is really sent — branded RCS from the CubeSmart sender, with SMS fallback."
               />
             </div>
           )}
@@ -457,7 +457,7 @@ function WatchPanel({
     <div className="mx-auto max-w-xl">
       <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
         <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-glow">
-          Watch her phone
+          Watch his phone
         </p>
         <h2 className="mt-2.5 font-heading text-xl font-semibold text-starwhite">{title}</h2>
         <p className="mt-3 text-[14px] leading-relaxed text-white/75">{narration}</p>

@@ -133,7 +133,7 @@ export function LiveCallStage({
         <div className="max-h-[52vh] min-h-[240px] space-y-3 overflow-y-auto px-5 py-5 no-scrollbar">
           {lines.length === 0 && (
             <p className="py-12 text-center text-[12px] text-white/30">
-              The transcript streams in here as she speaks.
+              The transcript streams in here as he speaks.
             </p>
           )}
 
@@ -161,7 +161,7 @@ export function LiveCallStage({
                   ].join(' ')}
                 >
                   <p className="mb-0.5 text-[9px] uppercase tracking-[0.15em] opacity-55">
-                    {member ? 'Maya' : 'CubeSmart'}
+                    {member ? 'John' : 'CubeSmart'}
                   </p>
                   <p className="text-[12px] leading-relaxed">{line.text}</p>
                 </div>
@@ -183,7 +183,7 @@ export function LiveCallStage({
         {canForce && (
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] bg-black/30 px-5 py-3">
             <p className="text-[10.5px] leading-relaxed text-white/40">
-              If the agent stalls on the call, you can hand her to the desk yourself — the same real
+              If the agent stalls on the call, you can hand him to the desk yourself — the same real
               TaskRouter task, same context.
             </p>
             <button

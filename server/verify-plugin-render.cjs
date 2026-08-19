@@ -50,17 +50,17 @@ const task = {
   attributes: {
     type: 'inbound',
     direction: 'inbound',
-    name: 'Maya Ellison',
-    customerName: 'Maya Ellison',
+    name: 'John Ellison',
+    customerName: 'John Ellison',
     from: '+18325551234',
     called: '+18668144982',
-    customers: { phone: '+18325551234', name: 'Maya Ellison' },
+    customers: { phone: '+18325551234', name: 'John Ellison' },
     escalated_by: 'Emerald Fitness voice AI',
     escalation_reason: 'Card on file expired, cannot reinstate membership on this line',
     ai_summary:
-      'Maya is back in town and wants off her 60 day hold. The Visa on file expired so the reinstatement charge failed. She needs a new card taken by a human.',
+      'John is back in town and wants off his 60 day hold. The Visa on file expired so the reinstatement charge failed. He needs a new card taken by a human.',
     emerald: {
-      studio: 'Emerald Fitness — West 7th, Fort Worth',
+      studio: 'Emerald Fitness — West 7th, Denver',
       membership_tier: 'Emerald Unlimited',
       membership_status: 'on-hold',
       hold_start: 'Monday, Aug 4',
@@ -80,7 +80,7 @@ const task = {
       memory_store_id: 'mem_store_abc',
     },
     recent_transcript: [
-      'Maya: Hey, I am back in town, can you take my membership off hold?',
+      'John: Hey, I am back in town, can you take my membership off hold?',
       'Voice AI: That is great news, welcome back.',
     ],
     intelligence: {
@@ -146,7 +146,7 @@ render(captured.info, 0);
 
 const joined = textFound.join(' | ');
 const mustContain = [
-  'Maya Ellison',
+  'John Ellison',
   'Emerald Unlimited',
   'On hold',
   'Visa •••• 4417 exp 09/26',

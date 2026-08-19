@@ -4,7 +4,7 @@ export function CubeSmartLogoMark({ size = 24 }: { size?: number }) {
     <img
       src="https://rosewood-clam-5211.twil.io/assets/cubesmart_logo.png"
       alt="CubeSmart"
-      className="object-contain shrink-0"
+      className="object-contain shrink-0 rounded-[25%]"
       style={{ height: size, width: "auto" }}
     />
   )

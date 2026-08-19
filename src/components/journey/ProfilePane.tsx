@@ -70,7 +70,7 @@ export function ProfilePane({
         </div>
         <p className="text-[13px] font-medium text-white/60">No tenant profile yet</p>
         <p className="mt-1 text-[11px] leading-relaxed text-white/35">
-          The Unified Profile fills in live as soon as she reserves a unit — traits, events and
+          The Unified Profile fills in live as soon as he reserves a unit — traits, events and
           observations, straight from Twilio Memory.
         </p>
       </div>

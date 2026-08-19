@@ -130,7 +130,7 @@ export function DeskStage({
                 <div className="grid grid-cols-2 gap-2.5">
                   <Fact label="Member" value={`${state?.firstName ?? ''} ${state?.lastName ?? ''}`} />
                   <Fact label="Phone" value={state?.lookup?.nationalFormat || state?.phone || ''} />
-                  <Fact label="Home store" value="West 7th · Fort Worth" />
+                  <Fact label="Home store" value="West 7th · Denver" />
                   <Fact label="Unit type" value={state?.membership.tier ?? ''} />
                   <Fact
                     label="Account status"
@@ -201,7 +201,7 @@ export function DeskStage({
                 <div className="rounded-lg border border-emerald/30 bg-emerald/[0.08] px-4 py-3">
                   <p className="text-[12px] text-emerald-glow">
                     {handoff?.worker} is on the call with everything already on screen.{' '}
-                    {state?.firstName} never had to repeat herself — that&apos;s the save.
+                    {state?.firstName} never had to repeat himself — that&apos;s the save.
                   </p>
                 </div>
               )}
@@ -254,7 +254,7 @@ function PluginStatus({ flex }: { flex: FlexHealth | null }) {
         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-glow" />
         <p className="text-[11.5px] text-white/60">
           <span className="font-semibold text-starwhite">Tenant Context panel is live in Flex</span>{' '}
-          — the agent sees her unit lease, access window, declined card, reservation history and the
+          — the agent sees his unit lease, access window, declined card, reservation history and the
           AI&apos;s summary in the panel beside the call.
         </p>
         {flex.pluginVersion && (

@@ -121,7 +121,7 @@ export const FLEX_PLUGIN_BUNDLE = `/* CubeSmart — Tenant Context plugin for Tw
     return h('img', {
       src: 'https://rosewood-clam-5211.twil.io/assets/cubesmart_logo.png',
       alt: 'CubeSmart',
-      style: { height: size, width: 'auto', flexShrink: 0, objectFit: 'contain' }
+      style: { height: size, width: 'auto', flexShrink: 0, objectFit: 'contain', borderRadius: '25%' }
     });
   }
 
