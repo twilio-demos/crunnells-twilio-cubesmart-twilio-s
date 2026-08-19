@@ -2733,3 +2733,31 @@ PhoneFrame,CapabilitiesSection,ClosingSection,HowItWorksSection,StorySection,Her
   `npm install && npm run build` (clean) and a final `KORE` text search across the repo (only
   MEMORY.md history + the internal `id: 'kore'` remain, both intentional).
 
+## Session: Swapped the CubeSmart logo mark for the real uploaded PNG
+User provided a real logo asset at `https://rosewood-clam-5211.twil.io/assets/cubesmart_logo.png`
+and asked to replace every instance of the CubeSmart logo with it.
+- `next.config.ts`: added `images.remotePatterns` for `rosewood-clam-5211.twil.io` (future-proofing
+  in case a `next/image` `<Image>` component is ever used for it — the project otherwise uses plain
+  `<img>` tags everywhere, which don't need this, but it's registered per the images convention).
+- `src/components/showcase/BarrysLogoMark.tsx` (`CubeSmartLogoMark`, used in `PhoneFrame.tsx`'s chat
+  header/call-screen avatar/RCS header — the main showcase's device chrome) and
+  `src/components/journey/EmeraldMark.tsx` (`CubeSmartMark`/`CubeSmartWordmark`, used across 6+
+  journey components — `CallStage`, `PhoneThread`, `MemberJourneySection`, `JourneyWorkspace`,
+  `SignupStage`, `BookingStage`) both had their inline SVG "stacked storage cubes" mark replaced with
+  a plain `<img src=".../cubesmart_logo.png" alt="CubeSmart" style={{height:size,width:'auto'}}
+  className="object-contain shrink-0">` — kept the same `size` prop contract so every call site
+  needed zero changes.
+- `flex-plugin/src/components/primitives.tsx` (the human-maintained dev-mirror `CubeSmartMark`) got
+  the same `<img>` swap using inline `style` (no Tailwind in that project).
+- `server/src/flex-plugin/bundle.ts` — the actual bundle SERVED to Flex — has its own inline `Mark()`
+  helper (built with the `h()` hyperscript helper since the whole plugin is one template-literal
+  JS file with no build step). Replaced its `h('span', ..., h('svg', ...))` box-and-icon rendering
+  with `h('img', { src: '.../cubesmart_logo.png', alt: 'CubeSmart', style: {...} })`. Did NOT bump
+  `FLEX_PLUGIN_VERSION` — the bundle is generated per-request from this string constant (not a
+  static asset), so the content updates automatically on redeploy without needing a new
+  Twilio-registered PluginVersion/Configuration/Release; only bump the version if Flex's own CDN
+  caching of the bundle URL ever becomes a problem in practice.
+- Verified `cd server && npm install && npx tsc --noEmit` (clean) and `npm run build` at the repo
+  root (clean). Requires "Push & Redeploy" for the `/server` (Railway) change to reach the live
+  voice agent / Flex plugin — the Next.js app picks up its own logo changes on normal deploy.
+

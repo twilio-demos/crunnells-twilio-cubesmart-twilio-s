@@ -118,28 +118,11 @@ export const FLEX_PLUGIN_BUNDLE = `/* CubeSmart — Tenant Context plugin for Tw
 
   function Mark(props) {
     var size = props && props.size ? props.size : 22;
-    return h(
-      'span',
-      {
-        style: {
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: size + 6,
-          height: size + 6,
-          borderRadius: 7,
-          background: 'linear-gradient(140deg, #ff7a1a, #c2570a)',
-          flexShrink: 0
-        }
-      },
-      h(
-        'svg',
-        { viewBox: '0 0 24 24', width: size - 4, height: size - 4, 'aria-hidden': 'true' },
-        h('rect', { x: 3, y: 12, width: 8, height: 8, rx: 1, fill: 'none', stroke: '#1c130d', strokeWidth: 1.6 }),
-        h('rect', { x: 13, y: 12, width: 8, height: 8, rx: 1, fill: 'none', stroke: '#1c130d', strokeWidth: 1.6 }),
-        h('rect', { x: 8, y: 3, width: 8, height: 8, rx: 1, fill: '#1c130d' })
-      )
-    );
+    return h('img', {
+      src: 'https://rosewood-clam-5211.twil.io/assets/cubesmart_logo.png',
+      alt: 'CubeSmart',
+      style: { height: size, width: 'auto', flexShrink: 0, objectFit: 'contain' }
+    });
   }
 
   function Pill(props) {

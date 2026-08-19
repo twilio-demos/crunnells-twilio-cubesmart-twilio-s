@@ -3,24 +3,17 @@ import { palette as c } from '../theme'
 
 export function CubeSmartMark({ size = 22 }: { size?: number }) {
   return (
-    <span
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="https://rosewood-clam-5211.twil.io/assets/cubesmart_logo.png"
+      alt="CubeSmart"
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: size + 6,
-        height: size + 6,
-        borderRadius: 7,
-        background: 'linear-gradient(140deg, #ff7a1a, #c2570a)',
+        height: size,
+        width: 'auto',
         flexShrink: 0,
+        objectFit: 'contain',
       }}
-    >
-      <svg viewBox="0 0 24 24" width={size - 4} height={size - 4} aria-hidden="true">
-        <rect x={3} y={12} width={8} height={8} rx={1} fill="none" stroke="#1c130d" strokeWidth={1.6} />
-        <rect x={13} y={12} width={8} height={8} rx={1} fill="none" stroke="#1c130d" strokeWidth={1.6} />
-        <rect x={8} y={3} width={8} height={8} rx={1} fill="#1c130d" />
-      </svg>
-    </span>
+    />
   )
 }
 
