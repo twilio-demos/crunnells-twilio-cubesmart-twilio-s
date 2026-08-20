@@ -2843,3 +2843,16 @@ Verified `cd server && npm install && npx tsc --noEmit` (clean) and `npm run bui
 bundle.ts) require "Push & Redeploy" to reach the live journey/voice service and the Flex plugin;
 the Next.js app picks up its changes on normal deploy.
 
+## Session: Removed the 4 Industry Perspective stat cards (1,516 / +10% / >52% / 190% ROI)
+User asked to remove/hide the four flip-card metric squares at the top of the page. Removed the
+`<div className="mt-14 grid ...">{industryMetrics.map(...)}</div>` block from `HeroSection.tsx`
+entirely, along with its now-unused `industryMetrics`/`MetricFlipCard` imports — the Hero section
+now ends after the intro paragraph (CubeSmart × Twilio eyebrow, headline, paragraph), no numbered
+cards. Deliberately did NOT delete `src/lib/data/metrics.ts`'s `industryMetrics` export or
+`MetricFlipCard.tsx` (still importable if the user wants them back later) — only stopped rendering
+them. Section id `#perspective` and its "Industry Perspective" nav entry in `ShowcaseClient.tsx`
+were left as-is (still a valid section, just without the stat cards). Updated the README's
+"Industry Perspective" bullet to describe the section without the four-flip-card claim, and noted
+the cards were removed. `opportunityStats`/`StorySection`'s separate sourced-stats card (Menlo/MIT
+NANDA/RAND/Stanford) is unrelated and untouched. Verified `npm run build` clean.
+
