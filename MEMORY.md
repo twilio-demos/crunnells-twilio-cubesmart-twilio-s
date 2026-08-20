@@ -2856,3 +2856,35 @@ were left as-is (still a valid section, just without the stat cards). Updated th
 the cards were removed. `opportunityStats`/`StorySection`'s separate sourced-stats card (Menlo/MIT
 NANDA/RAND/Stanford) is unrelated and untouched. Verified `npm run build` clean.
 
+## Session: "RCS not ready" root-caused and fixed (env var + phone number/Messaging Service config)
+User reported the journey workspace showed "RCS not ready" despite having configured
+`CUBESMART_RCS_SENDER_ID`/`CUBESMART_MESSAGING_SERVICE_SID`.
+
+**Root cause of the banner**: `CUBESMART_RCS_SENDER_ID` was set to the RCS sender's Twilio **SID**
+(`XE2cefcabf3218507842f7428f1d805293`), but `checkRcsHealth()` in `server/src/journey/rcs-health.ts`
+matches against the sender's **address string** (`sender_id` field from
+`GET /v2/Channels/Senders?Channel=rcs`, e.g. `rcs:cubesmart_u0f4fgvh_agent`) — never the `sid`
+field. So the lookup always came back "does not exist on this account" even though the sender was
+real, verified (friendly_name "CubeSmart", real logo/accent/description), and already attached to
+the "cubesmart" Messaging Service (`MGf3e17ebd0a633ed883ffdae2a77f4637`). Fixed by setting
+`CUBESMART_RCS_SENDER_ID=rcs:cubesmart_u0f4fgvh_agent` (the format the README always documented —
+"e.g. `rcs:your_agent_id`" — the value just hadn't been entered correctly).
+
+**Follow-up gap found while verifying (fixed with explicit approval)**: the account's
+`TWILIO_PHONE_NUMBER` (+18552592609, SID `PNdab5b895b84a1534aa760c859fa9e298`) had its `VoiceUrl`
+AND `SmsUrl` pointed at a totally unrelated app (`ramyar15-ib-demo-production.up.railway.app`) —
+leftover from this shared number's previous assignment to a different chat/template — and was not
+in the "cubesmart" Messaging Service's phone-number pool at all (so SMS fallback had no number to
+send from if an RCS attempt ever failed). Fixed all three, following the exact repoint pattern
+documented for clones in the README:
+- Messaging Service `MGf3e17ebd0a633ed883ffdae2a77f4637`: `InboundRequestUrl` →
+  `<this chat's Railway host>/journey/inbound`, `StatusCallback` → `.../journey/status`,
+  `UseInboundWebhookOnNumber` → `false`.
+- Phone number `PNdab5b895b84a1534aa760c859fa9e298`: `VoiceUrl` → `<railway host>/twiml`, `SmsUrl`
+  cleared (inbound now handled by the Messaging Service instead).
+- Added the phone number to the Messaging Service's `PhoneNumbers` pool
+  (`POST .../PhoneNumbers {PhoneNumberSid}`).
+
+No code files changed this session — purely an environment-variable value fix plus three live
+Twilio API calls via `createOrModifyTwilioResource`. No build verification needed.
+
