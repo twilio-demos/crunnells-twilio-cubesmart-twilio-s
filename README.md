@@ -177,10 +177,19 @@ below.
   creates your agent in the workspace. The journey workspace shows a live readiness chip and warns
   you if nobody is online, and the Act 4 panel shows the real task SID, queue, assignment status and
   which agent accepted.
-- **Provisioning** — run `node server/provision-cintel.cjs` (from a machine with the same
-  environment values) to create the storage retention playbook in Enterprise Knowledge, the three
-  custom Language Operators, and the intelligence configuration, then copy the printed
-  `CUBESMART_*` values into your environment variables.
+- **Provisioning** — the CubeSmart Conversation Intelligence layer (Enterprise Knowledge retention
+  playbook, the three custom Language Operators, the intelligence configuration) is created by a
+  one-time setup route baked into the voice server itself: `POST <journey service>/journey/provision-intel`.
+  It's idempotent — safe to call more than once, everything is looked up by display name first —
+  and it prints its result (`knowledgeBaseId`, `operatorIds`, `configId`, `attached`) which should
+  then be copied into the `CUBESMART_*` environment variables below. Deploy once, then trigger the
+  route once (e.g. `curl -X POST <journey service>/journey/provision-intel`).
+- **Reliable Flex handoff** — Act 4 tries a real Flex TaskRouter handoff first. If nobody is
+  available in Flex, the live call automatically forwards straight to the store team's fallback
+  phone (`FWD_NUMBER`) instead, so the demo always reaches a real person — no need to keep a Flex
+  agent logged in just to run the demo. The Desk screen shows which path was actually used, plus a
+  clear mockup of what a Flex agent's screen would show either way (tenant profile, call summary,
+  retention risk, recommended save).
 
 ### Environment values
 
@@ -194,6 +203,7 @@ below.
 | `CUBESMART_KNOWLEDGE_BASE_ID` | Enterprise Knowledge base holding the retention playbook |
 | `CUBESMART_OP_CALL_REASON` / `CUBESMART_OP_RETENTION_RISK` / `CUBESMART_OP_NEXT_BEST_ACTION` / `CUBESMART_OP_SENTIMENT` | The four Language Operator ids |
 | `FLEX_WORKSPACE_SID` / `FLEX_WORKFLOW_SID` / `FLEX_TASK_QUEUE_SID` | TaskRouter routing targets for the Flex handoff |
+| `FWD_NUMBER` | Fallback phone the live call forwards to when no Flex agent is available |
 | `NEXT_PUBLIC_FLEX_URL` | Deep link to the Flex agent desktop |
 | `NEXT_PUBLIC_VOICE_SERVER_URL` | Address of the live journey/voice service (falls back to `VOICE_SERVER_URL`, then `TWILIO_VOICE_PUBLIC_DOMAIN`) |
 

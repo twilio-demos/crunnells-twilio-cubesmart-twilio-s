@@ -96,7 +96,7 @@ function profileBrief(state: JourneyState): string {
     classes ? `Reservation history: ${classes}` : "Reservation history: none yet",
     state.fuelOrder ? `Usual supply order: ${state.fuelOrder.name}` : "",
     state.instructorRating
-      ? `Last staff rating she gave: ${state.instructorRating} out of 5`
+      ? `Last staff rating he gave: ${state.instructorRating} out of 5`
       : "",
   ].filter(Boolean);
 
@@ -140,47 +140,47 @@ function holdPrompt(state: JourneyState): string {
   const today = studioToday();
   const options = HOLD_OPTIONS.map((days) => {
     const label = days === 1 ? "tonight only" : days === 7 ? "this week" : `a standing ${days} days`;
-    return `${label}, which would take her through ${longDate(addDaysISO(today, days))}`;
+    return `${label}, which would take him through ${longDate(addDaysISO(today, days))}`;
   }).join("; ");
 
   return `${styleFor(state)}
 
 It is after 8pm. The store office is closed, so you are the only one answering. ${state.firstName} is calling.
 
-Here is what you already know about her. Use it, do not ask her to repeat it:
+Here is what you already know about him. Use it, do not ask him to repeat it:
 ${profileBrief(state)}
 
 Today's date is ${today}.
 
-YOUR ONE JOB ON THIS CALL: she is locked out after hours and needs her gate access reset. Nothing else. But she has to ASK for it first — you do not know why she is calling until she tells you.
+YOUR ONE JOB ON THIS CALL: he is locked out after hours and needs his gate access reset. Nothing else. But he has to ASK for it first — you do not know why he is calling until he tells you.
 
 Run it in this exact order:
-1. Your very first turn must mention, in the same breath, that the office is closed for the night but you can help her from here. What comes after that depends entirely on what she just said:
-   - If she has ALREADY said she is locked out, can't get in, needs her gate code, or something that means the same thing, then handle it right there in that same first turn. Never make her repeat a request she already made. Say it as one flowing reply: the office is closed for the night, but you can take care of that from here, and you can grant extended access for tonight only, this week, or a standing thirty days — which works best? Two short sentences maximum.
-   - If she has NOT actually asked for anything yet, then your first turn is ONLY the neutral line that the office is closed but you can help her from here. Nothing else. Do NOT name a reason for her call, do NOT mention gate codes, lockouts, access, or billing, and do NOT guess what she wants. Then stop and wait.
-2. If she has not said what she needs yet, let her tell you in her own words. If what you heard was unclear, cut off, or does not contain an actual request, say one short line asking her to say that again — never fill in the blank for her.
-3. Once she has clearly said she is locked out or needs her gate access reset, acknowledge it in one short sentence and offer her the three windows the store supports — tonight only, this week, or a standing thirty days — then ask which she wants. Say it like "Of course, I can take care of that — I can extend your access for tonight only, this week, or a standing thirty days. Which works best?" If you already did this in step 1, do not repeat it.
-4. Once she picks a window, confirm it back out loud with the actual end date and ask her to confirm that is right. For reference, starting today: ${options}.
-5. Only after she says yes, call reset_gate_access with the number of days she chose.
-6. After the tool succeeds, confirm it in one or two sentences: that her gate access is reset, how long the window runs for, the end date, that her new code is being sent to her phone now, and that standard rent still applies.
-7. Then ask, in one short line, if there is anything else you can help her with.
-8. If she says no, nope, that's it, that's all, I'm good, nothing else, or anything that means the same: say ONE short warm goodbye and call end_call in that same turn. Do not ask her anything else. Do not wait for her to speak again.
+1. Your very first turn must mention, in the same breath, that the office is closed for the night but you can help him from here. What comes after that depends entirely on what he just said:
+   - If he has ALREADY said he is locked out, can't get in, needs his gate code, or something that means the same thing, then handle it right there in that same first turn. Never make him repeat a request he already made. Say it as one flowing reply: the office is closed for the night, but you can take care of that from here, and you can grant extended access for tonight only, this week, or a standing thirty days — which works best? Two short sentences maximum.
+   - If he has NOT actually asked for anything yet, then your first turn is ONLY the neutral line that the office is closed but you can help him from here. Nothing else. Do NOT name a reason for his call, do NOT mention gate codes, lockouts, access, or billing, and do NOT guess what he wants. Then stop and wait.
+2. If he has not said what he needs yet, let him tell you in his own words. If what you heard was unclear, cut off, or does not contain an actual request, say one short line asking him to say that again — never fill in the blank for him.
+3. Once he has clearly said he is locked out or needs his gate access reset, acknowledge it in one short sentence and offer him the three windows the store supports — tonight only, this week, or a standing thirty days — then ask which he wants. Say it like "Of course, I can take care of that — I can extend your access for tonight only, this week, or a standing thirty days. Which works best?" If you already did this in step 1, do not repeat it.
+4. Once he picks a window, confirm it back out loud with the actual end date and ask him to confirm that is right. For reference, starting today: ${options}.
+5. Only after he says yes, call reset_gate_access with the number of days he chose.
+6. After the tool succeeds, confirm it in one or two sentences: that his gate access is reset, how long the window runs for, the end date, that his new code is being sent to his phone now, and that standard rent still applies.
+7. Then ask, in one short line, if there is anything else you can help him with.
+8. If he says no, nope, that's it, that's all, I'm good, nothing else, or anything that means the same: say ONE short warm goodbye and call end_call in that same turn. Do not ask him anything else. Do not wait for him to speak again.
 
 Hard rules:
-- NEVER be the first one to bring up a lockout, a gate code, access, billing or her card. She raises it, not you. If she has not asked for anything yet, your only job is to listen.
-- But the moment she HAS asked, answer it immediately in that same turn. Never acknowledge her request in one turn and then offer the windows in a later turn, and never ask her to repeat something she already told you clearly.
-- The "office is closed" line is a courtesy, not a stalling tactic. It never replaces answering her — if she has told you what she needs, both belong in the same reply.
-- If you are not certain she asked for access help, you have not heard her ask. Ask her to repeat herself instead of assuming.
-- Only tonight-only, this-week, or a standing thirty-day window are available. If she asks for a different length, say those are the three options and steer her to the closest one.
+- NEVER be the first one to bring up a lockout, a gate code, access, billing or his card. He raises it, not you. If he has not asked for anything yet, your only job is to listen.
+- But the moment he HAS asked, answer it immediately in that same turn. Never acknowledge his request in one turn and then offer the windows in a later turn, and never ask him to repeat something he already told you clearly.
+- The "office is closed" line is a courtesy, not a stalling tactic. It never replaces answering him — if he has told you what he needs, both belong in the same reply.
+- If you are not certain he asked for access help, you have not heard him ask. Ask him to repeat himself instead of assuming.
+- Only tonight-only, this-week, or a standing thirty-day window are available. If he asks for a different length, say those are the three options and steer him to the closest one.
 - Never reset access, change or extend a window without reading the dates back and getting a yes first.
-- Never ask "is there anything else" twice. Once she has said no, say goodbye and end the call.
-- Do not offer to cancel her lease. If she raises leaving outright, listen and say the West 7th team will follow up.
-- Do not offer her a discount, a fee waiver, a free unit upgrade or a refund. You are not authorised to.
+- Never ask "is there anything else" twice. Once he has said no, say goodbye and end the call.
+- Do not offer to cancel his lease. If he raises leaving outright, listen and say the West 7th team will follow up.
+- Do not offer him a discount, a fee waiver, a free unit upgrade or a refund. You are not authorised to.
 - Do not discuss pricing changes, refunds or anything you have no tool for. Say the West 7th team will follow up.`;
 }
 
 /**
- * Ways the tenant asks about her account being back to normal — in her own
+ * Ways the tenant asks about his account being back to normal — in his own
  * words.
  *
  * When any of these show up we stop trusting the model to sequence the call and
@@ -206,17 +206,17 @@ function reactivationDirective(state: JourneyState, message: string): string {
   if (cardChecked) {
     return `
 
-THIS TURN: she has raised checking on her account again and you have already checked the card on this call. Do NOT check it again. If you have not yet asked permission to bring in the West 7th team, ask that now in one short line. If she has already agreed, call transfer_to_store_team right now and say nothing else.`;
+THIS TURN: he has raised checking on his account again and you have already checked the card on this call. Do NOT check it again. If you have not yet asked permission to bring in the West 7th team, ask that now in one short line. If he has already agreed, call transfer_to_store_team right now and say nothing else.`;
   }
 
   return `
 
 THIS TURN — DO ALL OF THIS NOW, IN THIS ONE SINGLE REPLY. Nothing else:
   1. Call the check_payment_method tool immediately.
-  2. Then say one short warm line that you're glad she called and everything looks fine on the access side.
+  2. Then say one short warm line that you're glad he called and everything looks fine on the access side.
   3. Then say plainly that the card on file has expired, so this month's rent charge did not go through.
   4. Then say you are not able to take card details on this line, and ask if it is alright to bring in someone at the West 7th store who can sort it out on the spot.
-Ask her NO other question. Do NOT offer to take a message, leave a note, pass anything along, add anything to her file, or have anyone call her back. Do NOT ask her what she would like the store team to know. The store team joins this call live — there is no message to take.`;
+Ask him NO other question. Do NOT offer to take a message, leave a note, pass anything along, add anything to his file, or have anyone call him back. Do NOT ask him what he would like the store team to know. The store team joins this call live — there is no message to take.`;
 }
 
 function callbackPrompt(state: JourneyState, message: string): string {
@@ -226,16 +226,16 @@ function callbackPrompt(state: JourneyState, message: string): string {
 
   return `${styleFor(state)}
 
-${state.firstName} is calling the store back. She had extended gate access granted after being locked out.
+${state.firstName} is calling the store back. He had extended gate access granted after being locked out.
 
-Here is what you already know about her. Use it, do not ask her to repeat it:
+Here is what you already know about him. Use it, do not ask him to repeat it:
 ${profileBrief(state)}
 
 Today's date is ${today}.
 
-YOUR ONE JOB ON THIS CALL is to check in on her account, discover the card on file has expired, and hand her to a human at the store who can take a new one. Work through these stages. Each stage happens ONCE and then you never return to it.
+YOUR ONE JOB ON THIS CALL is to check in on his account, discover the card on file has expired, and hand him to a human at the store who can take a new one. Work through these stages. Each stage happens ONCE and then you never return to it.
 
-STAGE 1 — orient her. ONLY on your very first turn, tell her you can see her gate access is still extended${
+STAGE 1 — orient him. ONLY on your very first turn, tell him you can see his gate access is still extended${
     holdEnd ? ` and give the end date out loud: ${holdEnd}` : ""
   }. Say it once. ${
     holdEnd
@@ -243,38 +243,38 @@ STAGE 1 — orient her. ONLY on your very first turn, tell her you can see her g
       : ""
   }
 
-STAGE 2 — the account check. The moment she asks whether her account is back to normal, wants to reactivate anything, or is just checking in, do ALL of this in ONE single turn, in this order, without waiting for her to speak again:
-  a. React warmly in one short sentence — glad she called, happy to check.
+STAGE 2 — the account check. The moment he asks whether his account is back to normal, wants to reactivate anything, or is just checking in, do ALL of this in ONE single turn, in this order, without waiting for him to speak again:
+  a. React warmly in one short sentence — glad he called, happy to check.
   b. Call the check_payment_method tool. Do this in the same turn. Do NOT end your turn after the warm sentence.
-  c. Then tell her plainly, in one or two sentences, that everything looks fine on the access side, but the card on file has expired so this month's rent charge did not go through.
+  c. Then tell him plainly, in one or two sentences, that everything looks fine on the access side, but the card on file has expired so this month's rent charge did not go through.
   d. Then say you are not able to take card details on this line, and ask if it is alright to bring in someone at the West 7th store who can sort it out on the spot.
 ${
   cardChecked
-    ? "  You have ALREADY checked the payment method on this call. Do not call check_payment_method again. If you have not yet told her about the expired card, tell her now and ask permission to bring in the store team."
+    ? "  You have ALREADY checked the payment method on this call. Do not call check_payment_method again. If you have not yet told him about the expired card, tell him now and ask permission to bring in the store team."
     : ""
 }
 
-STAGE 3 — the handoff. As soon as she agrees, says yes, sure, okay, that's fine, or anything that means the same, call transfer_to_store_team immediately. Then say nothing at all — the transfer message plays for her automatically.
+STAGE 3 — the handoff. As soon as he agrees, says yes, sure, okay, that's fine, or anything that means the same, call transfer_to_store_team immediately. Then say nothing at all — the transfer message plays for him automatically.
 
 Hard rules:
-- There is NO message to take and NO callback to arrange. The West 7th store team joins THIS call, live, while she stays on the line. Never offer to take a message, leave a note, pass something along, add a note to her account, log a request, have someone call or text her back, or ask her what she would like the store team to know. If you catch yourself asking her to word anything, stop — ask permission to bring in the store team instead.
-- Never ask her to help you summarise, describe or explain her own situation to anyone. You already know everything you need from what is above and from this call.
+- There is NO message to take and NO callback to arrange. The West 7th store team joins THIS call, live, while he stays on the line. Never offer to take a message, leave a note, pass something along, add a note to his account, log a request, have someone call or text him back, or ask him what he would like the store team to know. If you catch yourself asking him to word anything, stop — ask permission to bring in the store team instead.
+- Never ask him to help you summarise, describe or explain his own situation to anyone. You already know everything you need from what is above and from this call.
 - NEVER repeat a sentence, or the meaning of a sentence, you have already said on this call. If you catch yourself about to restate the access window or its end date, move to the next stage instead.
-- If she says something you do not understand, or says nothing useful, do NOT restate the access window. Ask her in one short line what she would like help with today.
-- Never ask her for a card number, CVV, expiry or billing address. Never repeat card digits back beyond the last four.
-- Never tell her to call back later or during business hours.
+- If he says something you do not understand, or says nothing useful, do NOT restate the access window. Ask him in one short line what he would like help with today.
+- Never ask him for a card number, CVV, expiry or billing address. Never repeat card digits back beyond the last four.
+- Never tell him to call back later or during business hours.
 - Do not attempt to re-run the payment yourself.
 - Do not say the words hold up, unfortunately or bad news. Lead with the good news, then the blocker.
-- If she says she found a cheaper unit down the street, is not sure it is worth the money, or is thinking about moving out: acknowledge it warmly and specifically in one sentence, in her own words, and say the West 7th team will make it right. Then carry straight on with the stage you were on — do not lose your place. You must NOT offer her a discount, a fee waiver, a unit downsize or any kind of goodwill gesture — you are not authorised to, and the person at the store is. Never mention that anything is being recommended to anyone.
+- If he says he found a cheaper unit down the street, is not sure it is worth the money, or is thinking about moving out: acknowledge it warmly and specifically in one sentence, in his own words, and say the West 7th team will make it right. Then carry straight on with the stage you were on — do not lose your place. You must NOT offer him a discount, a fee waiver, a unit downsize or any kind of goodwill gesture — you are not authorised to, and the person at the store is. Never mention that anything is being recommended to anyone.
 - Never make promises about pricing you have no tool for.${reactivationDirective(state, message)}`;
 }
 
 /**
- * Did the tenant actually ask for gate access help, in her own words?
+ * Did the tenant actually ask for gate access help, in his own words?
  *
  * A noisy room can put stray words in front of the agent, and a helpful model
  * will happily run with them. Access is only ever reset if a real request is
- * present in what she said on this call.
+ * present in what he said on this call.
  */
 const ACCESS_REQUEST =
   /\b(locked out|lock ?out|can'?t get in|can'?t (?:open|access) the gate|gate (?:code|access)|access code|forgot my code|need (?:my )?(?:gate )?code|reset (?:my )?(?:gate )?code|stuck at the gate|need access|let me in|get in tonight|not letting me in)\b/i;
@@ -314,9 +314,9 @@ function twilioClient() {
  * Hang up shortly after the goodbye.
  *
  * The farewell is spoken by ConversationRelay's text-to-speech after this turn
- * returns, so the call cannot be cut immediately or she would hear nothing. A
+ * returns, so the call cannot be cut immediately or he would hear nothing. A
  * short delay lets the line play out and then closes the call properly instead
- * of leaving her holding a silent phone.
+ * of leaving him holding a silent phone.
  */
 function hangUpAfterGoodbye(state: JourneyState, delayMs = 6500) {
   const callSid = state.callSid;
@@ -338,7 +338,7 @@ function buildVoiceTools(state: JourneyState, turn: { paymentChecked: boolean })
   return {
     reset_gate_access: tool({
       description:
-        "Grant extended gate access for 1 (tonight only), 7 (this week) or 30 (standing) days. Only call this after the tenant has asked for access help in her own words, you have offered the three windows, and she has confirmed the dates you read back.",
+        "Grant extended gate access for 1 (tonight only), 7 (this week) or 30 (standing) days. Only call this after the tenant has asked for access help in his own words, you have offered the three windows, and he has confirmed the dates you read back.",
       inputSchema: z.object({
         days: z
           .union([z.literal(1), z.literal(7), z.literal(30)])
@@ -346,11 +346,11 @@ function buildVoiceTools(state: JourneyState, turn: { paymentChecked: boolean })
         member_asked_in_their_words: z
           .string()
           .describe(
-            "Quote what the tenant actually said that asked for access help. Leave empty if she never asked."
+            "Quote what the tenant actually said that asked for access help. Leave empty if he never asked."
           ),
         confirmed_out_loud: z
           .boolean()
-          .describe("True only if you already read the dates back and she said yes."),
+          .describe("True only if you already read the dates back and he said yes."),
       }),
       execute: async ({
         days,
@@ -362,13 +362,13 @@ function buildVoiceTools(state: JourneyState, turn: { paymentChecked: boolean })
         confirmed_out_loud: boolean;
       }) => {
         if (!memberAskedForHold(state) || !(member_asked_in_their_words || "").trim()) {
-          return "She has not actually asked for access help on this call yet. Do not reset anything and do not bring it up. Ask her what she is calling about, or ask her to say that again if you did not catch it.";
+          return "He has not actually asked for access help on this call yet. Do not reset anything and do not bring it up. Ask him what he is calling about, or ask him to say that again if you did not catch it.";
         }
         if (!HOLD_OPTIONS.includes(days as (typeof HOLD_OPTIONS)[number])) {
-          return "Only 1, 7 or 30 day windows are available. Offer those three and ask her to pick one.";
+          return "Only 1, 7 or 30 day windows are available. Offer those three and ask him to pick one.";
         }
         if (!confirmed_out_loud) {
-          return "Do not reset access yet. Read the start and end dates back to her and get a yes first.";
+          return "Do not reset access yet. Read the start and end dates back to him and get a yes first.";
         }
         const result = await pauseMembership(state, studioToday(), days);
         addTranscript(
@@ -383,24 +383,24 @@ function buildVoiceTools(state: JourneyState, turn: { paymentChecked: boolean })
           result.startISO
         )} through ${longDate(
           result.endISO
-        )}. Confirm that back to her with the end date and the window length, say her new code is coming to her phone now and standard rent still applies, and then ask if there is anything else you can help with.`;
+        )}. Confirm that back to him with the end date and the window length, say his new code is coming to his phone now and standard rent still applies, and then ask if there is anything else you can help with.`;
       },
     }),
     check_payment_method: tool({
       description:
-        "Check the payment method on file when a tenant checks in on her account. Always call this after you have reacted warmly and before promising anything is fine.",
+        "Check the payment method on file when a tenant checks in on his account. Always call this after you have reacted warmly and before promising anything is fine.",
       inputSchema: z.object({}),
       execute: async () => {
         await flagExpiredPayment(state);
         state.paymentCheckedOnCall = state.callCount;
         turn.paymentChecked = true;
         pushState(state);
-        return `The Visa ending ${state.membership.cardLast4} expired ${state.membership.cardExpiry}. This month's rent charge of ${state.membership.failedChargeAmount} was declined. Tell her now, in this same turn, that everything looks fine on the access side but the card on file has expired so the charge did not go through. Then say you cannot take card details on this line and ask if you can bring in the West 7th team. Do not end your turn without saying both of those things. Do not offer to take a message, note or callback instead — the store team joins this call live.`;
+        return `The Visa ending ${state.membership.cardLast4} expired ${state.membership.cardExpiry}. This month's rent charge of ${state.membership.failedChargeAmount} was declined. Tell him now, in this same turn, that everything looks fine on the access side but the card on file has expired so the charge did not go through. Then say you cannot take card details on this line and ask if you can bring in the West 7th team. Do not end your turn without saying both of those things. Do not offer to take a message, note or callback instead — the store team joins this call live.`;
       },
     }),
     transfer_to_store_team: tool({
       description:
-        "Hand the live call to a human at the West 7th store in Twilio Flex, passing the full context of what has happened so far. Only call this after you have told her about the expired card and she has agreed to be transferred. You write the reason and summary yourself from this call — never ask the tenant for them, and never read them out loud.",
+        "Hand the live call to a human at the West 7th store in Twilio Flex, passing the full context of what has happened so far. Only call this after you have told him about the expired card and he has agreed to be transferred. You write the reason and summary yourself from this call — never ask the tenant for them, and never read them out loud.",
       inputSchema: z.object({
         reason: z
           .string()
@@ -412,13 +412,13 @@ function buildVoiceTools(state: JourneyState, turn: { paymentChecked: boolean })
           .string()
           .optional()
           .describe(
-            "Two or three sentences a store team member can read in five seconds: who she is, what she wants, and what is blocking it. Written by you from this call, never asked of the tenant."
+            "Two or three sentences a store team member can read in five seconds: who he is, what he wants, and what is blocking it. Written by you from this call, never asked of the tenant."
           ),
       }),
       execute: async ({ reason, summary }: { reason?: string; summary?: string }) => {
         state.transferring = true;
         const fallbackReason = "Expired card on file — needs a new one taken to keep the lease active.";
-        const fallbackSummary = `${state.firstName} ${state.lastName} is a tenant in a ${state.membership.tier} checking in on her account. The Visa ending ${state.membership.cardLast4} expired ${state.membership.cardExpiry}, so the ${state.membership.failedChargeAmount} rent charge was declined. She needs a new card taken so her lease stays active.`;
+        const fallbackSummary = `${state.firstName} ${state.lastName} is a tenant in a ${state.membership.tier} checking in on his account. The Visa ending ${state.membership.cardLast4} expired ${state.membership.cardExpiry}, so the ${state.membership.failedChargeAmount} rent charge was declined. He needs a new card taken so his lease stays active.`;
         const result = await escalateToDesk(
           state,
           (reason || "").trim() || fallbackReason,
@@ -426,24 +426,24 @@ function buildVoiceTools(state: JourneyState, turn: { paymentChecked: boolean })
         );
         if (!result.ok) {
           state.transferring = false;
-          return `The transfer did not go through: ${result.error}. Tell her the store will call her straight back on this number, and apologise once.`;
+          return `The transfer did not go through: ${result.error}. Tell him the store will call him straight back on this number, and apologise once.`;
         }
-        return "Transfer complete. Say nothing further — she is already being connected.";
+        return "Transfer complete. Say nothing further — he is already being connected.";
       },
     }),
     end_call: tool({
       description:
-        "End the call politely. Call this once the tenant has confirmed there is nothing else you can help with. Say your one-line goodbye in the same turn — it will be spoken to her before the line closes.",
+        "End the call politely. Call this once the tenant has confirmed there is nothing else you can help with. Say your one-line goodbye in the same turn — it will be spoken to him before the line closes.",
       inputSchema: z.object({
-        she_said_nothing_else: z
+        he_said_nothing_else: z
           .string()
           .describe(
-            "Quote what she said that means she is done, for example 'no that's it' or 'nope, I'm good'."
+            "Quote what he said that means he is done, for example 'no that's it' or 'nope, I'm good'."
           ),
       }),
-      execute: async ({ she_said_nothing_else }: { she_said_nothing_else: string }) => {
-        if (!(she_said_nothing_else || "").trim()) {
-          return "Do not end the call yet. Ask her if there is anything else you can help with first.";
+      execute: async ({ he_said_nothing_else }: { he_said_nothing_else: string }) => {
+        if (!(he_said_nothing_else || "").trim()) {
+          return "Do not end the call yet. Ask him if there is anything else you can help with first.";
         }
         hangUpAfterGoodbye(state);
         addTranscript(state, "tool", "Call ending — nothing further needed.");
@@ -480,7 +480,7 @@ export function recordCallSid(phone: string | undefined, callSid: string) {
  * dropped without a teardown event — leaving `transferring` or `hangingUp` set,
  * so every later call was answered with silence.
  *
- * Only per-call things are cleared. Her lease, reservations, profile, events,
+ * Only per-call things are cleared. His lease, reservations, profile, events,
  * story progress and the Flex handoff record all survive, because the demo's
  * later beats read them.
  */
@@ -513,7 +513,7 @@ function beginCall(state: JourneyState, callSid: string) {
  * The model is asked to check the card and break the news in a single reply.
  * Occasionally it spends its whole turn on the tool call and comes back with no
  * words at all, which used to leave the caller listening to silence at the most
- * important moment of the demo. This is the exact line she should hear, so the
+ * important moment of the demo. This is the exact line he should hear, so the
  * turn can never be empty.
  */
 function expiredCardLine(state: JourneyState): string {
@@ -527,7 +527,7 @@ export async function handleJourneyVoiceTurn(
   message: string
 ): Promise<string | undefined> {
   // Room noise transcribed as a word or two is not the tenant talking. Stay
-  // quiet rather than answering something she never said.
+  // quiet rather than answering something he never said.
   if (isNoise(message)) return undefined;
 
   // A brand new call, recognised by its own SID. This MUST run before the quiet
@@ -555,8 +555,8 @@ export async function handleJourneyVoiceTurn(
   }
 
   addTranscript(state, "member", message);
-  // A save offer is held back until she raises leaving — check that the moment
-  // she speaks, so the agent's screen moves with the conversation.
+  // A save offer is held back until he raises leaving — check that the moment
+  // he speaks, so the agent's screen moves with the conversation.
   releasePendingNextBestAction(state);
   pushState(state);
 
@@ -588,14 +588,14 @@ export async function handleJourneyVoiceTurn(
     let reply = (result.text || "").trim();
 
     // The card check ran but the model came back speechless. Say the line
-    // ourselves rather than leaving her on a silent line.
+    // ourselves rather than leaving him on a silent line.
     if (!reply && turn.paymentChecked && !state.transferring && !state.hangingUp) {
       reply = expiredCardLine(state);
     }
 
-    // Last resort. She said something real, the agent is not deliberately quiet,
+    // Last resort. He said something real, the agent is not deliberately quiet,
     // and yet there are no words — usually the model spent its whole turn on a
-    // tool. Dead air on a live demo is the worst possible outcome, so ask her to
+    // tool. Dead air on a live demo is the worst possible outcome, so ask him to
     // say it again instead.
     if (!reply && !state.transferring && !state.hangingUp) {
       console.warn(
@@ -633,7 +633,7 @@ export async function handleJourneyVoiceTurn(
 }
 
 export async function handleJourneyCallEnded(state: JourneyState) {
-  // A Flex transfer also ends the ConversationRelay session, but she is still on
+  // A Flex transfer also ends the ConversationRelay session, but he is still on
   // the phone — the call has simply moved to a human. Do not mark it ended.
   if (state.transferring) {
     pushState(state);
@@ -643,7 +643,7 @@ export async function handleJourneyCallEnded(state: JourneyState) {
   state.callStatus = "ended";
   pushState(state);
 
-  // Act 3 step 10: the RCS confirmation lands as she hangs up.
+  // Act 3 step 10: the RCS confirmation lands as he hangs up.
   if (
     state.membership.status === "on-hold" &&
     !state.messages.some((m) => m.body?.includes("gate access at"))

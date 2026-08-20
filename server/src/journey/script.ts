@@ -581,7 +581,7 @@ export const BEATS: Beat[] = [
     mechanic:
       "The live call is handed to Twilio Flex as a real TaskRouter voice task with his full context in the task attributes. A Flex agent accepts and is bridged straight to him.",
     stage: "desk",
-    waiting: "The agent is transferring — accept the task in Flex",
+    waiting: "The agent is transferring — the call rings a real Flex agent if one is online, or forwards straight to the store team's phone if not.",
     events: [EVENTS.FLEX_ESCALATION],
   },
   {

@@ -24,12 +24,15 @@ export function DeskStage({
 }) {
   const escalation = state?.escalation
   const handoff = state?.flex
+  const intel = state?.intel
   const recent = (state?.transcript ?? []).slice(-12)
   const flexUrl = flex?.flexUrl || 'https://flex.twilio.com/agent-desktop'
+  const forwarded = handoff?.mode === 'forwarded'
 
-  const stage: 'waiting' | 'queued' | 'ringing' | 'live' | 'wrapped' | 'failed' = (() => {
+  const stage: 'waiting' | 'queued' | 'ringing' | 'live' | 'forwarded' | 'wrapped' | 'failed' = (() => {
     if (handoff?.error) return 'failed'
     if (!handoff?.transferred) return 'waiting'
+    if (forwarded) return 'forwarded'
     if (handoff.worker && handoff.status === 'assigned') return 'live'
     if (handoff.status === 'completed' || handoff.status === 'wrapping') return 'wrapped'
     if (handoff.status === 'reserved') return 'ringing'
@@ -47,10 +50,13 @@ export function DeskStage({
           <div className="flex items-center gap-3">
             <FlexMark />
             <div>
-              <p className="text-[12px] font-semibold text-starwhite">Twilio Flex</p>
+              <p className="text-[12px] font-semibold text-starwhite">
+                {forwarded ? 'Direct call forward' : 'Twilio Flex'}
+              </p>
               <p className="text-[10px] text-white/40">
-                {flex?.workflowName ? `${flex.workflowName} · ` : ''}
-                {flex?.queueName ?? 'Voice task routing'}
+                {forwarded
+                  ? `Ringing the store team at ${handoff?.forwardedTo ?? flex?.forwardNumber ?? 'the fallback number'} directly`
+                  : `${flex?.workflowName ? `${flex.workflowName} · ` : ''}${flex?.queueName ?? 'Voice task routing'}`}
               </p>
             </div>
           </div>
@@ -60,8 +66,9 @@ export function DeskStage({
         {stage === 'waiting' && !escalation ? (
           <div className="px-6 py-16 text-center">
             <p className="text-[13px] text-white/45">
-              Nothing has been transferred yet. When the voice agent escalates, this call is handed
-              to Flex as a real TaskRouter voice task.
+              Nothing has been transferred yet. When the voice agent escalates, this call either
+              lands on a real Flex agent as a TaskRouter voice task, or — if nobody is available —
+              forwards straight to the store team&apos;s phone.
             </p>
           </div>
         ) : (
@@ -92,40 +99,60 @@ export function DeskStage({
                 </div>
               )}
 
-              <div className="rounded-xl border border-white/[0.08] bg-black/30 p-4">
-                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
-                  Live TaskRouter task
-                </p>
-                <div className="grid grid-cols-2 gap-2.5">
-                  <Fact label="Task SID" value={handoff?.taskSid ?? 'creating…'} mono />
-                  <Fact
-                    label="Assignment"
-                    value={handoff?.status ?? '—'}
-                    tone={stage === 'live' ? 'good' : stage === 'failed' ? 'bad' : 'warn'}
-                  />
-                  <Fact label="Queue" value={handoff?.queue ?? flex?.queueName ?? '—'} />
-                  <Fact
-                    label="Accepted by"
-                    value={handoff?.worker ?? 'waiting for an agent'}
-                    tone={handoff?.worker ? 'good' : 'warn'}
-                  />
-                  <div className="col-span-2">
+              {forwarded ? (
+                <div className="rounded-xl border border-white/[0.08] bg-black/30 p-4">
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    Direct call forward
+                  </p>
+                  <div className="grid grid-cols-2 gap-2.5">
                     <Fact
-                      label="Workflow"
-                      value={
-                        handoff?.workflowSid || flex?.workflowSid
-                          ? `${flex?.workflowName ?? 'Workflow'} · ${handoff?.workflowSid ?? flex?.workflowSid}`
-                          : '—'
-                      }
-                      mono
+                      label="Ringing"
+                      value={handoff?.forwardedTo ?? flex?.forwardNumber ?? '—'}
+                      tone="warn"
                     />
+                    <Fact label="Reason" value={flex?.ok ? 'Flex agent unavailable' : (flex?.problem ?? 'Flex not ready')} />
+                  </div>
+                  <p className="mt-3 text-[10px] leading-relaxed text-white/35">
+                    No Flex agent was available, so the live call was dialled straight to the store
+                    team&apos;s phone instead — the demo always reaches a real person.
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-xl border border-white/[0.08] bg-black/30 p-4">
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    Live TaskRouter task
+                  </p>
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <Fact label="Task SID" value={handoff?.taskSid ?? 'creating…'} mono />
+                    <Fact
+                      label="Assignment"
+                      value={handoff?.status ?? '—'}
+                      tone={stage === 'live' ? 'good' : stage === 'failed' ? 'bad' : 'warn'}
+                    />
+                    <Fact label="Queue" value={handoff?.queue ?? flex?.queueName ?? '—'} />
+                    <Fact
+                      label="Accepted by"
+                      value={handoff?.worker ?? 'waiting for an agent'}
+                      tone={handoff?.worker ? 'good' : 'warn'}
+                    />
+                    <div className="col-span-2">
+                      <Fact
+                        label="Workflow"
+                        value={
+                          handoff?.workflowSid || flex?.workflowSid
+                            ? `${flex?.workflowName ?? 'Workflow'} · ${handoff?.workflowSid ?? flex?.workflowSid}`
+                            : '—'
+                        }
+                        mono
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className="rounded-xl border border-white/[0.08] bg-black/30 p-4">
                 <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
-                  Context handed to the Flex agent
+                  What the agent&apos;s screen shows
                 </p>
                 <div className="grid grid-cols-2 gap-2.5">
                   <Fact label="Member" value={`${state?.firstName ?? ''} ${state?.lastName ?? ''}`} />
@@ -171,22 +198,66 @@ export function DeskStage({
                       <Fact label="Usual supply order" value={state.fuelOrder.name} />
                     </div>
                   )}
+                  {intel?.reason && (
+                    <div className="col-span-2">
+                      <Fact label="Why he's calling" value={intel.reason.reason} />
+                    </div>
+                  )}
+                  {intel?.risk && (
+                    <Fact
+                      label="Retention risk"
+                      value={`${intel.risk.score} / 100 · ${intel.risk.band}`}
+                      tone={intel.risk.score >= 60 ? 'bad' : intel.risk.score >= 25 ? 'warn' : 'good'}
+                    />
+                  )}
                 </div>
                 <p className="mt-3 text-[10px] leading-relaxed text-white/35">
-                  All of this travels on the task attributes, and the CubeSmart Tenant Context
-                  plugin renders it in Flex — so it is on screen before the agent says a word.
+                  {forwarded
+                    ? "This is what a Flex agent's screen would show if this call had landed there — the same context is available to whoever picks up the forwarded call."
+                    : 'All of this travels on the task attributes, and the CubeSmart Tenant Context plugin renders it in Flex — so it is on screen before the agent says a word.'}
                 </p>
               </div>
 
+              {intel?.nextBestAction && (
+                <div className="rounded-xl border border-violet-400/30 bg-violet-400/[0.08] p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-violet-300">
+                    Recommended save · Conversation Intelligence
+                  </p>
+                  <p className="mt-1.5 text-[13px] font-semibold text-starwhite">
+                    {intel.nextBestAction.headline}
+                  </p>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-white/70">
+                    {intel.nextBestAction.offer}
+                  </p>
+                  {intel.nextBestAction.rationale && (
+                    <p className="mt-2 text-[11px] italic leading-relaxed text-white/45">
+                      {intel.nextBestAction.rationale}
+                    </p>
+                  )}
+                  <div className="mt-2.5 flex flex-wrap gap-2 text-[10px] text-violet-200/60">
+                    {intel.nextBestAction.policySource && <span>Source: {intel.nextBestAction.policySource}</span>}
+                    {intel.nextBestAction.urgency && <span>· {intel.nextBestAction.urgency}</span>}
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-2">
-                <a
-                  href={flexUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1 rounded-lg bg-emerald px-4 py-3 text-center font-heading text-sm font-semibold text-emerald-ink transition hover:bg-emerald-glow"
-                >
-                  Open Flex to answer →
-                </a>
+                {forwarded ? (
+                  <div className="flex-1 rounded-lg border border-emerald/30 bg-emerald/[0.08] px-4 py-3 text-center">
+                    <p className="text-[12px] font-semibold text-emerald-glow">
+                      Ringing {handoff?.forwardedTo ?? flex?.forwardNumber} now
+                    </p>
+                  </div>
+                ) : (
+                  <a
+                    href={flexUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 rounded-lg bg-emerald px-4 py-3 text-center font-heading text-sm font-semibold text-emerald-ink transition hover:bg-emerald-glow"
+                  >
+                    Open Flex to answer →
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={onRecheck}
@@ -202,6 +273,15 @@ export function DeskStage({
                   <p className="text-[12px] text-emerald-glow">
                     {handoff?.worker} is on the call with everything already on screen.{' '}
                     {state?.firstName} never had to repeat himself — that&apos;s the save.
+                  </p>
+                </div>
+              )}
+
+              {stage === 'forwarded' && (
+                <div className="rounded-lg border border-emerald/30 bg-emerald/[0.08] px-4 py-3">
+                  <p className="text-[12px] text-emerald-glow">
+                    The store team&apos;s phone is ringing directly with everything already summarised
+                    above. {state?.firstName} never had to repeat himself — that&apos;s the save.
                   </p>
                 </div>
               )}
@@ -314,7 +394,7 @@ function FlexReadiness({
   return (
     <div className="rounded-xl border border-amber-400/35 bg-amber-400/[0.09] px-4 py-3">
       <p className="text-[12px] font-semibold text-amber-200">
-        Flex isn&apos;t ready to take the call
+        {flex.forwardNumber ? 'No Flex agent online — forwarding instead' : "Flex isn't ready to take the call"}
       </p>
       <p className="mt-1 text-[11.5px] leading-relaxed text-amber-100/80">
         {flex.problem} {flex.hint}
@@ -344,7 +424,7 @@ function FlexReadiness({
 function StageBadge({
   stage,
 }: {
-  stage: 'waiting' | 'queued' | 'ringing' | 'live' | 'wrapped' | 'failed'
+  stage: 'waiting' | 'queued' | 'ringing' | 'live' | 'forwarded' | 'wrapped' | 'failed'
 }) {
   const map: Record<typeof stage, { label: string; className: string }> = {
     waiting: { label: 'Idle', className: 'bg-white/[0.06] text-white/40' },
@@ -358,6 +438,10 @@ function StageBadge({
     },
     live: {
       label: 'Agent connected',
+      className: 'bg-emerald/20 text-emerald-glow ring-1 ring-emerald/40',
+    },
+    forwarded: {
+      label: 'Forwarded to store team',
       className: 'bg-emerald/20 text-emerald-glow ring-1 ring-emerald/40',
     },
     wrapped: { label: 'Wrapped up', className: 'bg-white/[0.08] text-white/55' },

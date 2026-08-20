@@ -52,10 +52,17 @@ export interface FlexHealth extends FlexSetup {
   ok: boolean;
   problem?: string;
   hint?: string;
+  /** The store team's fallback phone, used when nobody is available in Flex. */
+  forwardNumber?: string;
   checkedAt: string;
 }
 
 const FLEX_URL = process.env.NEXT_PUBLIC_FLEX_URL || "https://flex.twilio.com/agent-desktop";
+
+/** The store team's fallback phone — used whenever nobody is available in Flex. */
+function resolveHandoffNumber(): string | undefined {
+  return process.env.FWD_NUMBER || undefined;
+}
 
 let setupCache: FlexSetup | null = null;
 
@@ -117,6 +124,7 @@ export async function checkFlexHealth(force = false): Promise<FlexHealth> {
     availableWorkerNames: [],
     pluginReleased: false,
     ok: false,
+    forwardNumber: resolveHandoffNumber(),
     checkedAt: new Date().toISOString(),
   };
 
@@ -152,11 +160,15 @@ export async function checkFlexHealth(force = false): Promise<FlexHealth> {
     health.availableWorkerNames = available.map((w) => w.friendlyName);
 
     if (health.workersTotal === 0) {
-      health.problem = "There are no agents in this Flex workspace yet.";
+      health.problem = health.forwardNumber
+        ? "There are no agents in this Flex workspace yet — the call will forward to the store team's phone instead."
+        : "There are no agents in this Flex workspace yet.";
       health.hint =
         "Log in to Flex once at flex.twilio.com — that creates your agent automatically.";
     } else if (health.workersAvailable === 0) {
-      health.problem = "Flex has agents, but nobody is available to take a call.";
+      health.problem = health.forwardNumber
+        ? "Flex has agents, but nobody is available — the call will forward to the store team's phone instead."
+        : "Flex has agents, but nobody is available to take a call.";
       health.hint = "Open Flex and set your status to Available before running Act 4.";
     } else {
       health.ok = true;
@@ -322,22 +334,20 @@ async function findLiveCallSid(state: JourneyState): Promise<string | undefined>
 }
 
 /**
- * Pull the caller out of ConversationRelay and enqueue them into Flex.
+ * Pull the caller out of ConversationRelay and hand them to a human.
  *
- * The redirect TwiML speaks the connect line itself so the caller hears
- * something the instant the AI session tears down, then `<Enqueue>` creates the
- * real TaskRouter voice task that rings the Flex agent.
+ * If a Flex agent is genuinely available right now, the call is enqueued into
+ * the real TaskRouter workflow, exactly as before. Otherwise — no agents
+ * logged in, or nobody available — the same live call is dialled straight to
+ * the store team's fallback phone instead, so the demo always reaches a real
+ * person. Either way the redirect TwiML speaks the connect line itself so the
+ * caller hears something the instant the AI session tears down.
  */
 export async function transferCallToFlex(
   state: JourneyState,
   reason: string,
   summary: string
-): Promise<{ ok: boolean; taskSid?: string; error?: string }> {
-  const setup = await resolveFlexSetup();
-  if (!setup.workspaceSid || !setup.workflowSid) {
-    return { ok: false, error: "Flex is not configured on this account." };
-  }
-
+): Promise<{ ok: boolean; taskSid?: string; error?: string; mode?: "flex" | "forwarded" }> {
   const callSid = await findLiveCallSid(state);
   if (!callSid) {
     return { ok: false, error: "No live call to transfer." };
@@ -345,14 +355,39 @@ export async function transferCallToFlex(
   state.callSid = callSid;
 
   const attributes = buildTaskAttributes(state, reason, summary);
+  const forwardNumber = resolveHandoffNumber();
+
+  const health = await checkFlexHealth();
+  const useFlex = health.ok && Boolean(health.workspaceSid && health.workflowSid);
+
+  if (!useFlex && !forwardNumber) {
+    return {
+      ok: false,
+      error: "Flex has no available agent and no fallback forwarding number is configured.",
+    };
+  }
 
   const response = new twilio.twiml.VoiceResponse();
   response.say(
     { voice: "Polly.Joanna" },
     `Connecting you to the ${BRAND.studio} store team now. They already have everything in front of them.`
   );
-  const enqueue = response.enqueue({ workflowSid: setup.workflowSid });
-  enqueue.task({ priority: 10, timeout: 900 }, JSON.stringify(attributes));
+
+  if (useFlex) {
+    const enqueue = response.enqueue({ workflowSid: health.workflowSid! });
+    enqueue.task({ priority: 10, timeout: 900 }, JSON.stringify(attributes));
+  } else {
+    const dial = response.dial({
+      callerId: process.env.TWILIO_PHONE_NUMBER,
+      timeout: 30,
+      answerOnBridge: true,
+    });
+    dial.number(forwardNumber!);
+    response.say(
+      { voice: "Polly.Joanna" },
+      "Sorry, nobody at the store could take that call right now. Please try again shortly."
+    );
+  }
 
   try {
     await twilioClient().calls(callSid).update({ twiml: response.toString() });
@@ -362,25 +397,32 @@ export async function transferCallToFlex(
 
   state.flex = {
     ...(state.flex ?? {}),
-    workspaceSid: setup.workspaceSid,
-    workflowSid: setup.workflowSid,
+    workspaceSid: useFlex ? health.workspaceSid : undefined,
+    workflowSid: useFlex ? health.workflowSid : undefined,
     attributes,
     transferred: true,
     transferredAt: new Date().toISOString(),
     callSid,
+    mode: useFlex ? "flex" : "forwarded",
+    forwardedTo: useFlex ? undefined : forwardNumber,
     // A previous run's task must not be carried over. Everything about the task
     // is unknown again until TaskRouter creates this call's own.
     taskSid: undefined,
-    status: "pending",
-    worker: undefined,
+    status: useFlex ? "pending" : "assigned",
+    worker: useFlex ? undefined : `Store team · ${forwardNumber}`,
     queue: undefined,
     error: undefined,
   };
 
-  // The task is created asynchronously by the Enqueue verb; pick it up shortly.
-  void pollForTask(state);
+  if (useFlex) {
+    // The task is created asynchronously by the Enqueue verb; pick it up shortly.
+    void pollForTask(state);
+  } else {
+    const { pushState } = await import("./bus.js");
+    pushState(state);
+  }
 
-  return { ok: true };
+  return { ok: true, mode: useFlex ? "flex" : "forwarded" };
 }
 
 /** Task states where a human could still be looking at the task. */
@@ -396,6 +438,9 @@ function parseAttributes(raw?: string | null): Record<string, unknown> {
 
 /** Look up the real task the Enqueue verb created for this call. */
 export async function fetchFlexTask(state: JourneyState): Promise<JourneyState["flex"]> {
+  // A forwarded call never created a TaskRouter task — there is nothing to poll.
+  if (state.flex?.mode === "forwarded") return state.flex;
+
   const setup = await resolveFlexSetup();
   if (!setup.workspaceSid || !state.flex?.transferred) return state.flex;
 

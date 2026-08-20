@@ -21,6 +21,7 @@ import {
   releasePendingNextBestAction,
   type RuleExecutionPayload,
 } from "./intel.js";
+import { provisionCintel } from "./intel-provision.js";
 import { syncConversationTranscript } from "./orchestrator.js";
 import { checkRcsHealth, invalidateRcsHealth } from "./rcs-health.js";
 import { applyDeliveryFacts } from "./send.js";
@@ -117,6 +118,22 @@ export function registerJourneyRoutes(app: FastifyInstance) {
   app.post("/journey/intel-check", async () => {
     invalidateIntelHealth();
     return { intel: await checkIntelHealth(true) };
+  });
+
+  /**
+   * One-time setup: creates the CubeSmart Conversation Intelligence operators,
+   * knowledge base and configuration on this Twilio account, and attaches it to
+   * the live Conversation Orchestrator config. Safe to call more than once —
+   * everything is looked up by display name first.
+   */
+  app.post("/journey/provision-intel", async (_request, reply) => {
+    try {
+      const result = await provisionCintel();
+      invalidateIntelHealth();
+      return { ok: true, result };
+    } catch (err) {
+      return reply.code(500).send({ ok: false, error: (err as Error).message });
+    }
   });
 
   /** Live Flex readiness + the real state of the handoff task. */

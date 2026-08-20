@@ -94,6 +94,14 @@ export interface FlexHandoff {
    */
   callSid?: string;
   error?: string;
+  /**
+   * How the human leg actually happened. "flex" is the real TaskRouter path;
+   * "forwarded" means no Flex agent was available so the live call was dialled
+   * straight to the store team's fallback phone instead.
+   */
+  mode?: "flex" | "forwarded";
+  /** The number the call was forwarded to, when mode is "forwarded". */
+  forwardedTo?: string;
 }
 
 export interface JourneyState {

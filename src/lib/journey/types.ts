@@ -135,6 +135,8 @@ export interface FlexHealth {
   ok: boolean
   problem?: string
   hint?: string
+  /** The store team's fallback phone, used when nobody is available in Flex. */
+  forwardNumber?: string
   checkedAt: string
 }
 
@@ -150,6 +152,10 @@ export interface FlexHandoff {
   transferredAt?: string
   callSid?: string
   error?: string
+  /** "flex" is a real TaskRouter task; "forwarded" means the call was dialled straight out. */
+  mode?: 'flex' | 'forwarded'
+  /** The number the call was forwarded to, when mode is "forwarded". */
+  forwardedTo?: string
 }
 
 export interface JourneyMessage {

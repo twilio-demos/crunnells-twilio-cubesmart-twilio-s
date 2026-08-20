@@ -1,6 +1,80 @@
 # Project Memory
 
-## Session 66 — Fixing the fallout from Session 65 (duplicates, repetition, stalled callback)
+## Session 72 — Turned on Conversation Intelligence (via in-server route, not the generic Twilio tool) + reliable Flex handoff with a call-forward fallback + agent-screen mockup
+
+**Discovery: `createOrModifyTwilioResource` cannot POST JSON to the newer Twilio Control Plane
+APIs.** Tried creating the Knowledge Base, then an Intelligence Operator, via that tool — both
+failed with `20422 "does not support this payload format"` regardless of whether the body was
+passed as `body` or `params`. Confirmed this is a tool-wide limitation (not knowledge-specific) by
+testing against `intelligence.twilio.com/v3/ControlPlane/Operators` too. GET requests work fine
+against these hosts (used to verify existing resources); only POST/PUT with a JSON body fails.
+Also confirmed I cannot work around it by running a node script directly — `/server` node
+execution is forbidden by the system rules, and even running node from the project root has NO
+access to the real Twilio credentials (`process.env.TWILIO_API_KEY` etc. are unset in the
+webcontainer shell — they only exist inside the actual Next.js/Railway runtime processes).
+
+**Fix: moved the provisioning logic INTO the running server**, since `/server`'s own code already
+successfully does raw `fetch()` + JSON to `memory.twilio.com` in production (proven — pulled a real
+tenant profile with real observations/summaries). New `server/src/journey/intel-provision.ts`
+— TypeScript port of the old `provision-cintel.cjs` one-off script (same KB_NAME/SOURCE_NAME/
+OPERATORS/CONFIG_NAME, same idempotent-by-display-name logic), reading credentials from
+`process.env` at request time instead of parsing a `.env` file. New route
+`POST /journey/provision-intel` in `routes.ts` calls it and returns the resulting IDs. **This
+needs to be triggered once after the next Railway deploy** (told the user to redeploy, then either
+they or I call the route) — env vars (`CUBESMART_INTEL_CONFIG_ID` etc.) still need to be copied in
+manually afterward since there's no way to feed a running server's discovered ID back into env
+vars automatically.
+
+**Verified via live API calls before building anything** (this is worth remembering, not just the
+fix): `TWILIO_MEMORY_STORE_ID`/`TWILIO_CONVERSATION_CONFIGURATION_ID` both point at real, ACTIVE
+Twilio resources (the shared "Vibes Store"/"Vibes Shared Configuration", used across many chats —
+its `intelligenceConfigurationIds` list is full of OTHER users' configs, e.g. Danfoss/Edtech/Rosie/
+OrderYoYo/Best Buy). No `cubesmart-realtime` intelligence config, `cubesmart-storage` knowledge
+base, or `CubeSmart *` operators existed anywhere on the account — confirming the CINTEL layer had
+genuinely never been provisioned, matching the live `/journey/config` health check's own report
+(`attached: false`, `problem: "No intelligence configuration is set for this demo."`). Basic Memory
+read/write (profiles/traits/observations/summaries) was independently confirmed working via a live
+profile pulled mid-session.
+
+**Reliable Flex handoff + fallback forwarding** (`flex.ts`): `transferCallToFlex` now calls
+`checkFlexHealth()` first — if a real Flex agent is genuinely available it enqueues into
+TaskRouter exactly as before; otherwise it `<Dial>`s the live call straight to `FWD_NUMBER`
+(set to `+17205899647`) with `callerId: TWILIO_PHONE_NUMBER`, `timeout: 30`, `answerOnBridge: true`,
+and a spoken fallback line if nobody picks up. `state.flex` gained `mode: "flex" | "forwarded"` and
+`forwardedTo` (mirrored in `state.ts` + client `types.ts`). `fetchFlexTask` now short-circuits
+(`return state.flex`) when `mode === "forwarded"` — there is no TaskRouter task to poll for a
+forwarded call. `FlexHealth` gained `forwardNumber` so the UI always knows the fallback exists.
+`checkFlexHealth`'s "no agents"/"nobody available" problem text now says the call will forward
+instead, when a fallback number is configured.
+
+**Agent-screen mockup** (`DeskStage.tsx`): renamed the "Context handed to the Flex agent" card to
+"What the agent's screen shows" — it now renders regardless of whether the call actually went to
+Flex or was forwarded, and additionally surfaces `state.intel.reason` (why he's calling) and
+`state.intel.risk` (retention score) inline in the fact grid. Added a new violet "Recommended save
+· Conversation Intelligence" card that renders `state.intel.nextBestAction` (headline/offer/
+rationale/policy source/urgency) directly in this panel — this is intentionally the ONE place in
+the UI allowed to show the NBA, since this panel represents the agent's screen, not the member-
+facing `IntelligencePanel` (which still explicitly withholds it). New `stage === 'forwarded'`
+variant throughout (StageBadge, header subtitle, the "Live TaskRouter task" card swapped for a
+"Direct call forward" card, the CTA row, and the success banner) so the UI never implies a fake
+TaskRouter task exists when the call was actually dialled directly.
+
+**Lint gotcha (repeat)**: 4 unescaped `'` in new JSX text nodes (`react/no-unescaped-entities`) —
+fixed with `&apos;`. Apostrophes inside JSX *attribute* string literals (e.g. `label="Why he's
+calling"`) are fine and don't need escaping — only literal text between tags does.
+
+**Files touched**: NEW `server/src/journey/intel-provision.ts`. Edited: `server/src/journey/
+{routes,flex,state,script}.ts`, `src/lib/journey/types.ts`, `src/components/journey/DeskStage.tsx`.
+Env var added: `FWD_NUMBER=+17205899647` (existing-but-previously-unused var, repurposed and given
+a real value — was not referenced anywhere in code before this session).
+
+**Still needs from the user**: Push & Redeploy (server changes never auto-deploy), then trigger
+`POST /journey/provision-intel` once to actually create the Twilio-side CINTEL resources, then copy
+the printed IDs into `CUBESMART_INTEL_CONFIG_ID`/`CUBESMART_KNOWLEDGE_BASE_ID`/`CUBESMART_OP_*` env
+vars (the webhook classification in `intel.ts` also falls back to matching by operator displayName,
+so results will apply correctly even before those env vars are copied in — but `checkIntelHealth()`
+needs `CUBESMART_INTEL_CONFIG_ID` to report `ok: true`).
+
 
 **1. Duplicated transcript lines (my bug from Session 65).** `syncConversationTranscript` was
 mirroring the WHOLE conversation, including the AI stretch this app already has from the relay turns.
