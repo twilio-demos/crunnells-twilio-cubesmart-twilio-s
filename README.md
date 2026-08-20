@@ -9,8 +9,9 @@ autopay recovery and retention.
 
 - **Industry Perspective** — an opening framing statement introducing CubeSmart's 1,516-store
   portfolio and how Twilio embeds inside the CubeSmart Management Platform to power the tenant
-  journey (the four flip-card industry stats — 1,516 stores, +10% conversion lift, >52% missed-call
-  loss, 190% ROI — have been removed from this section for now).
+  journey, followed by four simple stat cards (1,516 stores, +10% conversion lift, >52% missed-call
+  loss, 190% ROI) — each shows just the headline figure, its category, and a small source link, no
+  flip interaction.
 - **Executive Vision** — CubeSmart's 2026 "inflection point" framing: defending NOI against rising
   operating expense. Three stat cards: **$57.3M** incremental annual rental revenue from higher
   call-to-lease conversion, **$1.62M** annual labor expense reduction from automated RCS payment

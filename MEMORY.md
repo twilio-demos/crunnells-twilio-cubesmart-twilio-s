@@ -1,5 +1,18 @@
 # Project Memory
 
+## Session 74 — Restored the 4 Industry Perspective stat cards, but static (not flip)
+User asked to bring back the 4 stat cards removed in an earlier session (1,516 stores / +10%
+conversion / >52% missed-call loss / 190% ROI), but explicitly non-flippable — just the number and
+the category. New `src/components/showcase/IndustryStatCard.tsx` — a plain card (no `useState`,
+no click handler, no `flip-card`/`mint-glow-ring` classes) showing `metric.value` (big, mint/accent
+colored), `metric.label` below it, and a small dotted-underline citation link at the bottom (kept
+the source link since it's already real data on `IndustryMetric` and matches the sourcing
+convention used elsewhere in the app — deliberately dropped the long `description` body text
+though, since the user only asked for "the number and the category"). `HeroSection.tsx` re-added
+the `mt-14 grid grid-cols-2 md:grid-cols-4` block mapping `industryMetrics` to this new component
+(same grid shape as the original pre-removal version). Did NOT touch `MetricFlipCard.tsx` (still
+around, just unused by `HeroSection` now) or `metrics.ts` — purely additive/reversible.
+
 ## Session 73 — Mint accent recolored to #CF1E2F
 `globals.css` `--mint` `#74fbd0` → `#cf1e2f`, `--mint-dark` `#3f8972` → `#8f141f` (a darker shade
 of the same red, kept for consistency though it's currently unreferenced by any component). This

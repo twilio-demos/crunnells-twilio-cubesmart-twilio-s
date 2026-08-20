@@ -1,3 +1,6 @@
+import { industryMetrics } from '@/lib/data/metrics'
+import { IndustryStatCard } from './IndustryStatCard'
+
 export function HeroSection() {
   return (
     <section
@@ -24,6 +27,15 @@ export function HeroSection() {
           Twilio gives the CubeSmart Management Platform the embedded voice, messaging, verification, and AI layer that turns every
           tenant touchpoint — leasing, move-in, billing, and retention — into a moment that matters.
         </p>
+
+        <div
+          className="mt-14 grid max-w-5xl grid-cols-2 gap-4 animate-fade-up md:grid-cols-4 md:gap-5"
+          style={{ animationDelay: '0.2s' }}
+        >
+          {industryMetrics.map((metric) => (
+            <IndustryStatCard key={metric.label} metric={metric} />
+          ))}
+        </div>
       </div>
     </section>
   )
