@@ -22,8 +22,8 @@ autopay recovery and retention.
   while leaving the Management Platform free to build what's genuinely custom) and a sourced stats card citing Menlo
   Ventures, MIT NANDA, RAND, and the Stanford HAI AI Index.
 - **Embedded Capabilities** — a device-mockup showcase illustrating the Guided Move-In voice AI,
-  Branded Calling + Voice Insights, a branded RCS unit-browsing carousel, WhatsApp, and the unified
-  store inbox — all shown as if embedded natively inside CubeSmart's own tools.
+  Branded Calling + Voice Insights, a branded RCS unit-browsing carousel, and WhatsApp — all shown
+  as if embedded natively inside CubeSmart's own tools.
 - **How Does It Work** — a colour-coded layer diagram: Tenant Touchpoints (store phone line, SMS,
   CubeSmart app, web booking, gate kiosk, email, RCS) → CubeSmart Management Platform → Unified Integration Layer →
   Twilio Agent Connect (TAC) → the Twilio Platform (Conversation Orchestrator, Memory, Intelligence,

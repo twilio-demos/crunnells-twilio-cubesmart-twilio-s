@@ -1,5 +1,15 @@
 # Project Memory
 
+## Session 76 — Removed the "Conversations / Every Channel, One View" card + its page switcher
+Removed the `conversations-classic` entry entirely from `src/lib/data/capabilities.ts` (the only
+`wide: true` capability — stock photo of two people at a monitor, "CONVERSATIONS" badge, "Every
+Channel, One View" copy). `CapabilitiesSection.tsx` derives `desktop = capabilities.find(cap =>
+cap.wide)`, which is now `undefined`; `CapabilitiesCarousel.tsx` already guards both the
+`ViewSwitcher` (‹ • • › page switcher) and the desktop-view render behind `{desktop && ...}` /
+`showDesktop && desktop`, so removing the data was enough — no component changes needed. The
+Embedded Capabilities row is now just the 4 phone mockups (Guided Move-In Voice AI, Branded
+Calling, RCS, WhatsApp), no second page.
+
 ## Session 75 — Hid the citations on the Industry Perspective stat cards
 Follow-up to Session 74: user asked to hide the small citation links too. Removed the `<a
 href={metric.href}>{metric.citation}</a>` block entirely from `IndustryStatCard.tsx` — the card now

@@ -116,19 +116,4 @@ export const capabilities: Capability[] = [
       { from: 'member', text: 'Move-in link please 🙏' },
     ],
   },
-  {
-    id: 'conversations-classic',
-    product: 'Conversations',
-    title: 'Every Channel, One View',
-    description:
-      'SMS, RCS, WhatsApp and voice call summaries — plus click-to-call — so the store team picks up right where the last conversation left off, no matter which channel a tenant used last.',
-    accent: '#6923f4',
-    wide: true,
-    imageUrl: 'https://images.pexels.com/photos/8867472/pexels-photo-8867472.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    messages: [
-      { from: 'member', text: 'Can I switch my 10x10 to a 10x15 before I move in?' },
-      { from: 'assistant', text: "You're all set for the 10x15 Drive-Up in Building C — same move-in date. See you at the gate!" },
-      { from: 'member', text: 'Perfect, thank you!' },
-    ],
-  },
 ]
