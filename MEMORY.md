@@ -1,5 +1,12 @@
 # Project Memory
 
+## Session 75 — Hid the citations on the Industry Perspective stat cards
+Follow-up to Session 74: user asked to hide the small citation links too. Removed the `<a
+href={metric.href}>{metric.citation}</a>` block entirely from `IndustryStatCard.tsx` — the card now
+renders only `metric.value` and `metric.label`. `metrics.ts`'s `citation`/`href` fields are left in
+the data (unused by this card now, still referenced by `MetricFlipCard.tsx` which is itself unused
+by any page — both are harmless to leave in place in case citations are wanted back later).
+
 ## Session 74 — Restored the 4 Industry Perspective stat cards, but static (not flip)
 User asked to bring back the 4 stat cards removed in an earlier session (1,516 stores / +10%
 conversion / >52% missed-call loss / 190% ROI), but explicitly non-flippable — just the number and
