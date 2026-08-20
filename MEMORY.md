@@ -1,5 +1,17 @@
 # Project Memory
 
+## Session 73 — Mint accent recolored to #CF1E2F
+`globals.css` `--mint` `#74fbd0` → `#cf1e2f`, `--mint-dark` `#3f8972` → `#8f141f` (a darker shade
+of the same red, kept for consistency though it's currently unreferenced by any component). This
+is the main showcase app's "Twilio platform" accent (`text-mint`/`bg-mint`/`border-mint`, used in
+eyebrows, headlines, stat figures, nav dots, etc. across Hero/Story/Capabilities/Maturity/
+Executive Vision/How It Works/Closing). Deliberately left the hardcoded `rgba(116, 251, 208, ...)`
+glow-animation keyframes (perimeter-glow, idle-glow, connector-line, mint-glow-ring, nudge-halo,
+etc.) untouched — the user asked specifically about the mint "font" (text color), and those glows
+are decorative box-shadow/filter effects hardcoded as literal RGB, not derived from the `--mint`
+var. Revisit those separately if the user wants the glow effects recolored too. The `/journey`
+CubeSmart demo uses its own separate "emerald" tokens (already CubeSmart orange) — untouched.
+
 ## Session 72 — Turned on Conversation Intelligence (via in-server route, not the generic Twilio tool) + reliable Flex handoff with a call-forward fallback + agent-screen mockup
 
 **Discovery: `createOrModifyTwilioResource` cannot POST JSON to the newer Twilio Control Plane
